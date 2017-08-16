@@ -5,5 +5,4 @@
 
     yarn run lint
 
-    yarn run test-ci
-    
+    yarn run test
