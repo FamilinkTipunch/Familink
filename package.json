@@ -25,8 +25,15 @@
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "jest": {
-    "preset": "react-native"
-  },
+    		"preset": "react-native",
+    		"transformIgnorePatterns": [
+    			"<rootDir>/node_modules/(?!(jest-)?react-native|react-navigation|react-clone-referenced-element)"
+    		],
+    		"setupFiles": [
+    			"<rootDir>/node_modules/react-native/jest/setup.js",
+    			"<rootDir>/config/jest/setup-files/index.js"
+    		]
+    	},
   "description": "## Equipe Ti Punch",
   "main": "index.android.js",
   "repository": {
