@@ -1,0 +1,3 @@
+rootProject.name = 'FamilinkTipunch'
+
+include ':app'
