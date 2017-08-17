@@ -1,14 +1,12 @@
-// import React from 'react';
-
 import { NetInfo } from 'react-native';
 
-export default function checkReseau() {
-  let AppIsConnected = false;
-  NetInfo.isConnected.fetch().then((isConnected) => {
+export default function CheckReseau() {
+  let appIsConnected = false;
+  return NetInfo.isConnected.fetch().then((isConnected) => {
     if (isConnected) {
-      AppIsConnected = true;
-      return AppIsConnected;
+      appIsConnected = true;
+      return appIsConnected;
     }
-    return AppIsConnected;
+    return appIsConnected;
   });
 }
