@@ -1,15 +1,20 @@
-# Familink
+# Familink (Equipe Ti Punch)
 
-## Equipe Ti Punch
+## Installation
 
-### Definition de «Done»
+Pour lancer correctement l'application il faut:
+* Supprimer le dossier node_module
+* lancer la commandes: `npm install react-native-side-menu --save`
+* puis lancer la commande: `yarn`
+
+## Definition de «Done»
 
 * Ensemble des tests Jest pour une fonctionnalité
 * Tests sur les plateformes iOS et Android
 * Revue de code
 * Valider la Pull Request
 
-### Tests unitaires
+## Tests unitaires
 
 Les tests unitaires sont composés de 2 parties :
 * Scenarii d'erreurs
@@ -21,14 +26,14 @@ Chaque test effectué doit être renseigné dans les champs commentaires de la p
 * corroborés pour les résultats atterndus
 * corroborés pour les résultats réels
 
-### Liste des outils utilisés
+## Liste des outils utilisés
 
 * GitHub (gestionnaire de version)
 * EsLint (respect de convention de codage classique)
 * BuddyBuld (gestion de l'intégration et déploiement continu et du feedback utilisateur)
 * Jest (mise en place de cas de test)
 
-### Documents utiles
+## Documents utiles
 
 Les documents de gestion de projet sont stockés dans le «dossier» contenant :
 * Les BurnUp et BurnDown charts
