@@ -3,7 +3,12 @@
 import { NetInfo } from 'react-native';
 
 export default function checkReseau() {
+  let AppIsConnected = false;
   NetInfo.isConnected.fetch().then((isConnected) => {
-    console.log('App, is ' + (isConnected ? 'online' : 'offline'));
+    if (isConnected) {
+      AppIsConnected = true;
+      return AppIsConnected;
+    }
+    return AppIsConnected;
   });
 }
