@@ -1,13 +1,6 @@
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import 'react-native';
+import React from 'react';
+import Index from '../index.android.js';
 
-export default class UserTest extends Component {
-
-}
-
-AppRegistry.registerComponent('FamilinkTipunch', () => FamilinkTipunch);
+// Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
