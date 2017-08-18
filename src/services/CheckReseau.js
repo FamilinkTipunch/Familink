@@ -1,12 +1,21 @@
 import { NetInfo } from 'react-native';
+import { Component } from 'react';
 
-export default function checkReseau() {
-  NetInfo.isConnected.fetch().then(
-    (isConnected) => {
-      if (isConnected) {
-        //on se connectera a l'api
-      } else {
-        //sinon base de donnée
-      }
-    });
+export default class CheckReseau extends Component {
+  static getInitialState() {
+    return {
+      isConnected: null,
+    };
+  }
+
+  static isConnected() {
+    let appIsConnected = false;
+    return NetInfo.isConnected.fetch().then(
+      (isConnected) => {
+        if (isConnected) {
+          appIsConnected = true;
+        }
+        return appIsConnected;
+      });
+  }
 }
