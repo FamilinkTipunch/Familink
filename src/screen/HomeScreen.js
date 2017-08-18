@@ -156,7 +156,6 @@ export default class HomeScreen extends Component {
               onPress={this.onTestAlerte.bind(this)}
               title="TestAlert"
             />
-            <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*/ />
           </View>
           <TouchableOpacity
             onPress={this.toggle}
@@ -167,6 +166,7 @@ export default class HomeScreen extends Component {
               style={styles.burgerStyle}
             />
           </TouchableOpacity>
+          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
         </SideMenu>
       );
     }
