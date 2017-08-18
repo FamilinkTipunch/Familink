@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Popup from 'react-native-popup';
 import {
   Button,
   View,
@@ -14,6 +14,7 @@ import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 
 export const HOME_SCREEN_NAME = 'HOME_SCREEN';
+
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
@@ -31,10 +32,46 @@ export default class HomeScreen extends Component {
       this.navigateToLogout = this.navigateToLogout.bind(this);
     }
 
-    navigateToForgottenPassword() {
-      this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
-    }
+  // Fonction affichage et création de la forme de la popup     
+    onTestAlerte() {
+      // alert 
+      this.popup.alert(1);
+      this.popup.confirm({
+        content: 'Are you ready?',
+      });
 
+      this.popup.confirm({
+        content: 'Are you ready?',
+        ok: {
+          callback: () => {
+            this.popup.alert('Very good!');
+          },
+        },
+      });
+
+      this.popup.confirm({
+        title: 'title',
+        content: ['Message'],
+        ok: {
+          text: 'Accepter',
+          style: {
+            color: 'blue',
+          },
+          callback: () => {
+            this.popup.alert('Good!');
+          },
+        },
+        cancel: {
+          text: 'Refuser',
+          style: {
+            color: 'red',
+          },
+          callback: () => {
+            this.popup.alert('ok ！');
+          },
+        },
+      });
+    }
     navigateToLogin() {
       this.navigate(LOGIN_SCREEN_NAME);
     }
@@ -55,6 +92,9 @@ export default class HomeScreen extends Component {
       this.navigate(LOGOUT_SCREEN_NAME);
     }
 
+    navigateToForgottenPassword() {
+      this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
+    }
     render() {
       return (
         <View>
@@ -83,6 +123,11 @@ export default class HomeScreen extends Component {
             onPress={this.navigateToPhoneBookList}
             title="PhoneBookList"
           />
+          <Button
+            onPress={this.onTestAlerte.bind(this)}
+            title="TestAlert"
+          />
+          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*/ />
         </View>);
     }
 }
