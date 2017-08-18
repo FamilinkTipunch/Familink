@@ -1,14 +1,13 @@
-'use strict';
+const React = require('react-native');
 
-var React = require('react-native');
-var { StyleSheet } = React;
+const { StyleSheet } = React;
 
-const darkPurple = "#330136";
-const purple = "#5E1742";
-const lightPurple = "#962E40";
-const darkOrange = "#C9463D";
-const orange = "#FF5E35";
-const white = "#FFF";
+const darkPurple = '#330136';
+const purple = '#5E1742';
+const lightPurple = '#962E40';
+const darkOrange = '#C9463D';
+const orange = '#FF5E35';
+const white = '#FFF';
 
 module.exports = StyleSheet.create({
 
@@ -27,6 +26,9 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: white,
   },
+  list: {
+    backgroundColor: white,
+  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
@@ -34,7 +36,7 @@ module.exports = StyleSheet.create({
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
+    color: orange,
     marginBottom: 5,
   },
   menu: {
@@ -54,7 +56,7 @@ module.exports = StyleSheet.create({
     borderRadius: 24,
     flex: 1,
     borderWidth: 2,
-    borderColor: white,
+    borderColor: darkPurple,
   },
   name: {
     position: 'absolute',
@@ -62,13 +64,17 @@ module.exports = StyleSheet.create({
     fontWeight: '600',
     left: 60,
     top: 8,
-    color: white,
+    color: lightPurple,
   },
   item: {
     fontSize: 14,
     fontWeight: '300',
     paddingTop: 5,
-    color: white,
+    color: darkOrange,
+  },
+  burgerStyle: {
+    width: 32,
+    height: 32,
   },
 
 });

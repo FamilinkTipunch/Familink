@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 
@@ -36,6 +36,23 @@ export default class LogoutScreen extends Component {
       };
     }
 
+    onMenuItemSelected = item =>
+      this.setState({
+        isOpen: false,
+        selectedItem: item,
+      },
+      );
+
+    toggle() {
+      this.setState({
+        isOpen: !this.state.isOpen,
+      });
+    }
+
+    updateMenuState(isOpen) {
+      this.setState({ isOpen });
+    }
+
     navigateToForgottenPassword() {
       this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
     }
@@ -60,23 +77,6 @@ export default class LogoutScreen extends Component {
       this.navigate(LOGIN_SCREEN_NAME);
     }
 
-    toggle() {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-  
-    updateMenuState(isOpen) {
-      this.setState({ isOpen });
-    }
-  
-    onMenuItemSelected = item =>
-      this.setState({
-        isOpen: false,
-        selectedItem: item,
-      }
-    );
-
     render() {
       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
       return (
@@ -94,7 +94,7 @@ export default class LogoutScreen extends Component {
           >
             <Image
               source={image}
-              style={{ width: 32, height: 32 }}
+              style={styles.burgerStyle}
             />
           </TouchableOpacity>
         </SideMenu>

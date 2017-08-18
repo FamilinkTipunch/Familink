@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { View, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 
@@ -36,6 +36,23 @@ export default class PhoneBookListScreen extends Component {
       };
     }
 
+    onMenuItemSelected = item =>
+      this.setState({
+        isOpen: false,
+        selectedItem: item,
+      },
+      );
+
+    toggle() {
+      this.setState({
+        isOpen: !this.state.isOpen,
+      });
+    }
+
+    updateMenuState(isOpen) {
+      this.setState({ isOpen });
+    }
+
     navigateToForgottenPassword() {
       this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
     }
@@ -60,23 +77,6 @@ export default class PhoneBookListScreen extends Component {
       this.navigate(LOGIN_SCREEN_NAME);
     }
 
-    toggle() {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-  
-    updateMenuState(isOpen) {
-      this.setState({ isOpen });
-    }
-  
-    onMenuItemSelected = item =>
-      this.setState({
-        isOpen: false,
-        selectedItem: item,
-      }
-    );
-
     render() {
       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
       return (
@@ -86,7 +86,20 @@ export default class PhoneBookListScreen extends Component {
           onChange={isOpen => this.updateMenuState(isOpen)}
         >
           <View style={styles.container}>
-            <Text>Page PhoneBookList</Text>
+            <FlatList
+              data={[
+                { key: 'Devin' },
+                { key: 'Jackson' },
+                { key: 'James' },
+                { key: 'Joel' },
+                { key: 'John' },
+                { key: 'Jillian' },
+                { key: 'Jimmy' },
+                { key: 'Julie' },
+              ]}
+              renderItem={({ item }) =>
+                <Button onPress={this.navigateToPhoneBookDetail} title={item.key} />}
+            />
           </View>
           <TouchableOpacity
             onPress={this.toggle}
@@ -94,11 +107,10 @@ export default class PhoneBookListScreen extends Component {
           >
             <Image
               source={image}
-              style={{ width: 32, height: 32 }}
+              style={styles.burgerStyle}
             />
           </TouchableOpacity>
         </SideMenu>
       );
     }
 }
-

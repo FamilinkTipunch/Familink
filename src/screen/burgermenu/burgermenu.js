@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { Button, Dimensions, StyleSheet, ScrollView, View, Image, Text } from 'react-native';
+import React, { Component } from 'react';
+import { Button, ScrollView, View, Image, Text } from 'react-native';
 
-const window = Dimensions.get('window');
 const uri = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/US_Navy_100915-N-4790M-040_Lanier_Phillips%2C_left%2C_Bill_Cosby_and_Ed_LeBaron_pose_for_a_picture_before_receiving_the_Lone_Sailor_Award_at_the_Nation_%28cropped_to_Cosby%29.jpg';
 const styles = require('../styles/styles');
 
@@ -17,16 +16,22 @@ export default class Menu extends Component {
           <Text style={styles.name}>Bill Cosby</Text>
         </View>
         <Text
-          onPress={() => onItemSelected('About')}
+          onPress={() => this.props.navigation.navigate('HOME_SCREEN')}
           style={styles.item}
         >
-          About
+          Accueil
         </Text>
         <Text
-          onPress={() => onItemSelected('Contacts')}
+          onPress={() => this.props.navigation.navigate('PHONEBOOKLIST_SCREEN')}
           style={styles.item}
         >
           Contacts
+        </Text>
+        <Text
+          onPress={() => this.props.navigation.navigate('LOGOUT_SCREEN')}
+          style={styles.item}
+        >
+          Déconnexion
         </Text>
         <Button
           onPress={this.navigateToPhoneBookList}
@@ -37,7 +42,3 @@ export default class Menu extends Component {
     );
   }
 }
-
-Menu.propTypes = {
-  onItemSelected: PropTypes.func.isRequired,
-};
