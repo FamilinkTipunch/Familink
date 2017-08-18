@@ -46,16 +46,6 @@ export default class HomeScreen extends Component {
       this.props.navigator.replace({ id: item });
     }
 
-    toggle() {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-
-    updateMenuState(isOpen) {
-      this.setState({ isOpen });
-    }
-
   // Fonction affichage et création de la forme de la popup     
     onTestAlerte() {
       // alert 
@@ -95,6 +85,15 @@ export default class HomeScreen extends Component {
           },
         },
       });
+    }
+    toggle() {
+      this.setState({
+        isOpen: !this.state.isOpen,
+      });
+    }
+
+    updateMenuState(isOpen) {
+      this.setState({ isOpen });
     }
     navigateToLogin() {
       this.navigate(LOGIN_SCREEN_NAME);
@@ -154,10 +153,10 @@ export default class HomeScreen extends Component {
               title="PhoneBookList"
             />
             <Button
-            onPress={this.onTestAlerte.bind(this)}
-            title="TestAlert"
-          />
-          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*/ />
+              onPress={this.onTestAlerte.bind(this)}
+              title="TestAlert"
+            />
+            <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*/ />
           </View>
           <TouchableOpacity
             onPress={this.toggle}
