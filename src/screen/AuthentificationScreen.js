@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
-import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/burgermenu';
+import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
 
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -9,15 +7,15 @@ import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
+import { transparent } from './styles/styles';
 
-const image = require('../assets/menu.png');
 const styles = require('./styles/styles');
 
 export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
 
 export default class AuthentificationScreen extends Component {
     static navigationOptions = {
-      title: 'Auth',
+      title: 'Enregistrement',
     };
 
     constructor(props) {
@@ -29,28 +27,15 @@ export default class AuthentificationScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToLogout = this.navigateToLogout.bind(this);
-      this.toggle = this.toggle.bind(this);
-      this.state = {
-        isOpen: false,
-        selectedItem: 'About',
-      };
+      this.state = { text: '' };
     }
 
-    onMenuItemSelected = item =>
-      this.setState({
-        isOpen: false,
-        selectedItem: item,
-      },
-      );
-
-    toggle() {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-
-    updateMenuState(isOpen) {
-      this.setState({ isOpen });
+    onChangeDo(text) {
+      this.setState({ text });
+      if (text === '0000') {
+        return this.setState({ hello: true });
+      }
+      this.setState({ hello: false })
     }
 
     navigateToHome() {
@@ -78,26 +63,47 @@ export default class AuthentificationScreen extends Component {
     }
 
     render() {
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
       return (
-        <SideMenu
-          menu={menu}
-          isOpen={this.state.isOpen}
-          onChange={isOpen => this.updateMenuState(isOpen)}
-        >
-          <View style={styles.container}>
-            <Text>Page Authentification</Text>
-          </View>
-          <TouchableOpacity
-            onPress={this.toggle}
-            style={styles.button}
-          >
-            <Image
-              source={image}
-              style={styles.burgerStyle}
-            />
-          </TouchableOpacity>
-        </SideMenu>
+        <ScrollView scrollsToTop={false} style={styles.signin}>
+          <TextInput
+            style={[styles.input, styles.inputTop, styles.classic]}
+            placeholder={'Nom'}
+            maxLength={15}
+          />
+          <TextInput
+            style={[styles.input, styles.inputMiddle, styles.classic]}
+            placeholder={'Prenom'}
+            maxLength={15}
+          />
+          <TextInput
+            style={[styles.input, styles.inputBottom, styles.tel]}
+            keyboardType={'phone-pad'}
+            placeholder={'Tel'}
+            maxLength={10}
+          />
+          <TextInput
+            style={[styles.input, styles.inputTop, styles.password]}
+            keyboardType={'phone-pad'}
+            secureTextEntry={true}
+            placeholder={'Code Pin'}
+            maxLength={4}
+          />
+          <TextInput
+            style={[styles.input, styles.inputBottom, styles.password]}
+            keyboardType={'phone-pad'}
+            secureTextEntry={true}
+            placeholder={'Confirmer code'}
+            underlineColorAndroid={transparent}
+            maxLength={4}
+          />
+          <TouchableHighlight onPress={this.navigateToHome}>
+            <View style={styles.confirmationButton}>
+              <Text style={styles.validateText}>
+                Valider
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </ScrollView>
       );
     }
 }
