@@ -26,7 +26,8 @@
             "react-native/no-inline-styles": "error",
             "react-native/no-color-literals": "error",
             "import/no-extraneous-dependencies": ["error",{"devDependencies": true}],
-            "react/prop-types": 0
+            "react/prop-types": 0,
+            "react/jsx-no-bind": 0
         }
     }
     
