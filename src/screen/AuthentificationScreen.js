@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -11,6 +12,10 @@ import { transparent } from './styles/styles';
 import WebService from '../services/WebService';
 
 const styles = require('./styles/styles');
+
+const CANCEL_INDEX = 0;
+const options = ['Annuler', 'Senior', 'Famille', 'Professionnel'];
+const title = 'Quel statut vous correspond le mieux ?';
 
 export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
 
@@ -28,6 +33,7 @@ export default class AuthentificationScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToLogout = this.navigateToLogout.bind(this);
+
       this.state = {
         phone: '',
         password: '',
@@ -36,10 +42,33 @@ export default class AuthentificationScreen extends Component {
         email: '',
         profile: '',
         profileList: [],
+        firstpin: '',
+        validate: false,
+        selected: '',
       };
+      this.handlePress = this.handlePress.bind(this);
+      this.showActionSheet = this.showActionSheet.bind(this);
     }
     async componentDidMount() {
-      this.state.profileList = await WebService.getProfile();
+      this.state.profileList = await WebService.getProfile();      
+    }
+
+    onChangeDo(firstpin) {
+      this.setState({ firstpin });
+      if (firstpin === '0000') {
+        return this.setState({ validate: true });
+      }
+      return this.setState({ validate: false });
+    }
+
+    showActionSheet() {
+      this.ActionSheet.show();
+    }
+
+    handlePress(i) {
+      this.setState({
+        selected: i,
+      });
     }
 
     navigateToHome() {
@@ -72,12 +101,14 @@ export default class AuthentificationScreen extends Component {
           <TextInput
             style={[styles.input, styles.inputTop, styles.classic]}
             placeholder={'Nom'}
+            underlineColorAndroid={transparent}
             maxLength={15}
             onChangeText={lastName => this.setState({ lastName })}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.classic]}
             placeholder={'Prenom'}
+            underlineColorAndroid={transparent}
             maxLength={15}
             onChangeText={firstName => this.setState({ firstName })}
           />
@@ -85,6 +116,7 @@ export default class AuthentificationScreen extends Component {
             style={[styles.input, styles.inputMiddle, styles.tel]}
             keyboardType={'email-address'}
             placeholder={'eMail'}
+            underlineColorAndroid={transparent}
             maxLength={30}
             onChangeText={email => this.setState({ email })}
           />
@@ -92,6 +124,7 @@ export default class AuthentificationScreen extends Component {
             style={[styles.input, styles.inputBottom, styles.tel]}
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
+            underlineColorAndroid={transparent}
             maxLength={10}
             onChangeText={phone => this.setState({ phone })}
           />
@@ -100,6 +133,7 @@ export default class AuthentificationScreen extends Component {
             keyboardType={'numeric'}
             secureTextEntry={true}
             placeholder={'Code Pin'}
+            underlineColorAndroid={transparent}
             maxLength={4}
             onChangeText={password => this.setState({ password })}
           />
@@ -111,8 +145,32 @@ export default class AuthentificationScreen extends Component {
             underlineColorAndroid={transparent}
             maxLength={4}
           />
-          <TouchableHighlight onPress={async () =>
-            WebService.userSignIn(this.state.phone, this.state.password, this.state.firstName, this.state.lastName, this.state.email, 'FAMILLE').then(this.navigateToHome)}
+          <View style={styles.wrapper}>
+            <TouchableHighlight onPress={this.showActionSheet} underlayColor={transparent}>
+              <View style={styles.actionSheet}>
+                <Text style={styles.sheetText}>
+                  {options[this.state.selected]}
+                </Text>
+              </View>
+            </TouchableHighlight>
+            <ActionSheet
+              ref={o => this.ActionSheet = o}
+              title={title}
+              options={options}
+              cancelButtonIndex={CANCEL_INDEX}
+              onPress={this.handlePress}
+            />
+          </View>
+          <TouchableHighlight
+            onPress={async () =>
+              WebService.userSignIn(this.state.phone,
+                this.state.password,
+                this.state.firstName,
+                this.state.lastName,
+                this.state.email,
+                'FAMILLE')
+                .then(this.navigateToHome)}
+            underlayColor={transparent}
           >
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>

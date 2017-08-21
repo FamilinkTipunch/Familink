@@ -11,7 +11,7 @@ const white = 'rgba(255, 255, 255, 1)';
 const trWhite = 'rgba(255, 255, 255, 0.5)';
 const grey = 'rgba(240, 240, 240, 1)';
 export const darkGrey = 'rgba(200, 200, 200, 1)';
-export const transparent = 'rgba(255, 255, 255, 0)';
+export const transparent = 'transparent';
 
 module.exports = StyleSheet.create({
 
@@ -132,6 +132,24 @@ module.exports = StyleSheet.create({
     borderRadius: 5,
 
     backgroundColor: lightPurple,
+  },
+  actionSheet: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    borderRadius: 5,
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+
+    backgroundColor: trWhite,
+
+    marginBottom: 20,
+  },
+  sheetText: {
+    fontSize: 18,
+    marginLeft: 20,
   },
   validateText: {
     fontSize: 20,
