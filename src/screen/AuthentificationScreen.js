@@ -8,6 +8,7 @@ import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 import { transparent } from './styles/styles';
+import WebService from '../services/WebService';
 
 const styles = require('./styles/styles');
 
@@ -27,15 +28,18 @@ export default class AuthentificationScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToLogout = this.navigateToLogout.bind(this);
-      this.state = { text: '' };
+      this.state = {
+        phone: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        profile: '',
+        profileList: [],
+      };
     }
-
-    onChangeDo(text) {
-      this.setState({ text });
-      if (text === '0000') {
-        return this.setState({ hello: true });
-      }
-      this.setState({ hello: false })
+    async componentDidMount() {
+      this.state.profileList = await WebService.getProfile();
     }
 
     navigateToHome() {
@@ -69,36 +73,35 @@ export default class AuthentificationScreen extends Component {
             style={[styles.input, styles.inputTop, styles.classic]}
             placeholder={'Nom'}
             maxLength={15}
+            onChangeText={lastName => this.setState({ lastName })}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.classic]}
             placeholder={'Prenom'}
             maxLength={15}
+            onChangeText={firstName => this.setState({ firstName })}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.tel]}
             keyboardType={'email-address'}
             placeholder={'eMail'}
             maxLength={30}
+            onChangeText={email => this.setState({ email })}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.tel]}
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
             maxLength={10}
+            onChangeText={phone => this.setState({ phone })}
           />
-          <Picker
-            selectedValue={this.state.language}
-            onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
           <TextInput
             style={[styles.input, styles.inputTop, styles.password]}
             keyboardType={'numeric'}
             secureTextEntry={true}
             placeholder={'Code Pin'}
             maxLength={4}
+            onChangeText={password => this.setState({ password })}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.password]}
@@ -108,7 +111,9 @@ export default class AuthentificationScreen extends Component {
             underlineColorAndroid={transparent}
             maxLength={4}
           />
-          <TouchableHighlight onPress={this.navigateToHome}>
+          <TouchableHighlight onPress={async () =>
+            WebService.userSignIn(this.state.phone, this.state.password, this.state.firstName, this.state.lastName, this.state.email, 'FAMILLE').then(this.navigateToHome)}
+          >
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>
                 Valider
