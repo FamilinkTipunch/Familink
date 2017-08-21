@@ -68,35 +68,35 @@ export default class AuthentificationScreen extends Component {
           <TextInput
             style={[styles.input, styles.inputTop, styles.classic]}
             placeholder={'Nom'}
-            underlineColorAndroid={'transparent'}
+            underlineColorAndroid={transparent}
             maxLength={15}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.classic]}
             placeholder={'Prenom'}
-            underlineColorAndroid={'transparent'}
+            underlineColorAndroid={transparent}
             maxLength={15}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.tel]}
             keyboardType={'email-address'}
             placeholder={'eMail'}
-            underlineColorAndroid={'transparent'}
+            underlineColorAndroid={transparent}
             maxLength={30}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.tel]}
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
-            underlineColorAndroid={'transparent'}
+            underlineColorAndroid={transparent}
             maxLength={10}
           />
           <TextInput
             style={[styles.input, styles.inputTop, styles.password]}
             keyboardType={'numeric'}
-            /*eslint-disable*/secureTextEntry={true}/*eslint-enable*/
+            secureTextEntry={true}
             placeholder={'Code Pin'}
-            underlineColorAndroid={'transparent'}
+            underlineColorAndroid={transparent}
             maxLength={4}
           />
           <TextInput
@@ -104,7 +104,7 @@ export default class AuthentificationScreen extends Component {
             keyboardType={'numeric'}
             /*eslint-disable*/secureTextEntry={true}/*eslint-enable*/
             placeholder={'Confirmer code'}
-            underlineColorAndroid={'transparent'}
+            underlineColorAndroid={transparent}
             maxLength={4}
           />
           <TouchableHighlight onPress={this.navigateToHome}>

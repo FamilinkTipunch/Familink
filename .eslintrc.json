@@ -27,7 +27,8 @@
             "react-native/no-color-literals": "error",
             "import/no-extraneous-dependencies": ["error",{"devDependencies": true}],
             "react/prop-types": 0,
-            "react/jsx-no-bind": 0
+            "react/jsx-no-bind": 0,
+            "react/jsx-boolean-value": 0
         }
     }
     
