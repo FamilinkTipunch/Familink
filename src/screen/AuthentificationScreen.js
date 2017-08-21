@@ -76,21 +76,33 @@ export default class AuthentificationScreen extends Component {
             maxLength={15}
           />
           <TextInput
+            style={[styles.input, styles.inputMiddle, styles.tel]}
+            keyboardType={'email-address'}
+            placeholder={'eMail'}
+            maxLength={30}
+          />
+          <TextInput
             style={[styles.input, styles.inputBottom, styles.tel]}
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
             maxLength={10}
           />
+          <Picker
+            selectedValue={this.state.language}
+            onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
           <TextInput
             style={[styles.input, styles.inputTop, styles.password]}
-            keyboardType={'phone-pad'}
+            keyboardType={'numeric'}
             secureTextEntry={true}
             placeholder={'Code Pin'}
             maxLength={4}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.password]}
-            keyboardType={'phone-pad'}
+            keyboardType={'numeric'}
             secureTextEntry={true}
             placeholder={'Confirmer code'}
             underlineColorAndroid={transparent}
