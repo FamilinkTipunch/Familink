@@ -27,15 +27,16 @@ export default class AuthentificationScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToLogout = this.navigateToLogout.bind(this);
-      this.state = { text: '' };
+      this.state = { firstpin: '' };
+      this.state = { validate: false };
     }
 
-    onChangeDo(text) {
-      this.setState({ text });
-      if (text === '0000') {
-        return this.setState({ hello: true });
+    onChangeDo(firstpin) {
+      this.setState({ firstpin });
+      if (firstpin === '0000') {
+        return this.setState({ validate: true });
       }
-      return this.setState({ hello: false });
+      return this.setState({ validate: false });
     }
 
     navigateToHome() {
@@ -55,6 +56,7 @@ export default class AuthentificationScreen extends Component {
     }
 
     navigateToForgottenPassword() {
+
       this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
     }
 
