@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Text, View, Image, TouchableOpacity } from 'react-native';
+import Popup from 'react-native-popup';
+import { Button, Text, View, Image, TouchableOpacity, NetInfo } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 
@@ -9,6 +10,7 @@ import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
+import CheckReseau from '../services/CheckReseau';
 
 const image = require('../assets/menu.png');
 const styles = require('./styles/styles');
@@ -33,8 +35,73 @@ export default class HomeScreen extends Component {
       this.state = {
         isOpen: false,
         selectedItem: 'About',
+        isConnected: false,
       };
     }
+
+  // Fonction affichage et création de la forme de la popup      
+
+    componentDidMount() {
+      NetInfo.isConnected.addEventListener(
+        'change',
+        this.handleConnectivityChange,
+      );
+      CheckReseau.isConnected().then((appIsConnected) => {
+        this.setState({
+          isConnected: appIsConnected,
+        });
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+
+    componentWillUnmount() {
+      NetInfo.isConnected.removeEventListener(
+        'change',
+        this.handleConnectivityChange,
+      );
+    }
+
+    onTestAlerte() {
+      // alert 
+      this.popup.alert(1);
+      this.popup.confirm({
+        content: 'Are you ready?',
+      });
+
+      this.popup.confirm({
+        content: 'Are you ready?',
+        ok: {
+          callback: () => {
+            this.popup.alert('Very good!');
+          },
+        },
+      });
+
+      this.popup.confirm({
+        title: 'title',
+        content: ['Message'],
+        ok: {
+          text: 'Accepter',
+          style: {
+            color: 'blue',
+          },
+          callback: () => {
+            this.popup.alert('Good!');
+          },
+        },
+        cancel: {
+          text: 'Refuser',
+          style: {
+            color: 'red',
+          },
+          callback: () => {
+            this.popup.alert('ok ！');
+          },
+        },
+      });
+    }
+
 
     onMenuItemSelected = (item) => {
       this.setState({
@@ -53,6 +120,12 @@ export default class HomeScreen extends Component {
     updateMenuState(isOpen) {
       this.setState({ isOpen });
     }
+
+
+    handleConnectivityChange = (appIsConnected) => {
+      this.setState({ isConnected: appIsConnected });
+    };
+
 
     navigateToForgottenPassword() {
       this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
@@ -112,6 +185,11 @@ export default class HomeScreen extends Component {
               onPress={this.navigateToPhoneBookList}
               title="PhoneBookList"
             />
+            <Button
+              onPress={this.onTestAlerte.bind(this)}
+              title="TestAlert"
+            />
+            <Text>{this.state.isConnected ? 'Online' : 'Offline'}</Text>
           </View>
           <TouchableOpacity
             onPress={this.toggle}
@@ -122,6 +200,7 @@ export default class HomeScreen extends Component {
               style={styles.burgerStyle}
             />
           </TouchableOpacity>
+          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
         </SideMenu>
       );
     }
