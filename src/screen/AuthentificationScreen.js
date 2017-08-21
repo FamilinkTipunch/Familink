@@ -35,7 +35,7 @@ export default class AuthentificationScreen extends Component {
       if (text === '0000') {
         return this.setState({ hello: true });
       }
-      this.setState({ hello: false })
+      return this.setState({ hello: false });
     }
 
     navigateToHome() {
@@ -68,44 +68,43 @@ export default class AuthentificationScreen extends Component {
           <TextInput
             style={[styles.input, styles.inputTop, styles.classic]}
             placeholder={'Nom'}
+            underlineColorAndroid={'transparent'}
             maxLength={15}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.classic]}
             placeholder={'Prenom'}
+            underlineColorAndroid={'transparent'}
             maxLength={15}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.tel]}
             keyboardType={'email-address'}
             placeholder={'eMail'}
+            underlineColorAndroid={'transparent'}
             maxLength={30}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.tel]}
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
+            underlineColorAndroid={'transparent'}
             maxLength={10}
           />
-          <Picker
-            selectedValue={this.state.language}
-            onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
           <TextInput
             style={[styles.input, styles.inputTop, styles.password]}
             keyboardType={'numeric'}
-            secureTextEntry={true}
+            /*eslint-disable*/secureTextEntry={true}/*eslint-enable*/
             placeholder={'Code Pin'}
+            underlineColorAndroid={'transparent'}
             maxLength={4}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.password]}
             keyboardType={'numeric'}
-            secureTextEntry={true}
+            /*eslint-disable*/secureTextEntry={true}/*eslint-enable*/
             placeholder={'Confirmer code'}
-            underlineColorAndroid={transparent}
+            underlineColorAndroid={'transparent'}
             maxLength={4}
           />
           <TouchableHighlight onPress={this.navigateToHome}>
