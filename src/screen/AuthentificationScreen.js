@@ -56,7 +56,6 @@ export default class AuthentificationScreen extends Component {
     }
 
     navigateToForgottenPassword() {
-
       this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
     }
 
@@ -104,7 +103,7 @@ export default class AuthentificationScreen extends Component {
           <TextInput
             style={[styles.input, styles.inputBottom, styles.password]}
             keyboardType={'numeric'}
-            /*eslint-disable*/secureTextEntry={true}/*eslint-enable*/
+            secureTextEntry={true}
             placeholder={'Confirmer code'}
             underlineColorAndroid={transparent}
             maxLength={4}
