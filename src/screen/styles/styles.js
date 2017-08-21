@@ -148,7 +148,8 @@ module.exports = StyleSheet.create({
     marginBottom: 20,
   },
   sheetText: {
-    fontSize: 20,
+    fontSize: 18,
+    marginLeft: 20,
   },
   validateText: {
     fontSize: 20,

@@ -34,9 +34,7 @@ export default class AuthentificationScreen extends Component {
       this.navigateToLogout = this.navigateToLogout.bind(this);
       this.state = { firstpin: '' };
       this.state = { validate: false };
-      this.state = {
-        selected: '',
-      };
+      this.state = { selected: '' };
       this.handlePress = this.handlePress.bind(this);
       this.showActionSheet = this.showActionSheet.bind(this);
     }
@@ -54,12 +52,9 @@ export default class AuthentificationScreen extends Component {
     }
 
     handlePress(i) {
-      console.log(i);
-      if (this.state.selected !== 0) {
-        this.setState({
-          selected: i,
-        });
-      }
+      this.setState({
+        selected: i,
+      });
     }
 
     navigateToHome() {
@@ -132,9 +127,9 @@ export default class AuthentificationScreen extends Component {
             maxLength={4}
           />
           <View style={styles.wrapper}>
-            <TouchableHighlight onPress={this.showActionSheet}>
+            <TouchableHighlight onPress={this.showActionSheet} underlayColor={transparent}>
               <View style={styles.actionSheet}>
-                <Text>
+                <Text style={styles.sheetText}>
                   {options[this.state.selected]}
                 </Text>
               </View>
@@ -147,7 +142,7 @@ export default class AuthentificationScreen extends Component {
               onPress={this.handlePress}
             />
           </View>
-          <TouchableHighlight onPress={this.navigateToHome}>
+          <TouchableHighlight onPress={this.navigateToHome} underlayColor={transparent}>
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>
                 Valider
