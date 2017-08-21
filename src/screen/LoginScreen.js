@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, TextInput, TouchableHighlight, ScrollView } from 'react-native';
+import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
+
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
@@ -32,9 +34,26 @@ export default class LoginScreen extends Component {
       this.state = {
         isOpen: false,
         selectedItem: 'About',
+        value: {
+          numeroTel: '',
+          password: '',
+        },
+        checked: false,
       };
     }
-
+    componentWillUnmount() {
+      this.setState({
+        value: {
+          numeroTel: '',
+          password: null,
+        },
+      });
+    }
+    onChange = (value) => {
+      this.setState({
+        value,
+      });
+    }
     onMenuItemSelected = item =>
       this.setState({
         isOpen: false,
@@ -75,28 +94,52 @@ export default class LoginScreen extends Component {
     navigateToLogout() {
       this.navigate(LOGOUT_SCREEN_NAME);
     }
+    rememberMeonChange() {
+      this.setState({ checked: true });
+    }
 
     render() {
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+     // const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
       return (
-        <SideMenu
-          menu={menu}
-          isOpen={this.state.isOpen}
-          onChange={isOpen => this.updateMenuState(isOpen)}
-        >
-          <View style={styles.container}>
-            <Text>Page de Login</Text>
+        <ScrollView scrollsToTop={false} style={styles.signin}>
+          <TextInput
+            style={[styles.input, styles.inputBottom, styles.tel]}
+            keyboardType={'phone-pad'}
+            placeholder={'Tel'}
+            maxLength={10}
+            value={this.state.value.numeroTel}
+          />
+          <TextInput
+            style={[styles.input, styles.inputStandAlone, styles.password]}
+            keyboardType={'numeric'}
+            secureTextEntry={true}
+            placeholder={'Code Pin'}
+            maxLength={4}
+            value={this.state.value.password}
+          />
+          <Content>
+            <ListItem onPress={this.rememberMeonChange}>
+              <CheckBox checked={this.state.checked} />
+              <Body>
+                <Text>Remember me</Text>
+              </Body>
+            </ListItem>
+          </Content>
+          <TouchableHighlight>
+            <View style={styles.confirmationButton}>
+              <Text style={styles.validateText}>Log In</Text>
+            </View>
+          </TouchableHighlight>
+          <View style={styles.containerCreateAccount}>
+            <TouchableHighlight onPress={this.navigateToAuthentification}>
+              <Text style={styles.inputLoginCreateAccount}>Create Account</Text>
+            </TouchableHighlight>
+            <Text style={styles.inputLoginCreateAccount}>|</Text>
+            <TouchableHighlight>
+              <Text style={styles.inputLoginCreateAccount}>Forgot password?</Text>
+            </TouchableHighlight>
           </View>
-          <TouchableOpacity
-            onPress={this.toggle}
-            style={styles.button}
-          >
-            <Image
-              source={image}
-              style={styles.burgerStyle}
-            />
-          </TouchableOpacity>
-        </SideMenu>
+        </ScrollView>
       );
     }
 }
