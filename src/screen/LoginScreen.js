@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableOpacity, TextInput, TouchableHighlight, ScrollView } from 'react-native';
+import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
 import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
-import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/burgermenu';
 
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
@@ -12,7 +10,6 @@ import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 
-const image = require('../assets/menu.png');
 const styles = require('./styles/styles');
 
 export const LOGIN_SCREEN_NAME = 'LOGIN_SCREEN';
@@ -34,11 +31,9 @@ export default class LoginScreen extends Component {
       this.state = {
         isOpen: false,
         selectedItem: 'About',
-        value: {
-          numeroTel: '',
-          password: '',
-        },
-        checked: false,
+        numeroTel: '',
+        password: '',
+        isChecked: false,
       };
     }
     componentWillUnmount() {
@@ -47,11 +42,13 @@ export default class LoginScreen extends Component {
           numeroTel: '',
           password: null,
         },
+        isChecked: false,
       });
     }
-    onChange = (value) => {
+    onChange(value) {
       this.setState({
-        value,
+        numeroTel: value,
+        password: value,
       });
     }
     onMenuItemSelected = item =>
@@ -94,12 +91,15 @@ export default class LoginScreen extends Component {
     navigateToLogout() {
       this.navigate(LOGOUT_SCREEN_NAME);
     }
-    rememberMeonChange() {
-      this.setState({ checked: true });
+    rememberMeOnChange() {
+      this.setState({ isChecked: !this.state.isChecked });
+    }
+
+    identifier() {
+      this.navigateToHome();
     }
 
     render() {
-     // const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
       return (
         <ScrollView scrollsToTop={false} style={styles.signin}>
           <TextInput
@@ -107,7 +107,8 @@ export default class LoginScreen extends Component {
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
             maxLength={10}
-            value={this.state.value.numeroTel}
+            value={this.state.numeroTel}
+            onChange={value => this.onChange(value)}
           />
           <TextInput
             style={[styles.input, styles.inputStandAlone, styles.password]}
@@ -115,17 +116,18 @@ export default class LoginScreen extends Component {
             secureTextEntry={true}
             placeholder={'Code Pin'}
             maxLength={4}
-            value={this.state.value.password}
+            value={this.state.password}
+            onChange={value => this.onChange(value)}
           />
           <Content>
-            <ListItem onPress={this.rememberMeonChange}>
-              <CheckBox checked={this.state.checked} />
+            <ListItem style={styles.checkboxLogin}>
+              <CheckBox checked={this.state.isChecked} onPress={() => this.rememberMeOnChange()} />
               <Body>
                 <Text>Remember me</Text>
               </Body>
             </ListItem>
           </Content>
-          <TouchableHighlight>
+          <TouchableHighlight onPress={() => this.identifier()}>
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>Log In</Text>
             </View>

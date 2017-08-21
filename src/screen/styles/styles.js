@@ -150,4 +150,9 @@ module.exports = StyleSheet.create({
     textAlign: 'center',
     color: orange,
   },
+  checkboxLogin: {
+    width: window.width,
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
 });
