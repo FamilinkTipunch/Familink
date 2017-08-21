@@ -6,7 +6,7 @@ import Menu from './burgermenu/burgermenu';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
-import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookListScreen';
+import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
@@ -78,7 +78,7 @@ export default class PhoneBookListScreen extends Component {
     }
 
     render() {
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+      const menu = <Menu navigation={this.props.navigation} />;
       return (
         <SideMenu
           menu={menu}

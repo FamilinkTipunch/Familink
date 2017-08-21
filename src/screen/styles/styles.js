@@ -2,12 +2,16 @@ const React = require('react-native');
 
 const { StyleSheet } = React;
 
-const darkPurple = '#330136';
-const purple = '#5E1742';
-const lightPurple = '#962E40';
-const darkOrange = '#C9463D';
-const orange = '#FF5E35';
-const white = '#FFF';
+const darkPurple = 'rgba(51, 1, 54, 1)';
+const purple = 'rgba(83, 23, 66, 1)';
+const lightPurple = 'rgba(150, 46, 64, 1)';
+const darkOrange = 'rgba(201, 70, 61, 1)';
+const orange = 'rgba(255, 94, 53, 1)';
+const white = 'rgba(255, 255, 255, 1)';
+const trWhite = 'rgba(255, 255, 255, 0.5)';
+const grey = 'rgba(240, 240, 240, 1)';
+export const darkGrey = 'rgba(200, 200, 200, 1)';
+export const transparent = 'transparent';
 
 module.exports = StyleSheet.create({
 
@@ -24,10 +28,10 @@ module.exports = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: white,
+    backgroundColor: grey,
   },
   list: {
-    backgroundColor: white,
+    backgroundColor: grey,
   },
   welcome: {
     fontSize: 20,
@@ -45,6 +49,13 @@ module.exports = StyleSheet.create({
     height: window.height,
     backgroundColor: purple,
     padding: 20,
+  },
+  signin: {
+    flex: 1,
+    width: window.width,
+    height: window.height,
+    backgroundColor: grey,
+    padding: 50,
   },
   avatarContainer: {
     marginBottom: 20,
@@ -75,6 +86,76 @@ module.exports = StyleSheet.create({
   burgerStyle: {
     width: 32,
     height: 32,
+  },
+  input: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+
+    backgroundColor: trWhite,
+  },
+  inputTop: {
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomColor: transparent,
+  },
+  inputMiddle: {
+    borderBottomColor: transparent,
+  },
+  inputBottom: {
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+
+    marginBottom: 20,
+  },
+  classic: {
+    color: darkPurple,
+  },
+  tel: {
+    color: lightPurple,
+  },
+  password: {
+    color: orange,
+  },
+  confirmationButton: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    borderRadius: 5,
+
+    backgroundColor: lightPurple,
+  },
+  actionSheet: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    borderRadius: 5,
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+
+    backgroundColor: trWhite,
+
+    marginBottom: 20,
+  },
+  sheetText: {
+    fontSize: 18,
+    marginLeft: 20,
+  },
+  validateText: {
+    fontSize: 20,
+    fontWeight: '800',
+    textAlign: 'center',
+    color: white,
   },
 
 });

@@ -78,7 +78,7 @@ export default class PhoneBookDetailScreen extends Component {
     }
 
     render() {
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+      const menu = <Menu navigation={this.props.navigation} />;
       return (
         <SideMenu
           menu={menu}
