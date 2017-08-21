@@ -5,6 +5,7 @@
 Pour lancer correctement l'application il faut:
 * Supprimer le dossier node_module
 * lancer la commandes: `npm install react-native-side-menu --save`
+* lancer ensuite la commande : `npm i react-native-actionsheet --sav`
 * puis lancer la commande: `yarn`
 
 ## Definition de «Done»

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -10,6 +11,10 @@ import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 import { transparent } from './styles/styles';
 
 const styles = require('./styles/styles');
+
+const CANCEL_INDEX = 0;
+const options = ['Annuler', 'Senior', 'Famille', 'Professionnel'];
+const title = 'Quel statut vous correspond le mieux ?';
 
 export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
 
@@ -29,6 +34,11 @@ export default class AuthentificationScreen extends Component {
       this.navigateToLogout = this.navigateToLogout.bind(this);
       this.state = { firstpin: '' };
       this.state = { validate: false };
+      this.state = {
+        selected: '',
+      };
+      this.handlePress = this.handlePress.bind(this);
+      this.showActionSheet = this.showActionSheet.bind(this);
     }
 
     onChangeDo(firstpin) {
@@ -37,6 +47,19 @@ export default class AuthentificationScreen extends Component {
         return this.setState({ validate: true });
       }
       return this.setState({ validate: false });
+    }
+
+    showActionSheet() {
+      this.ActionSheet.show();
+    }
+
+    handlePress(i) {
+      console.log(i);
+      if (this.state.selected !== 0) {
+        this.setState({
+          selected: i,
+        });
+      }
     }
 
     navigateToHome() {
@@ -108,6 +131,22 @@ export default class AuthentificationScreen extends Component {
             underlineColorAndroid={transparent}
             maxLength={4}
           />
+          <View style={styles.wrapper}>
+            <TouchableHighlight onPress={this.showActionSheet}>
+              <View style={styles.actionSheet}>
+                <Text>
+                  {options[this.state.selected]}
+                </Text>
+              </View>
+            </TouchableHighlight>
+            <ActionSheet
+              ref={o => this.ActionSheet = o}
+              title={title}
+              options={options}
+              cancelButtonIndex={CANCEL_INDEX}
+              onPress={this.handlePress}
+            />
+          </View>
           <TouchableHighlight onPress={this.navigateToHome}>
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>
