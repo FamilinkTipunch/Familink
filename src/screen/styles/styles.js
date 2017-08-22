@@ -90,7 +90,7 @@ module.exports = StyleSheet.create({
   },
   input: {
     width: window.width,
-    
+
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
@@ -98,7 +98,7 @@ module.exports = StyleSheet.create({
 
     borderWidth: 0.5,
     borderColor: darkGrey,
-    
+
     backgroundColor: trWhite,
   },
   inputTop: {
