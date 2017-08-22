@@ -10,6 +10,7 @@ const orange = 'rgba(255, 94, 53, 1)';
 const white = 'rgba(255, 255, 255, 1)';
 const trWhite = 'rgba(255, 255, 255, 0.5)';
 const grey = 'rgba(240, 240, 240, 1)';
+
 export const darkGrey = 'rgba(200, 200, 200, 1)';
 export const transparent = 'transparent';
 
@@ -114,6 +115,11 @@ module.exports = StyleSheet.create({
 
     marginBottom: 20,
   },
+  inputStandAlone: {
+    borderRadius: 5,
+
+    marginBottom: 20,
+  },
   classic: {
     color: darkPurple,
   },
@@ -157,5 +163,22 @@ module.exports = StyleSheet.create({
     textAlign: 'center',
     color: white,
   },
-
+  containerCreateAccount: {
+    flex: 1,
+    width: window.width,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  inputLoginCreateAccount: {
+    fontSize: 15,
+    fontWeight: '800',
+    textAlign: 'center',
+    color: orange,
+  },
+  checkboxLogin: {
+    width: window.width,
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
 });

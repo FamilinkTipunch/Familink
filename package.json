@@ -8,6 +8,7 @@
     "lint": "eslint ./src ./index.*.js --ext .js"
   },
   "dependencies": {
+    "native-base": "^2.3.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.47.1",
     "react-native-actionsheet": "^2.2.2",

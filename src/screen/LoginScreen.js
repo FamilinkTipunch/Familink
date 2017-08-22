@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
-import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/burgermenu';
+import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
+import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
+
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
@@ -10,7 +10,6 @@ import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 
-const image = require('../assets/menu.png');
 const styles = require('./styles/styles');
 
 export const LOGIN_SCREEN_NAME = 'LOGIN_SCREEN';
@@ -32,9 +31,26 @@ export default class LoginScreen extends Component {
       this.state = {
         isOpen: false,
         selectedItem: 'About',
+        numeroTel: '',
+        password: '',
+        isChecked: false,
       };
     }
-
+    componentWillUnmount() {
+      this.setState({
+        value: {
+          numeroTel: '',
+          password: null,
+        },
+        isChecked: false,
+      });
+    }
+    onChange(value) {
+      this.setState({
+        numeroTel: value,
+        password: value,
+      });
+    }
     onMenuItemSelected = item =>
       this.setState({
         isOpen: false,
@@ -75,28 +91,57 @@ export default class LoginScreen extends Component {
     navigateToLogout() {
       this.navigate(LOGOUT_SCREEN_NAME);
     }
+    rememberMeOnChange() {
+      this.setState({ isChecked: !this.state.isChecked });
+    }
+
+    identifier() {
+      this.navigateToHome();
+    }
 
     render() {
-      const menu = <Menu navigation={this.props.navigation} />;
       return (
-        <SideMenu
-          menu={menu}
-          isOpen={this.state.isOpen}
-          onChange={isOpen => this.updateMenuState(isOpen)}
-        >
-          <View style={styles.container}>
-            <Text>Page de Login</Text>
+        <ScrollView scrollsToTop={false} style={styles.signin}>
+          <TextInput
+            style={[styles.input, styles.inputBottom, styles.tel]}
+            keyboardType={'phone-pad'}
+            placeholder={'Tel'}
+            maxLength={10}
+            value={this.state.numeroTel}
+            onChange={value => this.onChange(value)}
+          />
+          <TextInput
+            style={[styles.input, styles.inputStandAlone, styles.password]}
+            keyboardType={'numeric'}
+            secureTextEntry={true}
+            placeholder={'Code Pin'}
+            maxLength={4}
+            value={this.state.password}
+            onChange={value => this.onChange(value)}
+          />
+          <Content>
+            <ListItem style={styles.checkboxLogin}>
+              <CheckBox checked={this.state.isChecked} onPress={() => this.rememberMeOnChange()} />
+              <Body>
+                <Text>Remember me</Text>
+              </Body>
+            </ListItem>
+          </Content>
+          <TouchableHighlight onPress={() => this.identifier()}>
+            <View style={styles.confirmationButton}>
+              <Text style={styles.validateText}>Log In</Text>
+            </View>
+          </TouchableHighlight>
+          <View style={styles.containerCreateAccount}>
+            <TouchableHighlight onPress={this.navigateToAuthentification}>
+              <Text style={styles.inputLoginCreateAccount}>Create Account</Text>
+            </TouchableHighlight>
+            <Text style={styles.inputLoginCreateAccount}>|</Text>
+            <TouchableHighlight>
+              <Text style={styles.inputLoginCreateAccount}>Forgot password?</Text>
+            </TouchableHighlight>
           </View>
-          <TouchableOpacity
-            onPress={this.toggle}
-            style={styles.button}
-          >
-            <Image
-              source={image}
-              style={styles.burgerStyle}
-            />
-          </TouchableOpacity>
-        </SideMenu>
+        </ScrollView>
       );
     }
 }
