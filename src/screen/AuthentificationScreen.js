@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
-import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/burgermenu';
+import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
+import ActionSheet from 'react-native-actionsheet';
 
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -9,15 +8,19 @@ import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
+import { transparent } from './styles/styles';
 
-const image = require('../assets/menu.png');
 const styles = require('./styles/styles');
+
+const CANCEL_INDEX = 0;
+const options = ['Annuler', 'Senior', 'Famille', 'Professionnel'];
+const title = 'Quel statut vous correspond le mieux ?';
 
 export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
 
 export default class AuthentificationScreen extends Component {
     static navigationOptions = {
-      title: 'Auth',
+      title: 'Enregistrement',
     };
 
     constructor(props) {
@@ -29,28 +32,29 @@ export default class AuthentificationScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToLogout = this.navigateToLogout.bind(this);
-      this.toggle = this.toggle.bind(this);
-      this.state = {
-        isOpen: false,
-        selectedItem: 'About',
-      };
+      this.state = { firstpin: '' };
+      this.state = { validate: false };
+      this.state = { selected: '' };
+      this.handlePress = this.handlePress.bind(this);
+      this.showActionSheet = this.showActionSheet.bind(this);
     }
 
-    onMenuItemSelected = item =>
-      this.setState({
-        isOpen: false,
-        selectedItem: item,
-      },
-      );
+    onChangeDo(firstpin) {
+      this.setState({ firstpin });
+      if (firstpin === '0000') {
+        return this.setState({ validate: true });
+      }
+      return this.setState({ validate: false });
+    }
 
-    toggle() {
+    showActionSheet() {
+      this.ActionSheet.show();
+    }
+
+    handlePress(i) {
       this.setState({
-        isOpen: !this.state.isOpen,
+        selected: i,
       });
-    }
-
-    updateMenuState(isOpen) {
-      this.setState({ isOpen });
     }
 
     navigateToHome() {
@@ -78,26 +82,74 @@ export default class AuthentificationScreen extends Component {
     }
 
     render() {
-      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
       return (
-        <SideMenu
-          menu={menu}
-          isOpen={this.state.isOpen}
-          onChange={isOpen => this.updateMenuState(isOpen)}
-        >
-          <View style={styles.container}>
-            <Text>Page Authentification</Text>
-          </View>
-          <TouchableOpacity
-            onPress={this.toggle}
-            style={styles.button}
-          >
-            <Image
-              source={image}
-              style={styles.burgerStyle}
+        <ScrollView scrollsToTop={false} style={styles.signin}>
+          <TextInput
+            style={[styles.input, styles.inputTop, styles.classic]}
+            placeholder={'Nom'}
+            underlineColorAndroid={transparent}
+            maxLength={15}
+          />
+          <TextInput
+            style={[styles.input, styles.inputMiddle, styles.classic]}
+            placeholder={'Prenom'}
+            underlineColorAndroid={transparent}
+            maxLength={15}
+          />
+          <TextInput
+            style={[styles.input, styles.inputMiddle, styles.tel]}
+            keyboardType={'email-address'}
+            placeholder={'eMail'}
+            underlineColorAndroid={transparent}
+            maxLength={30}
+          />
+          <TextInput
+            style={[styles.input, styles.inputBottom, styles.tel]}
+            keyboardType={'phone-pad'}
+            placeholder={'Tel'}
+            underlineColorAndroid={transparent}
+            maxLength={10}
+          />
+          <TextInput
+            style={[styles.input, styles.inputTop, styles.password]}
+            keyboardType={'numeric'}
+            secureTextEntry={true}
+            placeholder={'Code Pin'}
+            underlineColorAndroid={transparent}
+            maxLength={4}
+          />
+          <TextInput
+            style={[styles.input, styles.inputBottom, styles.password]}
+            keyboardType={'numeric'}
+            secureTextEntry={true}
+            placeholder={'Confirmer code'}
+            underlineColorAndroid={transparent}
+            maxLength={4}
+          />
+          <View style={styles.wrapper}>
+            <TouchableHighlight onPress={this.showActionSheet} underlayColor={transparent}>
+              <View style={styles.actionSheet}>
+                <Text style={styles.sheetText}>
+                  {options[this.state.selected]}
+                </Text>
+              </View>
+            </TouchableHighlight>
+            <ActionSheet
+              ref={o => this.ActionSheet = o}
+              title={title}
+              options={options}
+              cancelButtonIndex={CANCEL_INDEX}
+              onPress={this.handlePress}
             />
-          </TouchableOpacity>
-        </SideMenu>
+          </View>
+          <TouchableHighlight onPress={this.navigateToHome} underlayColor={transparent}>
+            <View style={styles.confirmationButton}>
+              <Text style={styles.validateText}>
+                Valider
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </ScrollView>
       );
     }
 }

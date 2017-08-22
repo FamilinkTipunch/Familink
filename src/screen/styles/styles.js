@@ -29,10 +29,10 @@ module.exports = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: white,
+    backgroundColor: grey,
   },
   list: {
-    backgroundColor: white,
+    backgroundColor: grey,
   },
   welcome: {
     fontSize: 20,
@@ -90,12 +90,15 @@ module.exports = StyleSheet.create({
   },
   input: {
     width: window.width,
+    
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
+
     borderWidth: 0.5,
     borderColor: darkGrey,
+    
     backgroundColor: trWhite,
   },
   inputTop: {
@@ -109,10 +112,12 @@ module.exports = StyleSheet.create({
   inputBottom: {
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
+
     marginBottom: 20,
   },
   inputStandAlone: {
     borderRadius: 5,
+
     marginBottom: 20,
   },
   classic: {
@@ -126,10 +131,31 @@ module.exports = StyleSheet.create({
   },
   confirmationButton: {
     width: window.width,
+
     paddingTop: 10,
     paddingBottom: 10,
+
     borderRadius: 5,
+
     backgroundColor: lightPurple,
+  },
+  actionSheet: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    borderRadius: 5,
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+
+    backgroundColor: trWhite,
+
+    marginBottom: 20,
+  },
+  sheetText: {
+    fontSize: 18,
+    marginLeft: 20,
   },
   validateText: {
     fontSize: 20,
