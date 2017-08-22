@@ -71,6 +71,24 @@ export default class AuthentificationScreen extends Component {
       });
     }
 
+    onChangeDo(firstpin) {
+      this.setState({ firstpin });
+      if (firstpin === '0000') {
+        return this.setState({ validate: true });
+      }
+      return this.setState({ validate: false });
+    }
+
+    showActionSheet() {
+      this.ActionSheet.show();
+    }
+
+    handlePress(i) {
+      this.setState({
+        selected: i,
+      });
+    }
+
     navigateToHome() {
       this.navigate(HOME_SCREEN_NAME);
     }
