@@ -5,8 +5,10 @@ const { StyleSheet } = React;
 const darkPurple = 'rgba(51, 1, 54, 1)';
 const purple = 'rgba(83, 23, 66, 1)';
 const lightPurple = 'rgba(150, 46, 64, 1)';
+const trlightPurple = 'rgba(150, 46, 64, 0.1)';
 const darkOrange = 'rgba(201, 70, 61, 1)';
 const orange = 'rgba(255, 94, 53, 1)';
+const darkBlue = 'rgba(24, 72, 92, 1)';
 const white = 'rgba(255, 255, 255, 1)';
 const trWhite = 'rgba(255, 255, 255, 0.5)';
 const grey = 'rgba(240, 240, 240, 1)';
@@ -14,7 +16,7 @@ const grey = 'rgba(240, 240, 240, 1)';
 export const darkGrey = 'rgba(200, 200, 200, 1)';
 export const transparent = 'transparent';
 
-module.exports = StyleSheet.create({
+export const styles = StyleSheet.create({
 
   button: {
     position: 'absolute',
@@ -27,8 +29,6 @@ module.exports = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: grey,
   },
   list: {
@@ -56,7 +56,7 @@ module.exports = StyleSheet.create({
     width: window.width,
     height: window.height,
     backgroundColor: grey,
-    padding: 50,
+    padding: 30,
   },
   avatarContainer: {
     marginBottom: 20,
@@ -91,6 +91,8 @@ module.exports = StyleSheet.create({
   input: {
     width: window.width,
 
+    fontSize: 18,
+
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
@@ -100,6 +102,9 @@ module.exports = StyleSheet.create({
     borderColor: darkGrey,
 
     backgroundColor: trWhite,
+  },
+  inputFalse: {
+    backgroundColor: trlightPurple,
   },
   inputTop: {
     borderTopLeftRadius: 5,
@@ -123,11 +128,8 @@ module.exports = StyleSheet.create({
   classic: {
     color: darkPurple,
   },
-  tel: {
-    color: lightPurple,
-  },
-  password: {
-    color: orange,
+  blue: {
+    color: darkBlue,
   },
   confirmationButton: {
     width: window.width,
@@ -155,6 +157,7 @@ module.exports = StyleSheet.create({
   },
   sheetText: {
     fontSize: 18,
+    color: darkBlue,
     marginLeft: 20,
   },
   validateText: {

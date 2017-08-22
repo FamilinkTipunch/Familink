@@ -7,7 +7,6 @@ const profileUrl = '/public/profiles';
 export default class WebService extends Component {
   static userSignIn(signInPhone, signInpassword, signInfirstName,
     signInlastName, signInemail, signInprofile) {
-    console.log(signInPhone);
     return fetch(apiUrl + signInUrl, {
       method: 'POST',
       headers: {
