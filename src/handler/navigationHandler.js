@@ -41,7 +41,7 @@ stackNavigatorConfig[LOGOUT_SCREEN_NAME] = {
 };
 
 const ApplicationNavigator = StackNavigator(stackNavigatorConfig, {
-  initialRouteName: HOME_SCREEN_NAME,
+  initialRouteName: AUTH_SCREEN_NAME,
 });
 
 export default () => <ApplicationNavigator />;
