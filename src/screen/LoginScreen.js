@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
 import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
+import WebService from '../services/WebService';
 
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
@@ -17,6 +18,7 @@ export const LOGIN_SCREEN_NAME = 'LOGIN_SCREEN';
 export default class LoginScreen extends Component {
     static navigationOptions = {
       title: 'Login',
+      headerLeft: null,
     };
 
     constructor(props) {
@@ -27,45 +29,15 @@ export default class LoginScreen extends Component {
       this.navigateToPhoneBookDetail = this.navigateToPhoneBookDetail.bind(this);
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
-      this.toggle = this.toggle.bind(this);
+      this.login = this.login.bind(this);
       this.state = {
         isOpen: false,
         selectedItem: 'About',
         numeroTel: '',
         password: '',
         isChecked: false,
+        isLogin: '',
       };
-    }
-    componentWillUnmount() {
-      this.setState({
-        value: {
-          numeroTel: '',
-          password: null,
-        },
-        isChecked: false,
-      });
-    }
-    onChange(value) {
-      this.setState({
-        numeroTel: value,
-        password: value,
-      });
-    }
-    onMenuItemSelected = item =>
-      this.setState({
-        isOpen: false,
-        selectedItem: item,
-      },
-      );
-
-    toggle() {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-
-    updateMenuState(isOpen) {
-      this.setState({ isOpen });
     }
 
     navigateToForgottenPassword() {
@@ -95,8 +67,15 @@ export default class LoginScreen extends Component {
       this.setState({ isChecked: !this.state.isChecked });
     }
 
-    identifier() {
-      this.navigateToHome();
+    async login() {
+      this.setState({
+        isLogin: await WebService.canLogin(this.state.numeroTel, this.state.password),
+      });
+      if (this.state.isLogin === 'User not found' || this.state.isLogin === 'Password is not valid') {
+        console.log(this.state.isLogin);
+      } else {
+        this.navigateToHome();
+      }
     }
 
     render() {
@@ -107,8 +86,7 @@ export default class LoginScreen extends Component {
             keyboardType={'phone-pad'}
             placeholder={'Tel'}
             maxLength={10}
-            value={this.state.numeroTel}
-            onChange={value => this.onChange(value)}
+            onChangeText={numeroTel => this.setState({ numeroTel })}
           />
           <TextInput
             style={[styles.input, styles.inputStandAlone, styles.password]}
@@ -116,8 +94,7 @@ export default class LoginScreen extends Component {
             secureTextEntry={true}
             placeholder={'Code Pin'}
             maxLength={4}
-            value={this.state.password}
-            onChange={value => this.onChange(value)}
+            onChangeText={password => this.setState({ password })}
           />
           <Content>
             <ListItem style={styles.checkboxLogin}>
@@ -127,7 +104,7 @@ export default class LoginScreen extends Component {
               </Body>
             </ListItem>
           </Content>
-          <TouchableHighlight onPress={() => this.identifier()}>
+          <TouchableHighlight onPress={this.login}>
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>Log In</Text>
             </View>

@@ -10,11 +10,10 @@ import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 import { transparent } from './styles/styles';
 import WebService from '../services/WebService';
+import LoadingScreen from './LoadingScreen';
 
 const styles = require('./styles/styles');
 
-const CANCEL_INDEX = 0;
-const options = ['Annuler', 'Senior', 'Famille', 'Professionnel'];
 const title = 'Quel statut vous correspond le mieux ?';
 
 export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
@@ -41,16 +40,19 @@ export default class AuthentificationScreen extends Component {
         lastName: '',
         email: '',
         profile: '',
-        profileList: [],
+        profileList: null,
         firstpin: '',
         validate: false,
         selected: '',
       };
       this.handlePress = this.handlePress.bind(this);
       this.showActionSheet = this.showActionSheet.bind(this);
+      this.signin = this.signin.bind(this);
     }
-    async componentDidMount() {
-      this.state.profileList = await WebService.getProfile();
+    async componentWillMount() {
+      this.setState({
+        profileList: await WebService.getProfile(),
+      });
     }
 
     onChangeDo(firstpin) {
@@ -95,7 +97,22 @@ export default class AuthentificationScreen extends Component {
       this.navigate(LOGOUT_SCREEN_NAME);
     }
 
+    async signin() {
+      console.log('debut');
+      await WebService.userSignIn(this.state.phone,
+        this.state.password,
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.profileList[this.state.selected]);
+      this.navigateToLogin();
+      console.log('travail terminé');
+    }
+
     render() {
+      if (!this.state.profileList) {
+        return <LoadingScreen />;
+      }
       return (
         <ScrollView scrollsToTop={false} style={styles.signin}>
           <TextInput
@@ -149,27 +166,19 @@ export default class AuthentificationScreen extends Component {
             <TouchableHighlight onPress={this.showActionSheet} underlayColor={transparent}>
               <View style={styles.actionSheet}>
                 <Text style={styles.sheetText}>
-                  {options[this.state.selected]}
+                  {this.state.profileList[this.state.selected]}
                 </Text>
               </View>
             </TouchableHighlight>
             <ActionSheet
               ref={o => this.ActionSheet = o}
               title={title}
-              options={options}
-              cancelButtonIndex={CANCEL_INDEX}
+              options={this.state.profileList}
               onPress={this.handlePress}
             />
           </View>
           <TouchableHighlight
-            onPress={async () =>
-              WebService.userSignIn(this.state.phone,
-                this.state.password,
-                this.state.firstName,
-                this.state.lastName,
-                this.state.email,
-                'FAMILLE')
-                .then(this.navigateToHome)}
+            onPress={this.signin}
             underlayColor={transparent}
           >
             <View style={styles.confirmationButton}>
