@@ -9,6 +9,7 @@ import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 import { transparent } from './styles/styles';
+import WebService from '../services/WebService';
 
 const styles = require('./styles/styles');
 
@@ -32,11 +33,24 @@ export default class AuthentificationScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToLogout = this.navigateToLogout.bind(this);
-      this.state = { firstpin: '' };
-      this.state = { validate: false };
-      this.state = { selected: '' };
+
+      this.state = {
+        phone: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        profile: '',
+        profileList: [],
+        firstpin: '',
+        validate: false,
+        selected: '',
+      };
       this.handlePress = this.handlePress.bind(this);
       this.showActionSheet = this.showActionSheet.bind(this);
+    }
+    async componentDidMount() {
+      this.state.profileList = await WebService.getProfile();
     }
 
     onChangeDo(firstpin) {
@@ -89,12 +103,14 @@ export default class AuthentificationScreen extends Component {
             placeholder={'Nom'}
             underlineColorAndroid={transparent}
             maxLength={15}
+            onChangeText={lastName => this.setState({ lastName })}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.classic]}
             placeholder={'Prenom'}
             underlineColorAndroid={transparent}
             maxLength={15}
+            onChangeText={firstName => this.setState({ firstName })}
           />
           <TextInput
             style={[styles.input, styles.inputMiddle, styles.tel]}
@@ -102,6 +118,7 @@ export default class AuthentificationScreen extends Component {
             placeholder={'eMail'}
             underlineColorAndroid={transparent}
             maxLength={30}
+            onChangeText={email => this.setState({ email })}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.tel]}
@@ -109,6 +126,7 @@ export default class AuthentificationScreen extends Component {
             placeholder={'Tel'}
             underlineColorAndroid={transparent}
             maxLength={10}
+            onChangeText={phone => this.setState({ phone })}
           />
           <TextInput
             style={[styles.input, styles.inputTop, styles.password]}
@@ -117,6 +135,7 @@ export default class AuthentificationScreen extends Component {
             placeholder={'Code Pin'}
             underlineColorAndroid={transparent}
             maxLength={4}
+            onChangeText={password => this.setState({ password })}
           />
           <TextInput
             style={[styles.input, styles.inputBottom, styles.password]}
@@ -142,7 +161,17 @@ export default class AuthentificationScreen extends Component {
               onPress={this.handlePress}
             />
           </View>
-          <TouchableHighlight onPress={this.navigateToHome} underlayColor={transparent}>
+          <TouchableHighlight
+            onPress={async () =>
+              WebService.userSignIn(this.state.phone,
+                this.state.password,
+                this.state.firstName,
+                this.state.lastName,
+                this.state.email,
+                'FAMILLE')
+                .then(this.navigateToHome)}
+            underlayColor={transparent}
+          >
             <View style={styles.confirmationButton}>
               <Text style={styles.validateText}>
                 Valider
