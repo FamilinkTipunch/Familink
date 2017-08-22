@@ -50,25 +50,7 @@ export default class AuthentificationScreen extends Component {
       this.showActionSheet = this.showActionSheet.bind(this);
     }
     async componentDidMount() {
-      this.state.profileList = await WebService.getProfile();      
-    }
-
-    onChangeDo(firstpin) {
-      this.setState({ firstpin });
-      if (firstpin === '0000') {
-        return this.setState({ validate: true });
-      }
-      return this.setState({ validate: false });
-    }
-
-    showActionSheet() {
-      this.ActionSheet.show();
-    }
-
-    handlePress(i) {
-      this.setState({
-        selected: i,
-      });
+      this.state.profileList = await WebService.getProfile();
     }
 
     onChangeDo(firstpin) {
