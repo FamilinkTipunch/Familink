@@ -3,6 +3,7 @@ import { Component } from 'react';
 const apiUrl = 'https://familink.cleverapps.io';
 const signInUrl = '/public/sign-in';
 const profileUrl = '/public/profiles';
+const loginUrl = '/public/login';
 
 export default class WebService extends Component {
   static userSignIn(signInPhone, signInpassword, signInfirstName,
@@ -24,7 +25,7 @@ export default class WebService extends Component {
     }).then(response => response.json()).catch(err => err);
   }
 
-  static getProfile() {
+  static async getProfile() {
     return fetch(apiUrl + profileUrl, {
       method: 'GET',
       headers: {
@@ -32,5 +33,19 @@ export default class WebService extends Component {
         'Content-Type': 'application/json',
       },
     }).then(response => response.json());
+  }
+
+  static canLogin(loginPhone, loginPin) {
+    return fetch(apiUrl + loginUrl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: loginPhone,
+        password: loginPin,
+      }),
+    }).then(response => response.json()).catch(err => err);
   }
 }

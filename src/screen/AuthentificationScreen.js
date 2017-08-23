@@ -11,8 +11,8 @@ import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 import { transparent, styles } from './styles/styles';
 import WebService from '../services/WebService';
+import LoadingScreen from './LoadingScreen';
 
-const options = ['Senior', 'Famille', 'Professionnel'];
 const title = 'Quel statut vous correspond le mieux ?';
 const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
@@ -48,16 +48,19 @@ export default class AuthentificationScreen extends Component {
         passwordRetypeBool: true,
         allInputCorrect: 0,
         profile: '',
-        profileList: [],
+        profileList: null,
         firstpin: '',
         validate: false,
         selected: 0,
       };
       this.handlePress = this.handlePress.bind(this);
       this.showActionSheet = this.showActionSheet.bind(this);
+      this.signin = this.signin.bind(this);
     }
-    async componentDidMount() {
-      this.state.profileList = await WebService.getProfile();
+    async componentWillMount() {
+      this.setState({
+        profileList: await WebService.getProfile(),
+      });
     }
 
     onAlert() {
@@ -98,7 +101,17 @@ export default class AuthentificationScreen extends Component {
       this.navigate(LOGOUT_SCREEN_NAME);
     }
 
-    validator = () => {
+    async signin() {
+      await WebService.userSignIn(this.state.phone,
+        this.state.password,
+        this.state.firstName,
+        this.state.lastName,
+        this.state.email,
+        this.state.profileList[this.state.selected]);
+      this.navigateToLogin();
+    }
+
+    validator() {
       if (emailValidator.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
       } else {
@@ -137,7 +150,7 @@ export default class AuthentificationScreen extends Component {
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
       if (this.state.allInputCorrect === 6) {
-        this.navigate(HOME_SCREEN_NAME);
+        this.signin();
       } else {
         this.onAlert();
       }
@@ -145,6 +158,9 @@ export default class AuthentificationScreen extends Component {
     }
 
     render() {
+      if (!this.state.profileList) {
+        return <LoadingScreen />;
+      }
       return (
         <View style={styles.container}>
           <ScrollView scrollsToTop={true} style={styles.signin}>
@@ -231,33 +247,24 @@ export default class AuthentificationScreen extends Component {
               <TouchableHighlight onPress={this.showActionSheet} underlayColor={transparent}>
                 <View style={styles.actionSheet}>
                   <Text style={styles.sheetText}>
-                    {options[this.state.selected]}
+                    {this.state.profileList[this.state.selected]}
                   </Text>
                 </View>
               </TouchableHighlight>
               <ActionSheet
                 ref={o => this.ActionSheet = o}
                 title={title}
-                options={options}
+                options={this.state.profileList}
                 onPress={this.handlePress}
               />
             </View>
             <TouchableHighlight
               onPress={this.validator}
               underlayColor={transparent}
-              /* { {async () =>
-                WebService.userSignIn(this.state.phone,
-                  this.state.password,
-                  this.state.firstName,
-                  this.state.lastName,
-                  this.state.email,
-                  'FAMILLE')
-                  .then(this.navigateToHome)}
-              underlayColor={transparent} } */
             >
               <View style={styles.confirmationButton}>
                 <Text style={styles.validateText}>
-                  Valider
+                Valider
                 </Text>
               </View>
             </TouchableHighlight>

@@ -4,6 +4,7 @@ import { Button, Text, View, Image, TouchableOpacity, NetInfo } from 'react-nati
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 
+
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
@@ -20,6 +21,7 @@ export const HOME_SCREEN_NAME = 'HOME_SCREEN';
 export default class HomeScreen extends Component {
     static navigationOptions = {
       title: 'Home',
+      headerLeft: null,
     };
 
     constructor(props) {
