@@ -3,15 +3,13 @@ import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
 import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
 import WebService from '../services/WebService';
 
-
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
-
-const styles = require('./styles/styles');
+import { styles } from './styles/styles';
 
 export const LOGIN_SCREEN_NAME = 'LOGIN_SCREEN';
 
@@ -71,8 +69,8 @@ export default class LoginScreen extends Component {
       this.setState({
         isLogin: await WebService.canLogin(this.state.numeroTel, this.state.password),
       });
-      if (this.state.isLogin === 'User not found' || this.state.isLogin === 'Password is not valid') {
-        console.log(this.state.isLogin);
+      if (this.state.isLogin.message === 'User not found' || this.state.isLogin.message === 'Password is not valid') {
+        console.log(this.state.isLogin.message);
       } else {
         this.navigateToHome();
       }

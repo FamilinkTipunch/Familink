@@ -3,7 +3,8 @@ import Popup from 'react-native-popup';
 import { Button, Text, View, Image, TouchableOpacity, NetInfo } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
-
+import { styles } from './styles/styles';
+import CheckReseau from '../services/CheckReseau';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -11,10 +12,8 @@ import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
-import CheckReseau from '../services/CheckReseau';
 
 const image = require('../assets/menu.png');
-const styles = require('./styles/styles');
 
 export const HOME_SCREEN_NAME = 'HOME_SCREEN';
 

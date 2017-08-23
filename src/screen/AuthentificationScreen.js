@@ -111,7 +111,7 @@ export default class AuthentificationScreen extends Component {
       this.navigateToLogin();
     }
 
-    validator() {
+    validator = () => {
       if (emailValidator.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
       } else {
