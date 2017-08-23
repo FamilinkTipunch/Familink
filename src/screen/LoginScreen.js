@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Toast from 'react-native-simple-toast';
 import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
 import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
 import WebService from '../services/WebService';
@@ -72,6 +73,7 @@ export default class LoginScreen extends Component {
       if (this.state.isLogin.message === 'User not found' || this.state.isLogin.message === 'Password is not valid') {
         console.log(this.state.isLogin.message);
       } else {
+        Toast.show('Vous etes bien connecté');
         this.navigateToHome();
       }
     }
