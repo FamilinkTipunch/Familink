@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import Popup from 'react-native-popup';
+import { transparent, styles } from './styles/styles';
+import WebService from '../services/WebService';
+import LoadingScreen from './LoadingScreen';
 
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -9,9 +12,6 @@ import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
-import { transparent, styles } from './styles/styles';
-import WebService from '../services/WebService';
-import LoadingScreen from './LoadingScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
 const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
