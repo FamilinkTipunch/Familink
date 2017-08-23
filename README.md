@@ -5,7 +5,14 @@
 Pour lancer correctement l'application il faut:
 * Supprimer le dossier node_module
 * lancer la commandes: `npm install react-native-side-menu --save`
-* lancer ensuite la commande : `npm i react-native-actionsheet --save`
+* lancer ensuite la commande: `npm install react-native-actionsheet --save`
+* puis: `npm install --save react-native-loading-spinner-overlay`
+
+ou par yarn:
+* `yarn add react-native-side-menu`
+* `yarn add react-native-actionsheet`
+* `yarn add react-native-loading-spinner-overlay`
+
 * puis lancer la commande: `yarn`
 
 ## Definition de «Done»
