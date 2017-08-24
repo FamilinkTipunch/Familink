@@ -6,12 +6,7 @@ import { transparent, styles } from './styles/styles';
 import WebService from '../services/WebService';
 import LoadingScreen from './LoadingScreen';
 
-import { HOME_SCREEN_NAME } from './HomeScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
-import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
-import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
-import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
-import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
 const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -26,12 +21,7 @@ export default class AuthentificationScreen extends Component {
     constructor(props) {
       super(props);
       this.navigate = this.props.navigation.navigate;
-      this.navigateToHome = this.navigateToHome.bind(this);
       this.navigateToLogin = this.navigateToLogin.bind(this);
-      this.navigateToPhoneBookDetail = this.navigateToPhoneBookDetail.bind(this);
-      this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
-      this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
-      this.navigateToLogout = this.navigateToLogout.bind(this);
 
       this.state = {
         firstName: '',
@@ -77,28 +67,8 @@ export default class AuthentificationScreen extends Component {
       });
     }
 
-    navigateToHome() {
-      this.navigate(HOME_SCREEN_NAME);
-    }
-
     navigateToLogin() {
       this.navigate(LOGIN_SCREEN_NAME);
-    }
-
-    navigateToPhoneBookDetail() {
-      this.navigate(PHONEBOOKDETAIL_SCREEN_NAME);
-    }
-
-    navigateToPhoneBookList() {
-      this.navigate(PHONEBOOKLIST_SCREEN_NAME);
-    }
-
-    navigateToForgottenPassword() {
-      this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
-    }
-
-    navigateToLogout() {
-      this.navigate(LOGOUT_SCREEN_NAME);
     }
 
     async signin() {
@@ -269,7 +239,7 @@ export default class AuthentificationScreen extends Component {
               </View>
             </TouchableHighlight>
           </ScrollView>
-          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
+          <Popup ref={popup => (this.popup = popup)} />
         </View>
       );
     }
