@@ -7,7 +7,6 @@ import Menu from './burgermenu/burgermenu';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
-import { LOGOUT_SCREEN_NAME } from './LogoutScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
@@ -35,7 +34,6 @@ export default class PhoneBookListScreen extends Component {
       this.navigate = this.props.navigation.navigate;
       this.navigateToHome = this.navigateToHome.bind(this);
       this.navigateToLogin = this.navigateToLogin.bind(this);
-      this.navigateToLogout = this.navigateToLogout.bind(this);
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
       this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
@@ -69,10 +67,6 @@ export default class PhoneBookListScreen extends Component {
 
     navigateToHome() {
       this.navigate(HOME_SCREEN_NAME);
-    }
-
-    navigateToLogout() {
-      this.navigate(LOGOUT_SCREEN_NAME);
     }
 
     navigateToPhoneBookList() {
