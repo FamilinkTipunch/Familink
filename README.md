@@ -19,7 +19,7 @@ ou par yarn:
 * `yarn add react-navigation`
 * `yarn add react-native-simple-toast`
 
-* puis lancer la commande: `yarn`
+puis lancer la commande: `yarn`
 
 
 ## Gestion des erreurs

@@ -29,7 +29,7 @@ export default class HomeScreen extends Component {
       };
     }
 
-  // Fonction affichage et création de la forme de la popup      
+    // Fonction affichage et création de la forme de la popup      
     onTestAlerte() {
       // alert 
       this.popup.alert(1);
@@ -69,7 +69,6 @@ export default class HomeScreen extends Component {
         },
       });
     }
-
 
     onMenuItemSelected = (item) => {
       this.setState({
