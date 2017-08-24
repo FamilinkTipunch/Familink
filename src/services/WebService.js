@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { Alert } from 'react-native';
+import CheckReseau from './CheckReseau';
 
 const apiUrl = 'https://familink.cleverapps.io';
 const signInUrl = '/public/sign-in';
@@ -6,8 +8,19 @@ const profileUrl = '/public/profiles';
 const loginUrl = '/public/login';
 
 export default class WebService extends Component {
+  static onAlert() {
+    Alert.alert(
+      'Connectivity',
+      'Pas de connexion wifi',
+      null,
+      { cancelable: false },
+    );
+  }
   static userSignIn(signInPhone, signInpassword, signInfirstName,
     signInlastName, signInemail, signInprofile) {
+    if (CheckReseau.checkConnectivity() === false) {
+      WebService.onAlert();
+    }
     return fetch(apiUrl + signInUrl, {
       method: 'POST',
       headers: {
@@ -26,6 +39,9 @@ export default class WebService extends Component {
   }
 
   static async getProfile() {
+    if (CheckReseau.checkConnectivity() === false) {
+      WebService.onAlert();
+    }
     return fetch(apiUrl + profileUrl, {
       method: 'GET',
       headers: {
@@ -36,6 +52,9 @@ export default class WebService extends Component {
   }
 
   static canLogin(loginPhone, loginPin) {
+    if (CheckReseau.checkConnectivity() === false) {
+      WebService.onAlert();
+    }
     return fetch(apiUrl + loginUrl, {
       method: 'POST',
       headers: {

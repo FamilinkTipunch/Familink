@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Popup from 'react-native-popup';
-import { Button, View, Image, TouchableOpacity, NetInfo } from 'react-native';
+import { Button, View, Image, TouchableOpacity } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 import { styles } from './styles/styles';
-import CheckReseau from '../services/CheckReseau';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
@@ -31,25 +30,6 @@ export default class HomeScreen extends Component {
     }
 
     // Fonction affichage et création de la forme de la popup      
-    componentDidMount() {
-      NetInfo.isConnected.addEventListener(
-        'change',
-        this.handleConnectivityChange,
-      );
-      CheckReseau.isConnected().then((appIsConnected) => {
-        this.setState({
-          isConnected: appIsConnected,
-        });
-      });
-    }
-
-    componentWillUnmount() {
-      NetInfo.isConnected.removeEventListener(
-        'change',
-        this.handleConnectivityChange,
-      );
-    }
-
     onTestAlerte() {
       // alert 
       this.popup.alert(1);
@@ -107,10 +87,6 @@ export default class HomeScreen extends Component {
     updateMenuState(isOpen) {
       this.setState({ isOpen });
     }
-
-    handleConnectivityChange = (appIsConnected) => {
-      this.setState({ isConnected: appIsConnected });
-    };
 
     navigateToPhoneBookList() {
       this.navigate(PHONEBOOKLIST_SCREEN_NAME);
