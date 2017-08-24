@@ -13,7 +13,7 @@ ou par yarn:
 * `yarn add react-native-actionsheet`
 * `yarn add react-native-loading-spinner-overlay`
 
-* puis lancer la commande: `yarn`
+puis lancer la commande: `yarn`
 
 ## Definition de «Done»
 

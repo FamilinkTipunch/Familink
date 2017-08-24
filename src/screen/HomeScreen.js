@@ -40,8 +40,7 @@ export default class HomeScreen extends Component {
       };
     }
 
-  // Fonction affichage et création de la forme de la popup      
-
+    // Fonction affichage et création de la forme de la popup      
     componentDidMount() {
       NetInfo.isConnected.addEventListener(
         'change',
@@ -101,7 +100,6 @@ export default class HomeScreen extends Component {
       });
     }
 
-
     onMenuItemSelected = (item) => {
       this.setState({
         isOpen: false,
@@ -124,7 +122,6 @@ export default class HomeScreen extends Component {
     handleConnectivityChange = (appIsConnected) => {
       this.setState({ isConnected: appIsConnected });
     };
-
 
     navigateToForgottenPassword() {
       this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
