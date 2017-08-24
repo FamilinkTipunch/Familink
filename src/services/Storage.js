@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 // @Token:key
 // @Contact:key
 // @RememberMe:key
+// @Phone:key
 
 export default class Storage {
   static async setData(key, data) {
