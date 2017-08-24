@@ -1,10 +1,33 @@
 import React, { Component } from 'react';
-import { Button, ScrollView, View, Image, Text } from 'react-native';
+import { ScrollView, View, Image, Text } from 'react-native';
 import { styles } from '../styles/styles';
+
+import { PHONEBOOKLIST_SCREEN_NAME } from '../PhoneBookListScreen';
+import { HOME_SCREEN_NAME } from '../HomeScreen';
 
 const uri = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/US_Navy_100915-N-4790M-040_Lanier_Phillips%2C_left%2C_Bill_Cosby_and_Ed_LeBaron_pose_for_a_picture_before_receiving_the_Lone_Sailor_Award_at_the_Nation_%28cropped_to_Cosby%29.jpg';
 
 export default class Menu extends Component {
+  static navigationOptions = {
+    title: 'Burger',
+    headerLeft: null,
+  };
+
+  constructor(props) {
+    super(props);
+    this.navigate = this.props.navigation.navigate;
+    this.navigateToHome = this.navigateToHome.bind(this);
+    this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
+  }
+
+  navigateToHome() {
+    this.navigate(HOME_SCREEN_NAME);
+  }
+
+  navigateToPhoneBookList() {
+    this.navigate(PHONEBOOKLIST_SCREEN_NAME);
+  }
+
   render() {
     return (
       <ScrollView scrollsToTop={false} style={styles.menu}>
@@ -16,28 +39,23 @@ export default class Menu extends Component {
           <Text style={styles.name}>Bill Cosby</Text>
         </View>
         <Text
-          onPress={() => this.props.navigation.navigate('HOME_SCREEN')}
+          onPress={this.navigateToHome}
           style={styles.item}
         >
           Accueil
         </Text>
         <Text
-          onPress={() => this.props.navigation.navigate('PHONEBOOKLIST_SCREEN')}
+          onPress={this.navigateToPhoneBookList}
           style={styles.item}
         >
           Contacts
         </Text>
         <Text
-          onPress={() => this.props.navigation.navigate('LOGOUT_SCREEN')}
+          onPress={() => this.props.navigation.navigate()}
           style={styles.item}
         >
           Déconnexion
         </Text>
-        <Button
-          onPress={this.navigateToPhoneBookList}
-          style={styles.item}
-          title="PhoneBookList"
-        />
       </ScrollView>
     );
   }

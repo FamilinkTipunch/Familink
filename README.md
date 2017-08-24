@@ -7,13 +7,30 @@ Pour lancer correctement l'application il faut:
 * lancer la commandes: `npm install react-native-side-menu --save`
 * lancer ensuite la commande: `npm install react-native-actionsheet --save`
 * puis: `npm install --save react-native-loading-spinner-overlay`
+* puis: `npm install --save react-native-popup`
+* puis: `npm install --save react-navigation`
+* puis: `npm install --save react-native-simple-toast`
 
 ou par yarn:
 * `yarn add react-native-side-menu`
 * `yarn add react-native-actionsheet`
 * `yarn add react-native-loading-spinner-overlay`
+* `yarn add react-native-popup`
+* `yarn add react-navigation`
+* `yarn add react-native-simple-toast`
 
 * puis lancer la commande: `yarn`
+
+
+## Gestion des erreurs
+
+* Dans le cas d'une erreur du type : TypeError: Cannot read property 'short' of undefined. Le problème viens du composant simple-toast.
+
+Procédure:
+
+* Se placer dans le repertoire courant de l'application
+* `react-native unlink react-native-simple-toast`
+* `react-native link react-native-simple-toast`
 
 ## Definition de «Done»
 
