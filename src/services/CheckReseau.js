@@ -1,21 +1,24 @@
 import { NetInfo } from 'react-native';
-import { Component } from 'react';
 
-export default class CheckReseau extends Component {
-  static getInitialState() {
-    return {
-      isConnected: null,
-    };
-  }
-
-  static isConnected() {
-    let appIsConnected = false;
-    return NetInfo.isConnected.fetch().then(
-      (isConnected) => {
-        if (isConnected) {
-          appIsConnected = true;
+let isConnected = false;
+export default class CheckReseau {
+  static checkConnectivity() {
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (reach) => {
+        if (!reach) {
+          isConnected = false;
+        } else {
+          isConnected = true;
         }
-        return appIsConnected;
       });
+    NetInfo.isConnected.fetch().then((reach) => {
+      if (!reach) {
+        isConnected = false;
+      } else {
+        isConnected = true;
+      }
+    });
+    return isConnected;
   }
 }

@@ -174,14 +174,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   inputLoginCreateAccount: {
-    fontSize: 15,
-    fontWeight: '800',
-    textAlign: 'center',
-    color: orange,
+    fontSize: 18,
+    color: darkBlue,
   },
   checkboxLogin: {
     width: window.width,
-    paddingLeft: 40,
-    paddingRight: 40,
   },
 });
