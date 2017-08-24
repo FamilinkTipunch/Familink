@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Button, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
+import Popup from 'react-native-popup';
 import SideMenu from 'react-native-side-menu';
+import { transparent, styles } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
@@ -9,8 +11,16 @@ import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
-const image = require('../assets/menu.png');
-const styles = require('./styles/styles');
+const burgerIcon = require('../assets/menu.png');
+const searchIcon = require('../assets/search.png');
+const einstein = require('../assets/einstein.jpg');
+const curie = require('../assets/curie.jpg');
+const bohr = require('../assets/bohr.jpg');
+const cori = require('../assets/cori.jpg');
+const dirac = require('../assets/dirac.jpg');
+const mayer = require('../assets/mayer.jpg');
+const fermi = require('../assets/fermi.jpg');
+const hodgkin = require('../assets/hodgkin.jpg');
 
 export const PHONEBOOKLIST_SCREEN_NAME = 'PHONEBOOKLIST_SCREEN';
 
@@ -80,27 +90,55 @@ export default class PhoneBookListScreen extends Component {
           onChange={isOpen => this.updateMenuState(isOpen)}
         >
           <View style={styles.container}>
-            <FlatList
-              data={[
-                { key: 'Devin' },
-                { key: 'Jackson' },
-                { key: 'James' },
-                { key: 'Joel' },
-                { key: 'John' },
-                { key: 'Jillian' },
-                { key: 'Jimmy' },
-                { key: 'Julie' },
-              ]}
-              renderItem={({ item }) =>
-                <Button onPress={this.navigateToPhoneBookDetail} title={item.key} />}
-            />
+            <View style={styles.marginSearch}>
+              <Image
+                source={searchIcon}
+                style={[styles.absolute, styles.search]}
+              />
+              <TextInput
+                style={[styles.input, styles.inputSearch, styles.padding]}
+                placeholder={'Recherche'}
+                autoCapitalize={'sentences'}
+                autoCorrect={false}
+                underlineColorAndroid={transparent}
+              />
+            </View>
+            <ScrollView scrollsToTop={true} style={styles.contactList}>
+              <View>
+                <FlatList
+                  data={[
+                    { key: 'Albert Einstein', tel: '06 99 99 99 99', image: einstein },
+                    { key: 'Marie Curie', tel: '06 92 92 92 92', image: curie },
+                    { key: 'Niels Bohr', tel: '06 05 05 05 05', image: bohr },
+                    { key: 'Gerty Theresa Cori', tel: '06 47 47 47 47', image: cori },
+                    { key: 'Paul Dirac', tel: '06 33 33 33 33', image: dirac },
+                    { key: 'Maria Goeppert-Mayer', tel: '06 63 63 63 63', image: mayer },
+                    { key: 'Enrico Fermi', tel: '06 10 01 00 10', image: fermi },
+                    { key: 'Dorothy Hodgkin', tel: '06 64 64 64 64', image: hodgkin },
+                  ]}
+                  renderItem={({ item }) => (
+                    <View>
+                      <Image
+                        source={item.image}
+                        style={styles.avatar}
+                      />
+                      <Text style={styles.contactText}>{item.key}</Text>
+                      <Text style={styles.contactDetailText}>{item.tel}</Text>
+                      <View style={styles.line} />
+                    </View>
+                  )}
+                />
+                <View style={styles.marginBottom} />
+              </View>
+            </ScrollView>
+            <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
           </View>
           <TouchableOpacity
             onPress={this.toggle}
             style={styles.button}
           >
             <Image
-              source={image}
+              source={burgerIcon}
               style={styles.burgerStyle}
             />
           </TouchableOpacity>

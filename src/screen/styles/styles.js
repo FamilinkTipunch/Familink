@@ -1,6 +1,6 @@
 const React = require('react-native');
 
-const { StyleSheet } = React;
+const { StyleSheet, Platform } = React;
 
 const darkPurple = 'rgba(51, 1, 54, 1)';
 const purple = 'rgba(83, 23, 66, 1)';
@@ -12,6 +12,7 @@ const darkBlue = 'rgba(24, 72, 92, 1)';
 const white = 'rgba(255, 255, 255, 1)';
 const trWhite = 'rgba(255, 255, 255, 0.5)';
 const grey = 'rgba(240, 240, 240, 1)';
+const darkerGrey = 'rgba(150, 150, 150, 1)';
 
 export const darkGrey = 'rgba(200, 200, 200, 1)';
 export const transparent = 'transparent';
@@ -21,6 +22,44 @@ export const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     padding: 10,
+    zIndex: 2,
+  },
+  marginSearch: {
+    padding: 30,
+    borderBottomColor: darkGrey,
+    borderColor: transparent,
+    borderWidth: 0.5,
+  },
+  absolute: {
+    position: 'absolute',
+    zIndex: 1,
+  },
+  contactText: {
+    marginTop: -50,
+    marginLeft: 60,
+    marginBottom: 30,
+
+    fontSize: 22,
+    fontWeight: '300',
+
+    color: darkBlue,
+  },
+  contactTextAdd: {
+    marginTop: -38,
+    marginLeft: 60,
+
+    fontSize: 22,
+    fontWeight: '300',
+
+    color: darkBlue,
+  },
+  contactDetailText: {
+    marginTop: -30,
+    marginLeft: 60,
+    marginBottom: 50,
+
+    fontSize: 18,
+    color: darkerGrey,
   },
   caption: {
     fontSize: 20,
@@ -58,6 +97,19 @@ export const styles = StyleSheet.create({
     backgroundColor: grey,
     padding: 30,
   },
+  contactList: {
+    flex: 1,
+    width: window.width,
+    height: window.height,
+    padding: 30,
+  },
+  contactMargin: {
+    marginTop: 40,
+  },
+  contactMarginBottom: {
+    marginTop: 40,
+    marginBottom: 70,
+  },
   avatarContainer: {
     marginBottom: 20,
     marginTop: 20,
@@ -65,10 +117,12 @@ export const styles = StyleSheet.create({
   avatar: {
     width: 48,
     height: 48,
+
     borderRadius: 24,
     flex: 1,
-    borderWidth: 2,
-    borderColor: darkPurple,
+
+    borderWidth: 0.5,
+    borderColor: darkGrey,
   },
   name: {
     position: 'absolute',
@@ -88,6 +142,18 @@ export const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  search: {
+    marginLeft: 46,
+    marginTop: (Platform.OS === 'ios') ? 40 : 44,
+    width: 22,
+    height: 22,
+  },
+  add: {
+    marginLeft: 0,
+    marginTop: (Platform.OS === 'ios') ? 0 : 0,
+    width: 50,
+    height: 50,
+  },
   input: {
     width: window.width,
 
@@ -102,6 +168,9 @@ export const styles = StyleSheet.create({
     borderColor: darkGrey,
 
     backgroundColor: trWhite,
+  },
+  padding: {
+    paddingLeft: 50,
   },
   inputFalse: {
     backgroundColor: trlightPurple,
@@ -124,6 +193,9 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
 
     marginBottom: 20,
+  },
+  inputSearch: {
+    borderRadius: 5,
   },
   classic: {
     color: darkPurple,
@@ -155,6 +227,17 @@ export const styles = StyleSheet.create({
 
     marginBottom: 20,
   },
+  listSheet: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+
+    backgroundColor: trWhite,
+  },
   sheetText: {
     fontSize: 18,
     color: darkBlue,
@@ -179,5 +262,15 @@ export const styles = StyleSheet.create({
   },
   checkboxLogin: {
     width: window.width,
+  },
+  line: {
+    borderBottomColor: darkGrey,
+    borderBottomWidth: 0.5,
+
+    marginTop: -30,
+    marginBottom: 20,
+  },
+  marginBottom: {
+    marginBottom: 20,
   },
 });
