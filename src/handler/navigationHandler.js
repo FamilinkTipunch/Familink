@@ -41,7 +41,7 @@ stackNavigatorConfig[LOGOUT_SCREEN_NAME] = {
 };
 
 const ApplicationNavigator = StackNavigator(stackNavigatorConfig, {
-  initialRouteName: LOGIN_SCREEN_NAME,
+  initialRouteName: PHONEBOOKLIST_SCREEN_NAME,
 });
 
 export default () => <ApplicationNavigator />;
