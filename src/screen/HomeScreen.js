@@ -4,7 +4,6 @@ import { Button, View, Image, TouchableOpacity } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 import { styles } from './styles/styles';
-import CheckReseau from '../services/CheckReseau';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
