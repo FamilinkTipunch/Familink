@@ -19,7 +19,6 @@ export default class Storage {
   static async getData(key) {
     try {
       const value = await AsyncStorage.getItem(key);
-      console.log(value);
       return value;
     } catch (error) {
       return -1;

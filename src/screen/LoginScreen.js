@@ -6,6 +6,7 @@ import Popup from 'react-native-popup';
 import { transparent, styles } from './styles/styles';
 import WebService from '../services/WebService';
 import CheckReseau from '../services/CheckReseau';
+import Storage from '../services/Storage';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
@@ -69,6 +70,7 @@ export default class LoginScreen extends Component {
           this.validator();
         } else {
           Toast.show('Vous etes bien connecté');
+          Storage.setData('@Token:key', this.state.isLogin.token);
           this.navigateToHome();
         }
       }

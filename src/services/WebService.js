@@ -6,6 +6,7 @@ const apiUrl = 'https://familink.cleverapps.io';
 const signInUrl = '/public/sign-in';
 const profileUrl = '/public/profiles';
 const loginUrl = '/public/login';
+const createContactUrl = '/secured/users/contacts';
 
 export default class WebService extends Component {
   static onAlert() {
@@ -66,5 +67,38 @@ export default class WebService extends Component {
         password: loginPin,
       }),
     }).then(response => response.json()).catch(err => err);
+  }
+
+  static async createContact(contactPhone, contactFirstName, contactLastName,
+    contactEmail, contactProfile, contacturlGravatar, userToken) {
+    try {
+      if (CheckReseau.checkConnectivity() === false) {
+        WebService.onAlert();
+        return null;
+      }
+
+      const response = await fetch(apiUrl + createContactUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          phone: contactPhone,
+          firstName: contactFirstName,
+          lastName: contactLastName,
+          email: contactEmail,
+          profile: contactProfile,
+          gravatar: contacturlGravatar,
+        }),
+      });
+      const status = response.status;
+      if (status === 200) {
+        return 1;
+      }
+      return response.status;
+    } catch (error) {
+      return -1;
+    }
   }
 }

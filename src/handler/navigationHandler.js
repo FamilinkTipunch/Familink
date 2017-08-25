@@ -8,6 +8,7 @@ import LoginScreen, { LOGIN_SCREEN_NAME } from '../screen/LoginScreen';
 import PhoneBookDetailScreen, { PHONEBOOKDETAIL_SCREEN_NAME } from '../screen/PhoneBookDetailScreen';
 import PhoneBookListScreen, { PHONEBOOKLIST_SCREEN_NAME } from '../screen/PhoneBookListScreen';
 import ForgottenPasswordScreen, { FORGOTTENPASSWORD_SCREEN_NAME } from '../screen/ForgottenPasswordScreen';
+import AddContactScreen, { ADDCONTACT_SCREEN_NAME } from '../screen/AddContactScreen';
 
 const stackNavigatorConfig = {};
 
@@ -35,8 +36,12 @@ stackNavigatorConfig[FORGOTTENPASSWORD_SCREEN_NAME] = {
   screen: ForgottenPasswordScreen,
 };
 
+stackNavigatorConfig[ADDCONTACT_SCREEN_NAME] = {
+  screen: AddContactScreen,
+};
+
 const ApplicationNavigator = StackNavigator(stackNavigatorConfig, {
-  initialRouteName: PHONEBOOKLIST_SCREEN_NAME,
+  initialRouteName: LOGIN_SCREEN_NAME,
 });
 
 export default () => <ApplicationNavigator />;
