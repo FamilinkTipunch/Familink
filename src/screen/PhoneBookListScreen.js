@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Popup from 'react-native-popup';
 import SideMenu from 'react-native-side-menu';
+import Lodash from 'lodash';
 import { transparent, styles } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
 
@@ -41,7 +42,21 @@ export default class PhoneBookListScreen extends Component {
       this.state = {
         isOpen: false,
         selectedItem: 'About',
+        search: '',
+        contacts: [
+          { key: 'Albert Einstein', tel: '06 99 99 99 99', image: einstein },
+          { key: 'Marie Curie', tel: '06 92 92 92 92', image: curie },
+          { key: 'Niels Bohr', tel: '06 05 05 05 05', image: bohr },
+          { key: 'Gerty Theresa Cori', tel: '06 47 47 47 47', image: cori },
+          { key: 'Paul Dirac', tel: '06 33 33 33 33', image: dirac },
+          { key: 'Maria Goeppert-Mayer', tel: '06 63 63 63 63', image: mayer },
+          { key: 'Enrico Fermi', tel: '06 10 01 00 10', image: fermi },
+          { key: 'Dorothy Hodgkin', tel: '06 64 64 64 64', image: hodgkin },
+        ],
+        contactsFilter: [],
       };
+      this.state.contacts = Lodash.orderBy(this.state.contacts, ['key'], ['asc']);
+      this.state.contactsFilter = this.state.contacts;
     }
 
     onMenuItemSelected = item =>
@@ -50,6 +65,16 @@ export default class PhoneBookListScreen extends Component {
         selectedItem: item,
       },
       );
+
+    debug = (search) => {
+      if (search !== '') {
+        this.state.contactsFilter = Lodash.filter(
+          this.state.contacts, item => item.key.indexOf(search) > -1,
+        );
+      } else {
+        this.state.contactsFilter = this.state.contacts;
+      }
+    }
 
     toggle() {
       this.setState({
@@ -101,21 +126,18 @@ export default class PhoneBookListScreen extends Component {
                 autoCapitalize={'sentences'}
                 autoCorrect={false}
                 underlineColorAndroid={transparent}
+                value={this.state.search}
+                onChangeText={(search) => {
+                  this.debug(search);
+                  this.setState({ search });
+                }
+                }
               />
             </View>
             <ScrollView scrollsToTop={true} style={styles.contactList}>
               <View>
                 <FlatList
-                  data={[
-                    { key: 'Albert Einstein', tel: '06 99 99 99 99', image: einstein },
-                    { key: 'Marie Curie', tel: '06 92 92 92 92', image: curie },
-                    { key: 'Niels Bohr', tel: '06 05 05 05 05', image: bohr },
-                    { key: 'Gerty Theresa Cori', tel: '06 47 47 47 47', image: cori },
-                    { key: 'Paul Dirac', tel: '06 33 33 33 33', image: dirac },
-                    { key: 'Maria Goeppert-Mayer', tel: '06 63 63 63 63', image: mayer },
-                    { key: 'Enrico Fermi', tel: '06 10 01 00 10', image: fermi },
-                    { key: 'Dorothy Hodgkin', tel: '06 64 64 64 64', image: hodgkin },
-                  ]}
+                  data={this.state.contactsFilter}
                   renderItem={({ item }) => (
                     <View>
                       <Image

@@ -10,6 +10,7 @@ Pour lancer correctement l'application il faut:
 * puis: `npm install --save react-native-popup`
 * puis: `npm install --save react-navigation`
 * puis: `npm install --save react-native-simple-toast`
+* enfin: `npm install --save lodash`
 
 ou par yarn:
 * `yarn add react-native-side-menu`
@@ -18,6 +19,7 @@ ou par yarn:
 * `yarn add react-native-popup`
 * `yarn add react-navigation`
 * `yarn add react-native-simple-toast`
+* `yarn add lodash`
 
 puis lancer la commande: `yarn`
 
