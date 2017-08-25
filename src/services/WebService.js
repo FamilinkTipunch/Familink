@@ -79,4 +79,38 @@ export default class WebService extends Component {
       },
     }).then(response => response.json());
   }
+
+
+  static async createContact(contactPhone, contactFirstName, contactLastName,
+    contactEmail, contactProfile, contacturlGravatar, userToken) {
+    try {
+      if (CheckReseau.checkConnectivity() === false) {
+        WebService.onAlert();
+        return null;
+      }
+
+      const response = await fetch(apiUrl + contactUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify({
+          phone: contactPhone,
+          firstName: contactFirstName,
+          lastName: contactLastName,
+          email: contactEmail,
+          profile: contactProfile,
+          gravatar: contacturlGravatar,
+        }),
+      });
+      const status = response.status;
+      if (status === 200) {
+        return 1;
+      }
+      return response.status;
+    } catch (error) {
+      return -1;
+    }
+  }
 }

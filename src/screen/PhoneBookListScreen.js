@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FAB from 'react-native-fab';
 import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Popup from 'react-native-popup';
 import SideMenu from 'react-native-side-menu';
@@ -12,6 +13,7 @@ import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
+import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
 
 const burgerIcon = require('../assets/menu.png');
 const searchIcon = require('../assets/search.png');
@@ -31,6 +33,7 @@ export default class PhoneBookListScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
       this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
+      this.navigateToAddContact = this.navigateToAddContact.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
         isOpen: false,
@@ -78,6 +81,10 @@ export default class PhoneBookListScreen extends Component {
 
     updateMenuState(isOpen) {
       this.setState({ isOpen });
+    }
+
+    navigateToAddContact() {
+      this.navigate(ADDCONTACT_SCREEN_NAME);
     }
 
     navigateToForgottenPassword() {
@@ -146,7 +153,8 @@ export default class PhoneBookListScreen extends Component {
                 <View style={styles.marginBottom} />
               </View>
             </ScrollView>
-            <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
+            <Popup ref={popup => (this.popup = popup)} />
+            <FAB buttonColor="red" iconTextColor="#FFFFFF" onClickAction={() => this.navigateToAddContact()} visible={true} />
           </View>
           <TouchableOpacity
             onPress={this.toggle}
