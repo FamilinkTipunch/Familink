@@ -5,6 +5,7 @@ import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
 import { transparent, styles } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
+import WebService from '../services/WebService';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
@@ -14,14 +15,6 @@ import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 const burgerIcon = require('../assets/menu.png');
 const searchIcon = require('../assets/search.png');
-const einstein = require('../assets/einstein.jpg');
-const curie = require('../assets/curie.jpg');
-const bohr = require('../assets/bohr.jpg');
-const cori = require('../assets/cori.jpg');
-const dirac = require('../assets/dirac.jpg');
-const mayer = require('../assets/mayer.jpg');
-const fermi = require('../assets/fermi.jpg');
-const hodgkin = require('../assets/hodgkin.jpg');
 
 export const PHONEBOOKLIST_SCREEN_NAME = 'PHONEBOOKLIST_SCREEN';
 
@@ -43,20 +36,21 @@ export default class PhoneBookListScreen extends Component {
         isOpen: false,
         selectedItem: 'About',
         search: '',
-        contacts: [
-          { key: 'Albert Einstein', tel: '06 99 99 99 99', image: einstein },
-          { key: 'Marie Curie', tel: '06 92 92 92 92', image: curie },
-          { key: 'Niels Bohr', tel: '06 05 05 05 05', image: bohr },
-          { key: 'Gerty Theresa Cori', tel: '06 47 47 47 47', image: cori },
-          { key: 'Paul Dirac', tel: '06 33 33 33 33', image: dirac },
-          { key: 'Maria Goeppert-Mayer', tel: '06 63 63 63 63', image: mayer },
-          { key: 'Enrico Fermi', tel: '06 10 01 00 10', image: fermi },
-          { key: 'Dorothy Hodgkin', tel: '06 64 64 64 64', image: hodgkin },
-        ],
+        contacts: [],
         contactsFilter: [],
       };
-      this.state.contacts = Lodash.orderBy(this.state.contacts, ['key'], ['asc']);
       this.state.contactsFilter = this.state.contacts;
+    }
+
+    async componentWillMount() {
+      this.setState({
+        contacts: await WebService.getContacts(),
+        contactsFilter: await WebService.getContacts(),
+      });
+      this.setState({
+        contacts: Lodash.orderBy(this.state.contacts, ['firstName'], ['asc']),
+        contactsFilter: Lodash.orderBy(this.state.contactsFilter, ['firstName'], ['asc']),
+      });
     }
 
     onMenuItemSelected = item =>
@@ -69,7 +63,7 @@ export default class PhoneBookListScreen extends Component {
     debug = (search) => {
       if (search !== '') {
         this.state.contactsFilter = Lodash.filter(
-          this.state.contacts, item => item.key.indexOf(search) > -1,
+          this.state.contacts, item => item.firstName.indexOf(search) > -1,
         );
       } else {
         this.state.contactsFilter = this.state.contacts;
@@ -141,13 +135,12 @@ export default class PhoneBookListScreen extends Component {
                   renderItem={({ item }) => (
                     <View>
                       <Image
-                        source={item.image}
+                        source={{ uri: item.gravatar }}
                         style={styles.avatar}
                       />
-                      <Text style={styles.contactText}>{item.key}</Text>
-                      <Text style={styles.contactDetailText}>{item.tel}</Text>
-                      <View style={styles.line} />
-                    </View>
+                      <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
+                      <Text style={styles.contactDetailText}>{item.phone}</Text>
+                      <View style={styles.line} /></View>
                   )}
                 />
                 <View style={styles.marginBottom} />

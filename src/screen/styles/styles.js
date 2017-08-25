@@ -18,7 +18,6 @@ export const darkGrey = 'rgba(200, 200, 200, 1)';
 export const transparent = 'transparent';
 
 export const styles = StyleSheet.create({
-
   button: {
     position: 'absolute',
     padding: 10,
