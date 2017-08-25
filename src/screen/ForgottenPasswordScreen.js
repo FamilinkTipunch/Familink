@@ -40,7 +40,8 @@ export default class ForgottenPasswordScreen extends Component {
         <View style={styles.container}>
           <ScrollView scrollsToTop={false} style={styles.signin}>
             <Text style={styles.textForgotPassword}>Vous avez oublié votre mot de passe? { '\n' } Aucun problème,
-              rentrer ci-dessous votre numéro de téléphone et vous recevrez un SMS pour le réinitialiser.</Text>
+              rentrer ci-dessous votre numéro de téléphone et vous
+              recevrez un SMS pour le réinitialiser.</Text>
             <TextInput
               style={
                 this.state.phoneBool
