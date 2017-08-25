@@ -273,4 +273,10 @@ export const styles = StyleSheet.create({
   marginBottom: {
     marginBottom: 20,
   },
+  textForgotPassword: {
+    fontSize: 15,
+    color: darkBlue,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
 });
