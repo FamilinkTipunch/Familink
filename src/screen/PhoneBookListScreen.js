@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FAB from 'react-native-fab';
-import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity, Icon } from 'react-native';
+import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Popup from 'react-native-popup';
 import SideMenu from 'react-native-side-menu';
 import { transparent, styles } from './styles/styles';
