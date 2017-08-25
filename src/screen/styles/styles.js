@@ -18,7 +18,6 @@ export const darkGrey = 'rgba(200, 200, 200, 1)';
 export const transparent = 'transparent';
 
 export const styles = StyleSheet.create({
-
   button: {
     position: 'absolute',
     padding: 10,
@@ -271,6 +270,12 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   marginBottom: {
+    marginBottom: 20,
+  },
+  textForgotPassword: {
+    fontSize: 15,
+    color: darkBlue,
+    textAlign: 'center',
     marginBottom: 20,
   },
 });

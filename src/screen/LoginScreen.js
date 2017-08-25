@@ -147,7 +147,7 @@ export default class LoginScreen extends Component {
               </TouchableHighlight>
             </View>
           </ScrollView>
-          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
+          <Popup ref={popup => (this.popup = popup)} />
         </View>
       );
     }

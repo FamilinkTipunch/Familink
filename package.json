@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "lint": "^1.1.2",
+    "lodash": "^4.17.4",
     "native-base": "^2.3.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.47.1",
@@ -16,6 +17,7 @@
     "react-native-elements": "^0.16.0",
     "react-native-fab": "^1.0.5",
     "react-native-loading-spinner-overlay": "^0.5.1",
+    "react-native-parsed-text": "0.0.18",
     "react-native-popup": "^0.6.1",
     "react-native-side-menu": "^1.0.2",
     "react-native-simple-toast": "^0.0.6",

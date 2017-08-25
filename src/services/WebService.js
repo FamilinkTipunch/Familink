@@ -68,6 +68,7 @@ export default class WebService extends Component {
       }),
     }).then(response => response.json()).catch(err => err);
   }
+
   static async getContacts() {
     return fetch(apiUrl + contactUrl, {
       method: 'GET',
@@ -78,6 +79,7 @@ export default class WebService extends Component {
       },
     }).then(response => response.json());
   }
+
 
   static async createContact(contactPhone, contactFirstName, contactLastName,
     contactEmail, contactProfile, contacturlGravatar, userToken) {
