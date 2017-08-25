@@ -4,9 +4,9 @@ import ActionSheet from 'react-native-actionsheet';
 import Popup from 'react-native-popup';
 import Toast from 'react-native-simple-toast';
 import { transparent, styles } from './styles/styles';
-import WebService from '../services/WebService';
 import LoadingScreen from './LoadingScreen';
 import Storage from '../services/Storage';
+import { getProfile, createContact } from '../services/WebService';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
@@ -50,7 +50,7 @@ export default class AddContactScreen extends Component {
     }
     async componentWillMount() {
       this.setState({
-        profileList: await WebService.getProfile(),
+        profileList: await getProfile(),
       });
     }
 
@@ -79,7 +79,7 @@ export default class AddContactScreen extends Component {
     }
 
     async addContact() {
-      const status = await WebService.createContact(this.state.phone,
+      const status = await createContact(this.state.phone,
         this.state.firstName,
         this.state.lastName,
         this.state.email,

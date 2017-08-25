@@ -3,8 +3,8 @@ import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-nat
 import ActionSheet from 'react-native-actionsheet';
 import Popup from 'react-native-popup';
 import { transparent, styles } from './styles/styles';
-import WebService from '../services/WebService';
 import LoadingScreen from './LoadingScreen';
+import { getProfile, userSignIn } from '../services/WebService';
 
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
@@ -49,7 +49,7 @@ export default class AuthentificationScreen extends Component {
     }
     async componentWillMount() {
       this.setState({
-        profileList: await WebService.getProfile(),
+        profileList: await getProfile(),
       });
     }
 
@@ -72,7 +72,7 @@ export default class AuthentificationScreen extends Component {
     }
 
     async signin() {
-      await WebService.userSignIn(this.state.phone,
+      await userSignIn(this.state.phone,
         this.state.password,
         this.state.firstName,
         this.state.lastName,
