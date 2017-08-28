@@ -72,13 +72,15 @@ export default class AuthentificationScreen extends Component {
     }
 
     async signin() {
-      await userSignIn(this.state.phone,
+      const returnValue = await userSignIn(this.state.phone,
         this.state.password,
         this.state.firstName,
         this.state.lastName,
         this.state.email,
         this.state.profileList[this.state.selected]);
-      this.navigateToLogin();
+      if (returnValue === 1) {
+        this.navigateToLogin();
+      }
     }
 
     validator = () => {

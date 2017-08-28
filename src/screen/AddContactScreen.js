@@ -89,8 +89,6 @@ export default class AddContactScreen extends Component {
       if (status === 1) {
         Toast.show('Votre contact a été ajouté');
         this.navigateToPhoneBookList();
-      } else {
-        Toast.show(`Une erreur est survenue lors de la création du contact avec le code erreur:${status}`);
       }
     }
 

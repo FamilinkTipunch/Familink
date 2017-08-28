@@ -1,3 +1,4 @@
+import Toast from 'react-native-simple-toast';
 import { Alert } from 'react-native';
 import CheckReseau from './CheckReseau';
 
@@ -16,67 +17,114 @@ export function onAlert() {
     { cancelable: false },
   );
 }
-export function userSignIn(signInPhone, signInpassword, signInfirstName,
+export async function userSignIn(signInPhone, signInpassword, signInfirstName,
   signInlastName, signInemail, signInprofile) {
-  if (CheckReseau.checkConnectivity() === false) {
-    onAlert();
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+    }
+    const response = await fetch(apiUrl + signInUrl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: signInPhone,
+        password: signInpassword,
+        firstName: signInfirstName,
+        lastName: signInlastName,
+        email: signInemail,
+        profile: signInprofile,
+      }),
+    });
+    const status = response.status;
+    if (status === 200) {
+      return 1;
+    }
+    Toast.show(`Une erreur est survenue lors de votre enregistrement avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
   }
-  return fetch(apiUrl + signInUrl, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      phone: signInPhone,
-      password: signInpassword,
-      firstName: signInfirstName,
-      lastName: signInlastName,
-      email: signInemail,
-      profile: signInprofile,
-    }),
-  }).then(response => response.json()).catch(err => err);
 }
 
-export function getProfile() {
-  if (CheckReseau.checkConnectivity() === false) {
-    onAlert();
+export async function getProfile() {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+    const response = await fetch(apiUrl + profileUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const status = response.status;
+    if (status === 200) {
+      return response.json();
+    }
+    Toast.show(`Une erreur est survenue lors de la récupération des profiles avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
   }
-  return fetch(apiUrl + profileUrl, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.json());
 }
 
-export function canLogin(loginPhone, loginPin) {
-  if (CheckReseau.checkConnectivity() === false) {
-    onAlert();
+export async function canLogin(loginPhone, loginPin) {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+    const response = await fetch(apiUrl + loginUrl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: loginPhone,
+        password: loginPin,
+      }),
+    });
+    const status = response.status;
+    if (status === 200) {
+      return response.json();
+    }
+    Toast.show(`Une erreur est survenue lors de la connexion avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
   }
-  return fetch(apiUrl + loginUrl, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      phone: loginPhone,
-      password: loginPin,
-    }),
-  }).then(response => response.json()).catch(err => err);
 }
+
 
 export async function getContacts(token) {
-  return fetch(apiUrl + contactUrl, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }).then(response => response.json());
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+    const response = await fetch(apiUrl + contactUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const status = response.status;
+    if (status === 200) {
+      return response.json();
+    }
+    Toast.show(`Une erreur est survenue lors de la récupération des contacts avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
+  }
 }
 
 
@@ -107,6 +155,7 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
     if (status === 200) {
       return 1;
     }
+    Toast.show(`Une erreur est survenue lors de la création des contacts avec le code erreur:${response.status}`);
     return response.status;
   } catch (error) {
     return -1;
