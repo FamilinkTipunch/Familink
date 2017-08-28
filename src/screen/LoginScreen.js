@@ -66,7 +66,6 @@ export default class LoginScreen extends Component {
         isLogin: await canLogin(this.state.numTel, this.state.password),
       });
       if (this.state.isLogin.message !== 'Network request failed') { // si la connexion wifi est active
-        console.log(this.state.isLogin);
         if (this.state.isLogin === 400) {
           this.validator();
         } else {
