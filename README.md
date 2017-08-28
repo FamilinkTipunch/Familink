@@ -4,13 +4,14 @@
 
 Pour lancer correctement l'application il faut:
 * Supprimer le dossier node_module
-* lancer la commandes: `npm install react-native-side-menu --save`
+* lancer la commande: `npm install react-native-side-menu --save`
 * lancer ensuite la commande: `npm install react-native-actionsheet --save`
 * puis: `npm install --save react-native-loading-spinner-overlay`
 * puis: `npm install --save react-native-popup`
 * puis: `npm install --save react-navigation`
 * puis: `npm install --save react-native-simple-toast`
-* enfin: `npm install --save lodash`
+* lancer: `npm install --save lodash`
+* et enfin: `npm install react-native-alphabetlistview  --save `
 
 ou par yarn:
 * `yarn add react-native-side-menu`
@@ -20,6 +21,7 @@ ou par yarn:
 * `yarn add react-navigation`
 * `yarn add react-native-simple-toast`
 * `yarn add lodash`
+* `yarn add react-native-alphabetlistview`
 
 puis lancer la commande: `yarn`
 

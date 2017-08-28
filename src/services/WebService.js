@@ -75,7 +75,7 @@ export default class WebService extends Component {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA2MDYwNjA2MDYiLCJpYXQiOjE1MDM2NjQzNDgsImV4cCI6MTUwMzY2NTI0OH0.wW_kzI16y6OKBgA6MC0wpswsoDLAfJtG5N2UnUnrIVI',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA2MDAwMDAwMTAiLCJpYXQiOjE1MDM5MjQ3MjAsImV4cCI6MTUwMzkyNTYyMH0.SjG5jY5Sg7vWXWPL57Nohb9PgSIqlxXDawLUxfaJ4fI',
       },
     }).then(response => response.json());
   }
