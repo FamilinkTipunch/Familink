@@ -43,7 +43,6 @@ export default class LoginScreen extends Component {
       this.setState({
         isChecked: Storage.getData('@RememberMe:key'),
       });
-      console.log(this.state.isChecked);
       if (this.state.isChecked === true) {
         Storage.getData('@Phone:key')
           .then((value) => {
@@ -80,7 +79,6 @@ export default class LoginScreen extends Component {
 
     rememberMeOnChange() {
       this.setState({ isChecked: !this.state.isChecked });
-      console.log(!this.state.isChecked);
     }
 
     async login() {
@@ -93,15 +91,12 @@ export default class LoginScreen extends Component {
         } else {
           Toast.show('Vous etes bien connecté');
           if (!this.state.isChecked === true) {
-            console.log('+++');
-            console.log(!this.state.isChecked);
             Storage.setData('@Phone:key', this.state.numTel);
             Storage.setData('@RememberMe:key', String(!this.state.isChecked));
           } else {
             Storage.setData('@Phone:key', '');
             Storage.setData('@RememberMe:key', String(!this.state.isChecked));
           }
-          console.log('test');
           this.navigateToHome();
         }
       }
