@@ -9,7 +9,7 @@ const loginUrl = '/public/login';
 const contactUrl = '/secured/users/contacts';
 const forgotpasswordUrl = '/public/forgot-password';
 
-export function onAlert() {
+function onAlert() {
   Alert.alert(
     'Connectivity',
     'Pas de connexion wifi',
@@ -22,6 +22,7 @@ export async function userSignIn(signInPhone, signInpassword, signInfirstName,
   try {
     if (CheckReseau.checkConnectivity() === false) {
       onAlert();
+      return null;
     }
     const response = await fetch(apiUrl + signInUrl, {
       method: 'POST',
