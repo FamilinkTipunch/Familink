@@ -31,7 +31,7 @@ export default class PhoneBookListScreen extends Component {
       this.navigate = this.props.navigation.navigate;
       this.navigateToHome = this.navigateToHome.bind(this);
       this.navigateToLogin = this.navigateToLogin.bind(this);
-      this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
+      this.navigateToPhoneBookListDetail = this.navigateToPhoneBookListDetail.bind(this);
       this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
       this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToAddContact = this.navigateToAddContact.bind(this);
@@ -156,7 +156,7 @@ export default class PhoneBookListScreen extends Component {
       this.navigate(HOME_SCREEN_NAME);
     }
 
-    navigateToPhoneBookList() {
+    navigateToPhoneBookListDetail() {
       this.navigate(PHONEBOOKDETAIL_SCREEN_NAME);
     }
 
@@ -170,6 +170,7 @@ export default class PhoneBookListScreen extends Component {
 
     render() {
       const menu = <Menu navigation={this.props.navigation} />;
+      const { navigate } = this.props.navigation;
       return (
         <SideMenu
           menu={menu}
@@ -219,16 +220,20 @@ export default class PhoneBookListScreen extends Component {
                 <FlatList
                   data={this.state.contactsFilter}
                   renderItem={({ item }) => (
-                    <View>
-                      <Image
-                        source={item.gravatar !== ''
-                          ? { uri: item.gravatar }
-                          : { uri: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/976000/620x/michael-schumacher-Mercedes-slogan-axed-605272.jpg' }}
-                        style={styles.avatar}
-                      />
-                      <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
-                      <Text style={styles.contactDetailText}>{item.phone}</Text>
-                      <View style={styles.line} /></View>
+                    <TouchableOpacity
+                      onPress={() => navigate(PHONEBOOKDETAIL_SCREEN_NAME, { item })}
+                    >
+                      <View>
+                        <Image
+                          source={item.gravatar !== ''
+                            ? { uri: item.gravatar }
+                            : { uri: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/976000/620x/michael-schumacher-Mercedes-slogan-axed-605272.jpg' }}
+                          style={styles.avatar}
+                        />
+                        <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
+                        <Text style={styles.contactDetailText}>{item.phone}</Text>
+                        <View style={styles.line} /></View>
+                    </TouchableOpacity>
                   )}
                 />
                 <View style={styles.marginBottom} />

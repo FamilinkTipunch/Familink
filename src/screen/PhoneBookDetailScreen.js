@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/burgermenu';
 
@@ -9,8 +9,7 @@ import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
-const image = require('../assets/menu.png');
-const styles = require('./styles/styles');
+import { styles } from './styles/styles';
 
 export const PHONEBOOKDETAIL_SCREEN_NAME = 'PHONEBOOKDETAIL_SCREEN';
 
@@ -73,6 +72,7 @@ export default class PhoneBookDetailScreen extends Component {
 
     render() {
       const menu = <Menu navigation={this.props.navigation} />;
+      const { params } = this.props.navigation.state;
       return (
         <SideMenu
           menu={menu}
@@ -81,16 +81,8 @@ export default class PhoneBookDetailScreen extends Component {
         >
           <View style={styles.container}>
             <Text>Page PhoneBookDetail</Text>
+            <Text>{params.item.firstName}</Text>
           </View>
-          <TouchableOpacity
-            onPress={this.toggle}
-            style={styles.button}
-          >
-            <Image
-              source={image}
-              style={styles.burgerStyle}
-            />
-          </TouchableOpacity>
         </SideMenu>
       );
     }
