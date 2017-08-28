@@ -121,7 +121,6 @@ export default class WebService extends Component {
         WebService.onAlert();
         return null;
       }
-
       const response = await fetch(apiUrl + forgotpasswordUrl, {
         method: 'POST',
         headers: {
@@ -137,7 +136,7 @@ export default class WebService extends Component {
       }
       return response.status;
     } catch (error) {
-      return -1;
+      throw error;
     }
   }
 }

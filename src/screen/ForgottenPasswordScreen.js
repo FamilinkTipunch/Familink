@@ -30,12 +30,19 @@ export default class ForgottenPasswordScreen extends Component {
     }
 
     async sendForgotPassword() {
-      const status = await WebService.forgotPassword(this.state.phone);
-      if (status === 1) {
-        Toast.show('Un SMS vous a été envoyé');
-        this.navigateToLogin();
-      } else {
+      try {
+        const status = await WebService.forgotPassword(this.state.phone);
+        if (status === 1) {
+          Toast.show('Un SMS vous a été envoyé');
+          this.navigateToLogin();
+          return;
+        }
+        if (status === null) {
+          return;
+        }
         Toast.show(`Une erreur est survenue lors de la saisi du numéro avec le code erreur: ${status}`);
+      } catch (error) {
+        throw error;
       }
     }
     validator = () => {
