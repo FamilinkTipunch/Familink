@@ -114,11 +114,7 @@ export async function getContacts(token) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-<<<<<<< HEAD
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjA2MDAwMDAwMTAiLCJpYXQiOjE1MDM5MjQ3MjAsImV4cCI6MTUwMzkyNTYyMH0.SjG5jY5Sg7vWXWPL57Nohb9PgSIqlxXDawLUxfaJ4fI',
-=======
         Authorization: `Bearer ${token}`,
->>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
       },
     });
     const status = response.status;

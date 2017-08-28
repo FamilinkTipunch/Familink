@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-=======
 import FAB from 'react-native-fab';
-import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
-import Popup from 'react-native-popup';
 import SideMenu from 'react-native-side-menu';
->>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
 import Lodash from 'lodash';
-import SideMenu from 'react-native-side-menu';
 
 import { styles, transparent } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
@@ -48,7 +42,6 @@ export default class PhoneBookListScreen extends Component {
         search: '',
         contacts: [],
         contactsFilter: [],
-<<<<<<< HEAD
         letter: '',
         scrollIndicator: 0,
         alphabetLetter: [
@@ -60,9 +53,7 @@ export default class PhoneBookListScreen extends Component {
           { letter: 'U' }, { letter: 'V' }, { letter: 'W' }, { letter: 'X' },
           { letter: 'Y' }, { letter: 'Z' }, { letter: '#' },
         ],
-=======
         token: '',
->>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
       };
       this.state.contactsFilter = this.state.contacts;
     }
@@ -243,11 +234,7 @@ export default class PhoneBookListScreen extends Component {
                 <View style={styles.marginBottom} />
               </View>
             </ScrollView>
-<<<<<<< HEAD
-=======
-            <Popup ref={popup => (this.popup = popup)} />
             <FAB buttonColor="red" iconTextColor="#FFFFFF" onClickAction={() => this.navigateToAddContact()} visible={true} />
->>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
           </View>
           <TouchableOpacity
             onPress={this.toggle}

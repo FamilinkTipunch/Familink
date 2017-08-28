@@ -11,7 +11,8 @@ Pour lancer correctement l'application il faut:
 * puis: `npm install --save react-navigation`
 * puis: `npm install --save react-native-simple-toast`
 * lancer: `npm install --save lodash`
-* et enfin: `npm install react-native-alphabetlistview  --save `
+* et: `npm install react-native-alphabetlistview  --save `
+* et enfin: `npm install react-native-fab --save`
 
 ou par yarn:
 * `yarn add react-native-side-menu`
@@ -22,6 +23,7 @@ ou par yarn:
 * `yarn add react-native-simple-toast`
 * `yarn add lodash`
 * `yarn add react-native-alphabetlistview`
+* `yarn add react-native-fab`
 
 puis lancer la commande: `yarn`
 
