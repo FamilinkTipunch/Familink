@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+=======
+import FAB from 'react-native-fab';
+import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
+import Popup from 'react-native-popup';
+import SideMenu from 'react-native-side-menu';
+>>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
 import Lodash from 'lodash';
 import SideMenu from 'react-native-side-menu';
 
 import { styles, transparent } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
-import WebService from '../services/WebService';
+import Storage from '../services/Storage';
+import { getContacts } from '../services/WebService';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
+import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
 
 const burgerIcon = require('../assets/menu.png');
 const searchIcon = require('../assets/search.png');
@@ -31,6 +40,7 @@ export default class PhoneBookListScreen extends Component {
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
       this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
+      this.navigateToAddContact = this.navigateToAddContact.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
         isOpen: false,
@@ -38,6 +48,7 @@ export default class PhoneBookListScreen extends Component {
         search: '',
         contacts: [],
         contactsFilter: [],
+<<<<<<< HEAD
         letter: '',
         scrollIndicator: 0,
         alphabetLetter: [
@@ -49,14 +60,20 @@ export default class PhoneBookListScreen extends Component {
           { letter: 'U' }, { letter: 'V' }, { letter: 'W' }, { letter: 'X' },
           { letter: 'Y' }, { letter: 'Z' }, { letter: '#' },
         ],
+=======
+        token: '',
+>>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
       };
       this.state.contactsFilter = this.state.contacts;
     }
 
     async componentWillMount() {
+      await Storage.getData('@Token:key').then((value) => {
+        this.setState({ token: value });
+      });
       this.setState({
-        contacts: await WebService.getContacts(),
-        contactsFilter: await WebService.getContacts(),
+        contacts: await getContacts(this.state.token),
+        contactsFilter: await getContacts(this.state.token),
       });
       this.setState({
         contacts: Lodash.orderBy(this.state.contacts, ['firstName'], ['asc']),
@@ -134,6 +151,10 @@ export default class PhoneBookListScreen extends Component {
 
     updateMenuState(isOpen) {
       this.setState({ isOpen });
+    }
+
+    navigateToAddContact() {
+      this.navigate(ADDCONTACT_SCREEN_NAME);
     }
 
     navigateToForgottenPassword() {
@@ -222,6 +243,11 @@ export default class PhoneBookListScreen extends Component {
                 <View style={styles.marginBottom} />
               </View>
             </ScrollView>
+<<<<<<< HEAD
+=======
+            <Popup ref={popup => (this.popup = popup)} />
+            <FAB buttonColor="red" iconTextColor="#FFFFFF" onClickAction={() => this.navigateToAddContact()} visible={true} />
+>>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
           </View>
           <TouchableOpacity
             onPress={this.toggle}

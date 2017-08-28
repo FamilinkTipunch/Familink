@@ -264,6 +264,7 @@ export const styles = StyleSheet.create({
   marginBottom: {
     marginBottom: 20,
   },
+<<<<<<< HEAD
   alphabetView: {
     alignSelf: 'flex-end',
     marginTop: 110,
@@ -273,5 +274,12 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: darkBlue,
     marginBottom: (Platform.OS === 'ios') ? 0 : -4,
+=======
+  textForgotPassword: {
+    fontSize: 15,
+    color: darkBlue,
+    textAlign: 'center',
+    marginBottom: 20,
+>>>>>>> d47b49cfaf712215736444bb2e27aa8c9446da9c
   },
 });

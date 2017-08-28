@@ -4,8 +4,9 @@ import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
 import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
 import Popup from 'react-native-popup';
 import { transparent, styles } from './styles/styles';
-import WebService from '../services/WebService';
 import CheckReseau from '../services/CheckReseau';
+import Storage from '../services/Storage';
+import { canLogin } from '../services/WebService';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
@@ -62,13 +63,14 @@ export default class LoginScreen extends Component {
 
     async login() {
       this.setState({
-        isLogin: await WebService.canLogin(this.state.numTel, this.state.password),
+        isLogin: await canLogin(this.state.numTel, this.state.password),
       });
       if (this.state.isLogin.message !== 'Network request failed') { // si la connexion wifi est active
-        if (this.state.isLogin.message === 'User not found' || this.state.isLogin.message === 'Password is not valid') {
+        if (this.state.isLogin === 400) {
           this.validator();
         } else {
           Toast.show('Vous etes bien connecté');
+          Storage.setData('@Token:key', this.state.isLogin.token);
           this.navigateToHome();
         }
       }
@@ -145,7 +147,7 @@ export default class LoginScreen extends Component {
               </TouchableHighlight>
             </View>
           </ScrollView>
-          <Popup /*eslint-disable*/ ref={popup => (this.popup = popup)} /*eslint-enable*//>
+          <Popup ref={popup => (this.popup = popup)} />
         </View>
       );
     }
