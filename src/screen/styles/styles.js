@@ -43,15 +43,6 @@ export const styles = StyleSheet.create({
 
     color: darkBlue,
   },
-  contactTextAdd: {
-    marginTop: -38,
-    marginLeft: 60,
-
-    fontSize: 22,
-    fontWeight: '300',
-
-    color: darkBlue,
-  },
   contactDetailText: {
     marginTop: -30,
     marginLeft: 60,
@@ -101,6 +92,7 @@ export const styles = StyleSheet.create({
     width: window.width,
     height: window.height,
     padding: 30,
+    paddingRight: 50,
   },
   contactMargin: {
     marginTop: 40,
@@ -271,6 +263,16 @@ export const styles = StyleSheet.create({
   },
   marginBottom: {
     marginBottom: 20,
+  },
+  alphabetView: {
+    alignSelf: 'flex-end',
+    marginTop: 110,
+    padding: 20,
+  },
+  alphabetText: {
+    textAlign: 'center',
+    color: darkBlue,
+    marginBottom: (Platform.OS === 'ios') ? 0 : -4,
   },
   textForgotPassword: {
     fontSize: 15,

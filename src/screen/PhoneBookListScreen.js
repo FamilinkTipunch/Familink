@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FAB from 'react-native-fab';
-import { View, Image, FlatList, TextInput, Text, ScrollView, TouchableOpacity } from 'react-native';
-import Popup from 'react-native-popup';
 import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
-import { transparent, styles } from './styles/styles';
+
+import { styles, transparent } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
 import Storage from '../services/Storage';
 import { getContacts } from '../services/WebService';
@@ -42,6 +42,17 @@ export default class PhoneBookListScreen extends Component {
         search: '',
         contacts: [],
         contactsFilter: [],
+        letter: '',
+        scrollIndicator: 0,
+        alphabetLetter: [
+          { letter: 'A' }, { letter: 'B' }, { letter: 'C' }, { letter: 'D' },
+          { letter: 'E' }, { letter: 'F' }, { letter: 'G' }, { letter: 'H' },
+          { letter: 'I' }, { letter: 'J' }, { letter: 'K' }, { letter: 'L' },
+          { letter: 'M' }, { letter: 'N' }, { letter: 'O' }, { letter: 'P' },
+          { letter: 'Q' }, { letter: 'R' }, { letter: 'S' }, { letter: 'T' },
+          { letter: 'U' }, { letter: 'V' }, { letter: 'W' }, { letter: 'X' },
+          { letter: 'Y' }, { letter: 'Z' }, { letter: '#' },
+        ],
         token: '',
       };
       this.state.contactsFilter = this.state.contacts;
@@ -76,6 +87,51 @@ export default class PhoneBookListScreen extends Component {
       } else {
         this.state.contactsFilter = this.state.contacts;
       }
+    }
+
+    alphabetSelector = (letter) => {
+      this.setState({ scrollIndicator: 0 });
+      for (let i = 0; this.state.alphabetLetter[i].letter !== letter; i += 1) {
+        if (i === 0) {
+          this.setState({
+            count: this.state.scrollIndicator +=
+            (Platform.OS === 'ios')
+              ? 96 +
+              (86.5 *
+                (Lodash.filter(
+                  this.state.contacts, item =>
+                    item.firstName.indexOf(
+                      this.state.alphabetLetter[i].letter) > -1).length -
+                      1))
+              : 103 +
+              (92.5 *
+                (Lodash.filter(
+                  this.state.contacts, item =>
+                    item.firstName.indexOf(
+                      this.state.alphabetLetter[i].letter) > -1).length -
+                      1)),
+          });
+        } else {
+          this.setState({
+            count: this.state.scrollIndicator +=
+            (Platform.OS === 'ios')
+              ? 86.5 *
+              Lodash.filter(
+                this.state.contacts, item =>
+                  item.firstName.indexOf(
+                    this.state.alphabetLetter[i].letter) > -1).length
+              : 92.5 *
+              Lodash.filter(
+                this.state.contacts, item =>
+                  item.firstName.indexOf(
+                    this.state.alphabetLetter[i].letter) > -1).length,
+          });
+        }
+      }
+      this.scrollView.scrollTo({
+        y: this.state.scrollIndicator,
+        animated: true,
+      });
     }
 
     toggle() {
@@ -140,14 +196,34 @@ export default class PhoneBookListScreen extends Component {
                 }
               />
             </View>
-            <ScrollView scrollsToTop={true} style={styles.contactList}>
+            <FlatList
+              data={this.state.alphabetLetter}
+              style={[styles.absolute, styles.alphabetView]}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    const letter = item.letter;
+                    this.alphabetSelector(letter);
+                  }}
+                >
+                  <Text style={styles.alphabetText}>{item.letter}</Text>
+                </TouchableOpacity>
+              )}
+            />
+            <ScrollView
+              scrollsToTop={true}
+              style={styles.contactList}
+              ref={(scrollView) => { this.scrollView = scrollView; }}
+            >
               <View>
                 <FlatList
                   data={this.state.contactsFilter}
                   renderItem={({ item }) => (
                     <View>
                       <Image
-                        source={{ uri: item.gravatar }}
+                        source={item.gravatar !== ''
+                          ? { uri: item.gravatar }
+                          : { uri: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/976000/620x/michael-schumacher-Mercedes-slogan-axed-605272.jpg' }}
                         style={styles.avatar}
                       />
                       <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
@@ -158,7 +234,6 @@ export default class PhoneBookListScreen extends Component {
                 <View style={styles.marginBottom} />
               </View>
             </ScrollView>
-            <Popup ref={popup => (this.popup = popup)} />
             <FAB buttonColor="red" iconTextColor="#FFFFFF" onClickAction={() => this.navigateToAddContact()} visible={true} />
           </View>
           <TouchableOpacity
