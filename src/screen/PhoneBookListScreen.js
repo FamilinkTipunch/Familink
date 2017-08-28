@@ -6,7 +6,8 @@ import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
 import { transparent, styles } from './styles/styles';
 import Menu from './burgermenu/burgermenu';
-import WebService from '../services/WebService';
+import Storage from '../services/Storage';
+import { getContacts } from '../services/WebService';
 
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
@@ -41,14 +42,18 @@ export default class PhoneBookListScreen extends Component {
         search: '',
         contacts: [],
         contactsFilter: [],
+        token: '',
       };
       this.state.contactsFilter = this.state.contacts;
     }
 
     async componentWillMount() {
+      await Storage.getData('@Token:key').then((value) => {
+        this.setState({ token: value });
+      });
       this.setState({
-        contacts: await WebService.getContacts(),
-        contactsFilter: await WebService.getContacts(),
+        contacts: await getContacts(this.state.token),
+        contactsFilter: await getContacts(this.state.token),
       });
       this.setState({
         contacts: Lodash.orderBy(this.state.contacts, ['firstName'], ['asc']),
