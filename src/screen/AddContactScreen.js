@@ -2,26 +2,29 @@ import React, { Component } from 'react';
 import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import Popup from 'react-native-popup';
+import Toast from 'react-native-simple-toast';
 import { transparent, styles } from './styles/styles';
 import LoadingScreen from './LoadingScreen';
-import { getProfile, userSignIn } from '../services/WebService';
+import Storage from '../services/Storage';
+import { getProfile, createContact } from '../services/WebService';
 
-import { LOGIN_SCREEN_NAME } from './LoginScreen';
+import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
 const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+const urlAvatarValidator = /(https?:\/\/.*\.(?:png|jpg))/;
 
-export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
+export const ADDCONTACT_SCREEN_NAME = 'ADDCONTACT_SCREEN';
 
-export default class AuthentificationScreen extends Component {
+export default class AddContactScreen extends Component {
     static navigationOptions = {
-      title: 'Enregistrement',
+      title: 'Ajouter un contact',
     };
 
     constructor(props) {
       super(props);
       this.navigate = this.props.navigation.navigate;
-      this.navigateToLogin = this.navigateToLogin.bind(this);
+      this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
 
       this.state = {
         firstName: '',
@@ -32,24 +35,28 @@ export default class AuthentificationScreen extends Component {
         emailBool: true,
         phone: '',
         phoneBool: true,
-        password: '',
-        passwordBool: true,
-        passwordRetype: '',
-        passwordRetypeBool: true,
         allInputCorrect: 0,
         profile: '',
         profileList: null,
         firstpin: '',
         validate: false,
         selected: 0,
+        urlAvatar: '',
+        token: '',
       };
       this.handlePress = this.handlePress.bind(this);
       this.showActionSheet = this.showActionSheet.bind(this);
-      this.signin = this.signin.bind(this);
+      this.addContact = this.addContact.bind(this);
     }
     async componentWillMount() {
       this.setState({
         profileList: await getProfile(),
+      });
+    }
+
+    componentDidMount() {
+      Storage.getData('@Token:key').then((value) => {
+        this.setState({ token: value });
       });
     }
 
@@ -67,19 +74,21 @@ export default class AuthentificationScreen extends Component {
       });
     }
 
-    navigateToLogin() {
-      this.navigate(LOGIN_SCREEN_NAME);
+    navigateToPhoneBookList() {
+      this.navigate(PHONEBOOKLIST_SCREEN_NAME);
     }
 
-    async signin() {
-      const returnValue = await userSignIn(this.state.phone,
-        this.state.password,
+    async addContact() {
+      const status = await createContact(this.state.phone,
         this.state.firstName,
         this.state.lastName,
         this.state.email,
-        this.state.profileList[this.state.selected]);
-      if (returnValue === 1) {
-        this.navigateToLogin();
+        this.state.profileList[this.state.selected],
+        this.state.urlAvatar,
+        this.state.token);
+      if (status === 1) {
+        Toast.show('Votre contact a été ajouté');
+        this.navigateToPhoneBookList();
       }
     }
 
@@ -108,21 +117,14 @@ export default class AuthentificationScreen extends Component {
         this.setState({ phoneBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (this.state.password.length < 4) {
-        this.setState({ passwordBool: false });
-        this.setState({ passwordRetypeBool: false });
+      if (urlAvatarValidator.test(this.state.urlAvatar) !== true) {
+        this.setState({ urlAvatarBool: false });
       } else {
-        this.setState({ passwordBool: true });
+        this.setState({ urlAvatarBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (this.state.password !== this.state.passwordRetype || this.state.password === '') {
-        this.setState({ passwordRetypeBool: false });
-      } else {
-        this.setState({ passwordRetypeBool: true });
-        this.setState({ count: this.state.allInputCorrect += 1 });
-      }
-      if (this.state.allInputCorrect === 6) {
-        this.signin();
+      if (this.state.allInputCorrect === 4) {
+        this.addContact();
       } else {
         this.onAlert();
       }
@@ -187,33 +189,13 @@ export default class AuthentificationScreen extends Component {
               onChangeText={phone => this.setState({ phone, phoneBool: true })}
             />
             <TextInput
-              style={
-                this.state.passwordBool
-                  ? [styles.input, styles.inputTop, styles.blue]
-                  : [styles.input, styles.inputFalse, styles.inputTop, styles.classic]}
-              keyboardType={'numeric'}
-              secureTextEntry={true}
-              placeholder={'Code Pin'}
+              style={[styles.input, styles.inputMiddle, styles.blue]}
+              placeholder={'url Gravatar'}
+              autoCapitalize={'sentences'}
+              autoCorrect={false}
               underlineColorAndroid={transparent}
-              maxLength={4}
-              value={this.state.password}
-              onChangeText={password => this.setState({ password, passwordBool: true })}
-            />
-            <TextInput
-              style={
-                this.state.passwordRetypeBool
-                  ? [styles.input, styles.inputBottom, styles.blue]
-                  : [styles.input, styles.inputFalse, styles.inputBottom, styles.classic]}
-              keyboardType={'numeric'}
-              secureTextEntry={true}
-              placeholder={'Confirmer code'}
-              underlineColorAndroid={transparent}
-              maxLength={4}
-              value={this.state.passwordRetype}
-              onChangeText={
-                passwordRetype => this.setState({
-                  passwordRetype, passwordRetypeBool: true,
-                })}
+              value={this.state.urlAvatar}
+              onChangeText={urlAvatar => this.setState({ urlAvatar })}
             />
             <View style={styles.wrapper}>
               <TouchableHighlight onPress={this.showActionSheet} underlayColor={transparent}>
@@ -236,7 +218,7 @@ export default class AuthentificationScreen extends Component {
             >
               <View style={styles.confirmationButton}>
                 <Text style={styles.validateText}>
-                Valider
+                Ajouter
                 </Text>
               </View>
             </TouchableHighlight>
