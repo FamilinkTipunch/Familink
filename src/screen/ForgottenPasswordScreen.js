@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, ScrollView, TouchableHighlight } from 'react-native';
 import Popup from 'react-native-popup';
+import Toast from 'react-native-simple-toast';
 import { transparent, styles } from './styles/styles';
+import WebService from '../services/WebService';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 export const FORGOTTENPASSWORD_SCREEN_NAME = 'FORGOTTENPASSWORD_SCREEN';
 
 export default class ForgottenPasswordScreen extends Component {
     static navigationOptions = {
-      title: 'ForgottenPassword',
+      title: 'Mot de passe oublié',
     };
 
     constructor(props) {
@@ -26,13 +28,23 @@ export default class ForgottenPasswordScreen extends Component {
     navigateToLogin() {
       this.navigate(LOGIN_SCREEN_NAME);
     }
+
+    async sendForgotPassword() {
+      const status = await WebService.forgotPassword(this.state.phone);
+      if (status === 1) {
+        Toast.show('Un SMS vous a été envoyé');
+        this.navigateToLogin();
+      } else {
+        Toast.show(`Une erreur est survenue lors de la saisi du numéro avec le code erreur: ${status}`);
+      }
+    }
     validator = () => {
       if (this.state.phone.length < 10) {
         this.setState({ phoneBool: false });
         this.onAlert();
       } else {
         this.setState({ phoneBool: true });
-        this.navigateToLogin();
+        this.sendForgotPassword();
       }
     }
     render() {

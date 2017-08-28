@@ -87,7 +87,7 @@ export default class AddContactScreen extends Component {
         this.state.urlAvatar,
         this.state.token);
       if (status === 1) {
-        Toast.show('Votre contact à été ajouté');
+        Toast.show('Votre contact a été ajouté');
         this.navigateToPhoneBookList();
       } else {
         Toast.show(`Une erreur est survenue lors de la création du contact avec le code erreur:${status}`);
