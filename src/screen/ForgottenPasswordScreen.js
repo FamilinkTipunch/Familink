@@ -3,7 +3,7 @@ import { Text, View, TextInput, ScrollView, TouchableHighlight } from 'react-nat
 import Popup from 'react-native-popup';
 import Toast from 'react-native-simple-toast';
 import { transparent, styles } from './styles/styles';
-import WebService from '../services/WebService';
+import { forgotPassword } from '../services/WebService';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 export const FORGOTTENPASSWORD_SCREEN_NAME = 'FORGOTTENPASSWORD_SCREEN';
@@ -30,7 +30,7 @@ export default class ForgottenPasswordScreen extends Component {
     }
 
     async sendForgotPassword() {
-      const status = await WebService.forgotPassword(this.state.phone);
+      const status = await forgotPassword(this.state.phone);
       if (status === 1) {
         Toast.show('Un SMS vous a été envoyé');
         this.navigateToLogin();

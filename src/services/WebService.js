@@ -161,29 +161,30 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
   } catch (error) {
     return -1;
   }
+}
 
-  static async forgotPassword(passwordPhone) {
-    try {
-      if (CheckReseau.checkConnectivity() === false) {
-        WebService.onAlert();
-        return null;
-      }
-      const response = await fetch(apiUrl + forgotpasswordUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phone: passwordPhone,
-        }),
-      });
-      const status = response.status;
-      if (status === 200 || status === 204) {
-        return 1;
-      }
-      return response.status;
-    } catch (error) {
-      throw error;
+export async function forgotPassword(passwordPhone) {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
     }
+    const response = await fetch(apiUrl + forgotpasswordUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        phone: passwordPhone,
+      }),
+    });
+    const status = response.status;
+    if (status === 200 || status === 204) {
+      return 1;
+    }
+    return response.status;
+  } catch (error) {
+    throw error;
   }
 }
+
