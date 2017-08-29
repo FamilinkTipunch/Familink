@@ -5,14 +5,12 @@ import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
 
 import { styles, transparent } from './styles/styles';
-import Menu from './burgermenu/burgermenu';
+import Menu from './burgermenu/Menu';
 import Storage from '../services/Storage';
 import { getContacts } from '../services/WebService';
 
-import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
-import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
 
@@ -32,8 +30,6 @@ export default class PhoneBookListScreen extends Component {
       this.navigateToHome = this.navigateToHome.bind(this);
       this.navigateToLogin = this.navigateToLogin.bind(this);
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
-      this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
-      this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToAddContact = this.navigateToAddContact.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
@@ -148,20 +144,12 @@ export default class PhoneBookListScreen extends Component {
       this.navigate(ADDCONTACT_SCREEN_NAME);
     }
 
-    navigateToForgottenPassword() {
-      this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
-    }
-
     navigateToHome() {
       this.navigate(HOME_SCREEN_NAME);
     }
 
     navigateToPhoneBookList() {
       this.navigate(PHONEBOOKDETAIL_SCREEN_NAME);
-    }
-
-    navigateToAuthentification() {
-      this.navigate(AUTH_SCREEN_NAME);
     }
 
     navigateToLogin() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Popup from 'react-native-popup';
 import { Button, View, Image, TouchableOpacity } from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/burgermenu';
+import Menu from './burgermenu/Menu';
 import { styles } from './styles/styles';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
@@ -27,47 +27,6 @@ export default class HomeScreen extends Component {
         selectedItem: 'About',
         isConnected: false,
       };
-    }
-
-    // Fonction affichage et création de la forme de la popup      
-    onTestAlerte() {
-      // alert 
-      this.popup.alert(1);
-      this.popup.confirm({
-        content: 'Are you ready?',
-      });
-
-      this.popup.confirm({
-        content: 'Are you ready?',
-        ok: {
-          callback: () => {
-            this.popup.alert('Very good!');
-          },
-        },
-      });
-
-      this.popup.confirm({
-        title: 'title',
-        content: ['Message'],
-        ok: {
-          text: 'Accepter',
-          style: {
-            color: 'blue',
-          },
-          callback: () => {
-            this.popup.alert('Good!');
-          },
-        },
-        cancel: {
-          text: 'Refuser',
-          style: {
-            color: 'red',
-          },
-          callback: () => {
-            this.popup.alert('ok ！');
-          },
-        },
-      });
     }
 
     onMenuItemSelected = (item) => {
