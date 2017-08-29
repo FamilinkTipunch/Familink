@@ -7,9 +7,9 @@ import LoadingScreen from './LoadingScreen';
 import { getProfile, userSignIn } from '../services/WebService';
 
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
+import { emailRegex, phoneRegex, passwordRegex } from '../Tools/Regex';
 
 const title = 'Quel statut vous correspond le mieux ?';
-const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 export const AUTH_SCREEN_NAME = 'AUTH_SCREEN';
 
@@ -84,7 +84,7 @@ export default class AuthentificationScreen extends Component {
     }
 
     validator = () => {
-      if (emailValidator.test(this.state.email) !== true) {
+      if (emailRegex.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
       } else {
         this.setState({ emailBool: true });
@@ -102,13 +102,13 @@ export default class AuthentificationScreen extends Component {
         this.setState({ lastNameBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (this.state.phone.length < 10) {
+      if (phoneRegex.test(this.state.phone) !== true) {
         this.setState({ phoneBool: false });
       } else {
         this.setState({ phoneBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (this.state.password.length < 4) {
+      if (passwordRegex.test(this.state.password) !== true) {
         this.setState({ passwordBool: false });
         this.setState({ passwordRetypeBool: false });
       } else {

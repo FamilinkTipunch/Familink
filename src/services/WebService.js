@@ -190,6 +190,7 @@ export async function forgotPassword(passwordPhone) {
     if (status === 200 || status === 204) {
       return 1;
     }
+    Toast.show(`Une erreur est survenue lors de la saisi du numéro avec le code erreur: ${status}`);
     return response.status;
   } catch (error) {
     throw error;

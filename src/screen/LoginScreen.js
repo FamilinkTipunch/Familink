@@ -7,7 +7,6 @@ import { transparent, styles } from './styles/styles';
 import CheckReseau from '../services/CheckReseau';
 import Storage from '../services/Storage';
 import { canLogin } from '../services/WebService';
-
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
@@ -85,7 +84,7 @@ export default class LoginScreen extends Component {
       this.setState({
         isLogin: await canLogin(this.state.numTel, this.state.password),
       });
-      if (this.state.isLogin.message !== 'Network request failed') { // si la connexion wifi est active
+      if (this.state.isLogin !== null) { // si la connexion wifi est actives
         if (this.state.isLogin === 400) {
           this.validator();
         } else {
@@ -104,11 +103,8 @@ export default class LoginScreen extends Component {
     }
 
     validator = () => {
-      if (this.state.isLogin.message === 'User not found') {
-        this.setState({ numTelBool: false });
-        this.setState({ passwordBool: false });
-      } else if (this.state.isLogin.message !== 'User not found' && this.state.isLogin.message === 'Password is not valid') {
-        this.setState({ passwordBool: false });
+      if (this.state.isLogin === 400) {
+        this.setState({ numTelBool: false, numTel: '', password: '', passwordBool: false });
       }
       this.onAlert();
     }
