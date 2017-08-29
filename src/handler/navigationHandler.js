@@ -41,7 +41,7 @@ stackNavigatorConfig[ADDCONTACT_SCREEN_NAME] = {
 };
 
 const ApplicationNavigator = StackNavigator(stackNavigatorConfig, {
-  initialRouteName: PHONEBOOKLIST_SCREEN_NAME,
+  initialRouteName: LOGIN_SCREEN_NAME,
 });
 
 export default () => <ApplicationNavigator />;
