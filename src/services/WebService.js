@@ -3,11 +3,11 @@ import { Alert } from 'react-native';
 import CheckReseau from './CheckReseau';
 
 const apiUrl = 'https://familink.cleverapps.io';
-const signInUrl = '/public/sign-in';
-const profileUrl = '/public/profiles';
-const loginUrl = '/public/login';
-const contactUrl = '/secured/users/contacts';
-const forgotpasswordUrl = '/public/forgot-password';
+const signInUrl = '/public/sign-in/';
+const profileUrl = '/public/profiles/';
+const loginUrl = '/public/login/';
+const contactUrl = '/secured/users/contacts/';
+const forgotpasswordUrl = '/public/forgot-password/';
 
 function onAlert() {
   Alert.alert(
@@ -196,3 +196,31 @@ export async function forgotPassword(passwordPhone) {
   }
 }
 
+export async function deleteContact(token, contactId) {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+    const response = await fetch(apiUrl + contactUrl + contactId, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const status = response.status;
+    if (status === 200 || status === 204) {
+      return 1;
+    }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
+    Toast.show(`Une erreur est survenue lors de la suppression du contact avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
+  }
+}
