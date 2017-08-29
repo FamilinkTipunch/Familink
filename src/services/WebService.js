@@ -164,7 +164,7 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
       Toast.show('Votre token est plus valide, veuillez vous reconnecter');
       return response.status;
     }
-    Toast.show(`Une erreur est survenue lors de la récupération des contacts avec le code erreur:${response.status}`);
+    Toast.show(`Une erreur est survenue lors de la création des contacts avec le code erreur:${response.status}`);
     return response.status;
   } catch (error) {
     return -1;

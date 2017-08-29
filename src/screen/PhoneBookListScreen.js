@@ -10,9 +10,7 @@ import Menu from './burgermenu/Menu';
 import Storage from '../services/Storage';
 import { getContacts } from '../services/WebService';
 
-import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
-import { LOGIN_SCREEN_NAME } from './LoginScreen';
 import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
 
 const burgerIcon = require('../assets/menu.png');
@@ -28,9 +26,6 @@ export default class PhoneBookListScreen extends Component {
     constructor(props) {
       super(props);
       this.navigate = this.props.navigation.navigate;
-      this.navigateToHome = this.navigateToHome.bind(this);
-      this.navigateToLogin = this.navigateToLogin.bind(this);
-      this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToAddContact = this.navigateToAddContact.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
@@ -149,20 +144,9 @@ export default class PhoneBookListScreen extends Component {
       this.navigate(ADDCONTACT_SCREEN_NAME);
     }
 
-    navigateToHome() {
-      this.navigate(HOME_SCREEN_NAME);
-    }
-
-    navigateToPhoneBookList() {
-      this.navigate(PHONEBOOKDETAIL_SCREEN_NAME);
-    }
-
-    navigateToLogin() {
-      this.navigate(LOGIN_SCREEN_NAME);
-    }
-
     render() {
       const menu = <Menu navigation={this.props.navigation} />;
+      const { navigate } = this.props.navigation;
       return (
         <SideMenu
           menu={menu}
@@ -212,16 +196,20 @@ export default class PhoneBookListScreen extends Component {
                 <FlatList
                   data={this.state.contactsFilter}
                   renderItem={({ item }) => (
-                    <View>
-                      <Image
-                        source={item.gravatar !== ''
-                          ? { uri: item.gravatar }
-                          : { uri: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/976000/620x/michael-schumacher-Mercedes-slogan-axed-605272.jpg' }}
-                        style={styles.avatar}
-                      />
-                      <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
-                      <Text style={styles.contactDetailText}>{item.phone}</Text>
-                      <View style={styles.line} /></View>
+                    <TouchableOpacity
+                      onPress={() => navigate(PHONEBOOKDETAIL_SCREEN_NAME, { item })}
+                    >
+                      <View>
+                        <Image
+                          source={item.gravatar !== ''
+                            ? { uri: item.gravatar }
+                            : { uri: 'http://russfik.ru/templates/Blogss/dleimages/noavatar.png' }}
+                          style={styles.avatar}
+                        />
+                        <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
+                        <Text style={styles.contactDetailText}>{item.phone}</Text>
+                        <View style={styles.line} /></View>
+                    </TouchableOpacity>
                   )}
                 />
                 <View style={styles.marginBottom} />
