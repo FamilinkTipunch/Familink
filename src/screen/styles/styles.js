@@ -115,6 +115,15 @@ export const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: darkGrey,
   },
+  avatarDetailContact: {
+    width: 70,
+    height: 70,
+
+    borderRadius: 24,
+
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+  },
   name: {
     position: 'absolute',
     fontSize: 28,

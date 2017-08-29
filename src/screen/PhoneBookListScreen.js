@@ -227,7 +227,7 @@ export default class PhoneBookListScreen extends Component {
                         <Image
                           source={item.gravatar !== ''
                             ? { uri: item.gravatar }
-                            : { uri: 'http://cdn.images.dailystar.co.uk/dynamic/1/photos/976000/620x/michael-schumacher-Mercedes-slogan-axed-605272.jpg' }}
+                            : { uri: 'http://russfik.ru/templates/Blogss/dleimages/noavatar.png' }}
                           style={styles.avatar}
                         />
                         <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
