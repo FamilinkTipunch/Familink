@@ -121,6 +121,10 @@ export async function getContacts(token) {
     if (status === 200) {
       return response.json();
     }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
     Toast.show(`Une erreur est survenue lors de la récupération des contacts avec le code erreur:${response.status}`);
     return response.status;
   } catch (error) {
@@ -156,7 +160,11 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
     if (status === 200) {
       return 1;
     }
-    Toast.show(`Une erreur est survenue lors de la création des contacts avec le code erreur:${response.status}`);
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
+    Toast.show(`Une erreur est survenue lors de la récupération des contacts avec le code erreur:${response.status}`);
     return response.status;
   } catch (error) {
     return -1;
