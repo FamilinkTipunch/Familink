@@ -141,7 +141,7 @@ export const styles = StyleSheet.create({
   },
   add: {
     marginLeft: 0,
-    marginTop: (Platform.OS === 'ios') ? 0 : 0,
+    marginTop: 0,
     width: 50,
     height: 50,
   },
