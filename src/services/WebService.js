@@ -225,3 +225,41 @@ export async function deleteContact(token, contactId) {
     return -1;
   }
 }
+
+export async function updateContact(contactPhone, contactFirstName, contactLastName,
+  contactEmail, contactProfile, contacturlGravatar, userToken, contactId) {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+
+    const response = await fetch(apiUrl + contactUrl + contactId, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userToken}`,
+      },
+      body: JSON.stringify({
+        phone: contactPhone,
+        firstName: contactFirstName,
+        lastName: contactLastName,
+        email: contactEmail,
+        profile: contactProfile,
+        gravatar: contacturlGravatar,
+      }),
+    });
+    const status = response.status;
+    if (status === 200 || status === 204) {
+      return 1;
+    }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
+    Toast.show(`Une erreur est survenue lors de la modification du contacts avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
+  }
+}

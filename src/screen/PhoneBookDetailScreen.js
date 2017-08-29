@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableHighlight } from 'react-native';
+import { Text, TextInput, View, Image, TouchableHighlight, ScrollView } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Toast from 'react-native-simple-toast';
 import Menu from './burgermenu/Menu';
 
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
-import { MODIFCONTACT_SCREEN_NAME } from './PhoneBookModify';
+import { MODIFCONTACT_SCREEN_NAME } from './PhoneBookModifyScreen';
 import Storage from '../services/Storage';
 import { styles, transparent } from './styles/styles';
 import { deleteContact } from '../services/WebService';
@@ -84,29 +84,60 @@ export default class PhoneBookDetailScreen extends Component {
           onChange={isOpen => this.updateMenuState(isOpen)}
         >
           <View style={styles.container}>
-            <Image
-              source={params.item.gravatar !== ''
-                ? { uri: params.item.gravatar }
-                : { uri: 'http://russfik.ru/templates/Blogss/dleimages/noavatar.png' }}
-              style={styles.avatarDetailContact}
-            />
-            <Text>{params.item.phone}</Text>
-            <Text>{params.item.firstName}</Text>
-            <Text>{params.item.lastName}</Text>
-            <Text>{params.item.email}</Text>
-            <Text>{params.item.profile}</Text>
-            <TouchableHighlight
-              onPress={() => navigate(MODIFCONTACT_SCREEN_NAME, { params })}
-              underlayColor={transparent}
-            >
-              <Text style={styles.inputLoginCreateAccount}>Modifier</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              onPress={() => this.delete(params.item._id)}
-              underlayColor={transparent}
-            >
-              <Text style={styles.inputLoginCreateAccount}>Supprimer</Text>
-            </TouchableHighlight>
+            <ScrollView scrollsToTop={false} style={styles.signin}>
+              <Image
+                source={params.item.gravatar !== ''
+                  ? { uri: params.item.gravatar }
+                  : { uri: 'http://russfik.ru/templates/Blogss/dleimages/noavatar.png' }}
+                style={styles.avatarDetailContact}
+              />
+              <TextInput
+                style={[styles.input, styles.inputTop, styles.blue, styles.marginTop]}
+                underlineColorAndroid={transparent}
+                editable={false}
+                value={params.item.phone}
+              />
+              <TextInput
+                style={[styles.input, styles.inputMiddle, styles.blue]}
+                underlineColorAndroid={transparent}
+                editable={false}
+                value={params.item.firstName}
+              />
+              <TextInput
+                style={[styles.input, styles.inputMiddle, styles.blue]}
+                underlineColorAndroid={transparent}
+                editable={false}
+                value={params.item.lastName}
+              />
+              <TextInput
+                style={[styles.input, styles.inputMiddle, styles.blue]}
+                underlineColorAndroid={transparent}
+                editable={false}
+                value={params.item.email}
+              />
+              <TextInput
+                style={[styles.input, styles.inputBottom, styles.blue]}
+                underlineColorAndroid={transparent}
+                editable={false}
+                value={params.item.profile}
+              />
+              <TouchableHighlight
+                onPress={() => navigate(MODIFCONTACT_SCREEN_NAME, { params })}
+                underlayColor={transparent}
+              >
+                <View style={styles.modifyButton}>
+                  <Text style={styles.validateText}>Modifier</Text>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                onPress={() => this.delete(params.item._id)}
+                underlayColor={transparent}
+              >
+                <View style={styles.confirmationButton}>
+                  <Text style={styles.validateText}>Supprimer</Text>
+                </View>
+              </TouchableHighlight>
+            </ScrollView>
           </View>
         </SideMenu>
       );
