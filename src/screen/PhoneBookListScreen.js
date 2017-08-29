@@ -3,6 +3,7 @@ import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacit
 import FAB from 'react-native-fab';
 import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
+import Toast from 'react-native-simple-toast';
 
 import { styles, transparent } from './styles/styles';
 import Menu from './burgermenu/Menu';
@@ -62,6 +63,10 @@ export default class PhoneBookListScreen extends Component {
         contacts: await getContacts(this.state.token),
         contactsFilter: await getContacts(this.state.token),
       });
+      if (this.state.contacts === 401 || this.state.contactsFilter === 401) {
+        Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+        this.navigateToLogin();
+      }
       this.setState({
         contacts: Lodash.orderBy(this.state.contacts, ['firstName'], ['asc']),
         contactsFilter: Lodash.orderBy(this.state.contactsFilter, ['firstName'], ['asc']),
