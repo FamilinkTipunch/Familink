@@ -9,6 +9,7 @@ import Storage from '../services/Storage';
 import { getProfile, createContact } from '../services/WebService';
 import { emailRegex, urlAvatarRegex } from '../Tools/Regex';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
+import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
 
@@ -23,6 +24,7 @@ export default class AddContactScreen extends Component {
       super(props);
       this.navigate = this.props.navigation.navigate;
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
+      this.navigateToLogin = this.navigateToLogin.bind(this);
 
       this.state = {
         firstName: '',
@@ -76,6 +78,10 @@ export default class AddContactScreen extends Component {
       this.navigate(PHONEBOOKLIST_SCREEN_NAME);
     }
 
+    navigateToLogin() {
+      this.navigate(LOGIN_SCREEN_NAME);
+    }
+
     async addContact() {
       const status = await createContact(this.state.phone,
         this.state.firstName,
@@ -88,7 +94,11 @@ export default class AddContactScreen extends Component {
         Toast.show('Votre contact a été ajouté');
         this.navigateToPhoneBookList();
       }
+      if (status === 401) {
+        this.navigateToLogin();
+      }
     }
+
 
     validator = () => {
       if (emailRegex.test(this.state.email) !== true) {
