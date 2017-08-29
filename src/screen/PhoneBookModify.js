@@ -56,7 +56,7 @@ export default class PhoneBookModify extends Component {
         firstName: params.params.item.firstName,
         lastName: params.params.item.lastName,
         email: params.params.item.email,
-        phone: params.params.item.phone,        
+        phone: params.params.item.phone,
         urlAvatar: params.params.item.gravatar,
         profile: params.params.item.profile,
       });
