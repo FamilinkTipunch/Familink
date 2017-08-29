@@ -35,8 +35,6 @@ export default class ForgottenPasswordScreen extends Component {
       if (status === 1) {
         Toast.show('Un SMS vous a été envoyé');
         this.navigateToLogin();
-      } else if (status !== null) {
-        Toast.show(`Une erreur est survenue lors de la saisi du numéro avec le code erreur: ${status}`);
       }
     }
     validator = () => {
