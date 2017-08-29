@@ -3,16 +3,15 @@ import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacit
 import FAB from 'react-native-fab';
 import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
+import Toast from 'react-native-simple-toast';
 
 import { styles, transparent } from './styles/styles';
-import Menu from './burgermenu/burgermenu';
+import Menu from './burgermenu/Menu';
 import Storage from '../services/Storage';
 import { getContacts } from '../services/WebService';
 
-import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
-import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
 
@@ -31,9 +30,7 @@ export default class PhoneBookListScreen extends Component {
       this.navigate = this.props.navigation.navigate;
       this.navigateToHome = this.navigateToHome.bind(this);
       this.navigateToLogin = this.navigateToLogin.bind(this);
-      this.navigateToPhoneBookListDetail = this.navigateToPhoneBookListDetail.bind(this);
-      this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
-      this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
+      this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
       this.navigateToAddContact = this.navigateToAddContact.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
@@ -66,6 +63,10 @@ export default class PhoneBookListScreen extends Component {
         contacts: await getContacts(this.state.token),
         contactsFilter: await getContacts(this.state.token),
       });
+      if (this.state.contacts === 401 || this.state.contactsFilter === 401) {
+        Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+        this.navigateToLogin();
+      }
       this.setState({
         contacts: Lodash.orderBy(this.state.contacts, ['firstName'], ['asc']),
         contactsFilter: Lodash.orderBy(this.state.contactsFilter, ['firstName'], ['asc']),
@@ -148,20 +149,12 @@ export default class PhoneBookListScreen extends Component {
       this.navigate(ADDCONTACT_SCREEN_NAME);
     }
 
-    navigateToForgottenPassword() {
-      this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
-    }
-
     navigateToHome() {
       this.navigate(HOME_SCREEN_NAME);
     }
 
     navigateToPhoneBookListDetail() {
       this.navigate(PHONEBOOKDETAIL_SCREEN_NAME);
-    }
-
-    navigateToAuthentification() {
-      this.navigate(AUTH_SCREEN_NAME);
     }
 
     navigateToLogin() {

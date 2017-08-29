@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableHighlight } from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/burgermenu';
+import Menu from './burgermenu/Menu';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { MODIFCONTACT_SCREEN_NAME } from './PhoneBookModify';
