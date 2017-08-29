@@ -7,25 +7,24 @@ import { transparent, styles } from './styles/styles';
 import LoadingScreen from './LoadingScreen';
 import Storage from '../services/Storage';
 import { getProfile, createContact } from '../services/WebService';
-import { emailRegex, urlAvatarRegex } from '../Tools/Regex';
+
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
-import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
+const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+const urlAvatarValidator = /(https?:\/\/.*\.(?:png|jpg))/;
 
-export const ADDCONTACT_SCREEN_NAME = 'ADDCONTACT_SCREEN';
+export const MODIFCONTACT_SCREEN_NAME = 'MODIFCONTACT_SCREEN';
 
-export default class AddContactScreen extends Component {
+export default class PhoneBookModify extends Component {
     static navigationOptions = {
-      title: 'Ajouter un contact',
+      title: 'Modifier un contact',
     };
 
     constructor(props) {
       super(props);
       this.navigate = this.props.navigation.navigate;
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
-      this.navigateToLogin = this.navigateToLogin.bind(this);
-
       this.state = {
         firstName: '',
         firstNameBool: true,
@@ -51,6 +50,15 @@ export default class AddContactScreen extends Component {
     async componentWillMount() {
       this.setState({
         profileList: await getProfile(),
+      });
+      const { params } = this.props.navigation.state;
+      this.setState({
+        firstName: params.params.item.firstName,
+        lastName: params.params.item.lastName,
+        email: params.params.item.email,
+        phone: params.params.item.phone,
+        urlAvatar: params.params.item.gravatar,
+        profile: params.params.item.profile,
       });
     }
 
@@ -78,10 +86,6 @@ export default class AddContactScreen extends Component {
       this.navigate(PHONEBOOKLIST_SCREEN_NAME);
     }
 
-    navigateToLogin() {
-      this.navigate(LOGIN_SCREEN_NAME);
-    }
-
     async addContact() {
       const status = await createContact(this.state.phone,
         this.state.firstName,
@@ -94,14 +98,10 @@ export default class AddContactScreen extends Component {
         Toast.show('Votre contact a été ajouté');
         this.navigateToPhoneBookList();
       }
-      if (status === 401) {
-        this.navigateToLogin();
-      }
     }
 
-
     validator = () => {
-      if (emailRegex.test(this.state.email) !== true) {
+      if (emailValidator.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
       } else {
         this.setState({ emailBool: true });
@@ -125,7 +125,7 @@ export default class AddContactScreen extends Component {
         this.setState({ phoneBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (urlAvatarRegex.test(this.state.urlAvatar) !== true) {
+      if (urlAvatarValidator.test(this.state.urlAvatar) !== true) {
         this.setState({ urlAvatarBool: false });
       } else {
         this.setState({ urlAvatarBool: true });
@@ -226,7 +226,7 @@ export default class AddContactScreen extends Component {
             >
               <View style={styles.confirmationButton}>
                 <Text style={styles.validateText}>
-                Ajouter
+                Modifier
                 </Text>
               </View>
             </TouchableHighlight>

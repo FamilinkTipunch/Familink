@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
+import Toast from 'react-native-simple-toast';
 
 import { styles, transparent } from './styles/styles';
-import Menu from './burgermenu/burgermenu';
+import Menu from './burgermenu/Menu';
 import Storage from '../services/Storage';
 import { getContacts } from '../services/WebService';
 
-import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
-import { HOME_SCREEN_NAME } from './HomeScreen';
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
-import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
-import { LOGIN_SCREEN_NAME } from './LoginScreen';
 import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
 
 const burgerIcon = require('../assets/menu.png');
@@ -28,11 +25,6 @@ export default class PhoneBookListScreen extends Component {
     constructor(props) {
       super(props);
       this.navigate = this.props.navigation.navigate;
-      this.navigateToHome = this.navigateToHome.bind(this);
-      this.navigateToLogin = this.navigateToLogin.bind(this);
-      this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
-      this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
-      this.navigatetoForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.navigateToAddContact = this.navigateToAddContact.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
@@ -64,6 +56,10 @@ export default class PhoneBookListScreen extends Component {
       this.setState({
         contacts: await getContacts(this.state.token),
       });
+      if (this.state.contacts === 401 || this.state.contactsFilter === 401) {
+        Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+        this.navigateToLogin();
+      }
       this.setState({
         contacts: Lodash.orderBy(this.state.contacts, [contact => contact.firstName.toLowerCase()], ['asc']),
       });
@@ -150,28 +146,9 @@ export default class PhoneBookListScreen extends Component {
       this.navigate(ADDCONTACT_SCREEN_NAME);
     }
 
-    navigateToForgottenPassword() {
-      this.navigate(FORGOTTENPASSWORD_SCREEN_NAME);
-    }
-
-    navigateToHome() {
-      this.navigate(HOME_SCREEN_NAME);
-    }
-
-    navigateToPhoneBookList() {
-      this.navigate(PHONEBOOKDETAIL_SCREEN_NAME);
-    }
-
-    navigateToAuthentification() {
-      this.navigate(AUTH_SCREEN_NAME);
-    }
-
-    navigateToLogin() {
-      this.navigate(LOGIN_SCREEN_NAME);
-    }
-
     render() {
       const menu = <Menu navigation={this.props.navigation} />;
+      const { navigate } = this.props.navigation;
       return (
         <SideMenu
           menu={menu}
@@ -221,22 +198,26 @@ export default class PhoneBookListScreen extends Component {
                 <FlatList
                   data={this.state.contactsFilter}
                   renderItem={({ item }) => (
-                    <View>
-                      <Image
-                        source={item.gravatar !== ''
-                          ? { uri: item.gravatar }
-                          : { uri: 'https://s-media-cache-ak0.pinimg.com/736x/dd/45/96/dd4596b601062eb491ea9bb8e3a78062--two-faces-baby-faces.jpg' }
-                        }
-                        style={styles.avatar}
-                      />
-                      <Text
-                        style={styles.contactText}
-                        numberOfLines={1}
-                      >
-                        {item.firstName} {item.lastName}
-                      </Text>
-                      <Text style={styles.contactDetailText} numberOfLines={1}>{item.phone}</Text>
-                      <View style={styles.line} /></View>
+                    <TouchableOpacity
+                      onPress={() => navigate(PHONEBOOKDETAIL_SCREEN_NAME, { item })}
+                    >
+                      <View>
+                        <Image
+                          source={item.gravatar !== ''
+                            ? { uri: item.gravatar }
+                            : { uri: 'https://s-media-cache-ak0.pinimg.com/736x/dd/45/96/dd4596b601062eb491ea9bb8e3a78062--two-faces-baby-faces.jpg' }
+                          }
+                          style={styles.avatar}
+                        />
+                        <Text
+                          style={styles.contactText}
+                          numberOfLines={1}
+                        >
+                          {item.firstName} {item.lastName}
+                        </Text>
+                        <Text style={styles.contactDetailText} numberOfLines={1}>{item.phone}</Text>
+                        <View style={styles.line} /></View>
+                    </TouchableOpacity>
                   )}
                 />
                 <View style={styles.marginBottom} />

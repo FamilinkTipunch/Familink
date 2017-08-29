@@ -7,7 +7,6 @@ import { transparent, styles } from './styles/styles';
 import CheckReseau from '../services/CheckReseau';
 import Storage from '../services/Storage';
 import { canLogin } from '../services/WebService';
-
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
@@ -27,6 +26,7 @@ export default class LoginScreen extends Component {
       this.navigateToAuthentification = this.navigateToAuthentification.bind(this);
       this.navigateToForgottenPassword = this.navigateToForgottenPassword.bind(this);
       this.login = this.login.bind(this);
+      this.componentDidMount = this.componentDidMount.bind(this);
       this.state = {
         isOpen: false,
         selectedItem: 'About',
@@ -34,11 +34,30 @@ export default class LoginScreen extends Component {
         numTelBool: true,
         password: '',
         passwordBool: true,
-        isChecked: false,
+        isChecked: true,
         isLogin: '',
       };
     }
     componentWillMount() {
+      this.setState({
+        isChecked: Storage.getData('@RememberMe:key'),
+      });
+      if (this.state.isChecked === true) {
+        Storage.getData('@Phone:key')
+          .then((value) => {
+            this.setState({
+              numTel: value,
+              isChecked: false,
+            });
+          });
+      } else {
+        this.setState({
+          isChecked: false,
+        });
+      }
+    }
+
+    componentDidMount() {
       CheckReseau.checkConnectivity();
     }
 
@@ -65,11 +84,18 @@ export default class LoginScreen extends Component {
       this.setState({
         isLogin: await canLogin(this.state.numTel, this.state.password),
       });
-      if (this.state.isLogin.message !== 'Network request failed') { // si la connexion wifi est active
+      if (this.state.isLogin !== null) { // si la connexion wifi est actives
         if (this.state.isLogin === 400) {
           this.validator();
         } else {
           Toast.show('Vous etes bien connecté');
+          if (!this.state.isChecked === true) {
+            Storage.setData('@Phone:key', this.state.numTel);
+            Storage.setData('@RememberMe:key', String(!this.state.isChecked));
+          } else {
+            Storage.setData('@Phone:key', '');
+            Storage.setData('@RememberMe:key', String(!this.state.isChecked));
+          }
           Storage.setData('@Token:key', this.state.isLogin.token);
           this.navigateToHome();
         }
@@ -77,11 +103,8 @@ export default class LoginScreen extends Component {
     }
 
     validator = () => {
-      if (this.state.isLogin.message === 'User not found') {
-        this.setState({ numTelBool: false });
-        this.setState({ passwordBool: false });
-      } else if (this.state.isLogin.message !== 'User not found' && this.state.isLogin.message === 'Password is not valid') {
-        this.setState({ passwordBool: false });
+      if (this.state.isLogin === 400) {
+        this.setState({ numTelBool: false, numTel: '', password: '', passwordBool: false });
       }
       this.onAlert();
     }
@@ -101,6 +124,7 @@ export default class LoginScreen extends Component {
               underlineColorAndroid={transparent}
               maxLength={10}
               onChangeText={numTel => this.setState({ numTel, numTelBool: true })}
+              value={this.state.numTel}
             />
             <TextInput
               style={
@@ -118,7 +142,7 @@ export default class LoginScreen extends Component {
             <Content>
               <ListItem style={styles.checkboxLogin}>
                 <CheckBox
-                  checked={this.state.isChecked}
+                  checked={!this.state.isChecked}
                   onPress={() => this.rememberMeOnChange()}
                 />
                 <Body>

@@ -138,6 +138,15 @@ export const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: darkGrey,
   },
+  avatarDetailContact: {
+    width: 70,
+    height: 70,
+
+    borderRadius: 24,
+
+    borderWidth: 0.5,
+    borderColor: darkGrey,
+  },
   name: {
     position: 'absolute',
     fontSize: 28,
@@ -164,7 +173,7 @@ export const styles = StyleSheet.create({
   },
   add: {
     marginLeft: 0,
-    marginTop: (Platform.OS === 'ios') ? 0 : 0,
+    marginTop: 0,
     width: 50,
     height: 50,
   },

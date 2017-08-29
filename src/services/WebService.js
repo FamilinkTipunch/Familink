@@ -3,11 +3,11 @@ import { Alert } from 'react-native';
 import CheckReseau from './CheckReseau';
 
 const apiUrl = 'https://familink.cleverapps.io';
-const signInUrl = '/public/sign-in';
-const profileUrl = '/public/profiles';
-const loginUrl = '/public/login';
-const contactUrl = '/secured/users/contacts';
-const forgotpasswordUrl = '/public/forgot-password';
+const signInUrl = '/public/sign-in/';
+const profileUrl = '/public/profiles/';
+const loginUrl = '/public/login/';
+const contactUrl = '/secured/users/contacts/';
+const forgotpasswordUrl = '/public/forgot-password/';
 
 function onAlert() {
   Alert.alert(
@@ -121,6 +121,10 @@ export async function getContacts(token) {
     if (status === 200) {
       return response.json();
     }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
     Toast.show(`Une erreur est survenue lors de la récupération des contacts avec le code erreur:${response.status}`);
     return response.status;
   } catch (error) {
@@ -156,6 +160,10 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
     if (status === 200) {
       return 1;
     }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
     Toast.show(`Une erreur est survenue lors de la création des contacts avec le code erreur:${response.status}`);
     return response.status;
   } catch (error) {
@@ -182,9 +190,38 @@ export async function forgotPassword(passwordPhone) {
     if (status === 200 || status === 204) {
       return 1;
     }
+    Toast.show(`Une erreur est survenue lors de la saisi du numéro avec le code erreur: ${status}`);
     return response.status;
   } catch (error) {
     throw error;
   }
 }
 
+export async function deleteContact(token, contactId) {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+    const response = await fetch(apiUrl + contactUrl + contactId, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const status = response.status;
+    if (status === 200 || status === 204) {
+      return 1;
+    }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
+    Toast.show(`Une erreur est survenue lors de la suppression du contact avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
+  }
+}
