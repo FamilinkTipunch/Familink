@@ -5,6 +5,7 @@ import Toast from 'react-native-simple-toast';
 import { transparent, styles } from './styles/styles';
 import { forgotPassword } from '../services/WebService';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
+import { phoneRegex } from '../Tools/Regex';
 
 export const FORGOTTENPASSWORD_SCREEN_NAME = 'FORGOTTENPASSWORD_SCREEN';
 
@@ -39,7 +40,7 @@ export default class ForgottenPasswordScreen extends Component {
       }
     }
     validator = () => {
-      if (this.state.phone.length < 10) {
+      if (phoneRegex.test(this.state.phone) !== true) {
         this.setState({ phoneBool: false });
         this.onAlert();
       } else {

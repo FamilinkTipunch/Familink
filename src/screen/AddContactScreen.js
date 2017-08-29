@@ -7,12 +7,10 @@ import { transparent, styles } from './styles/styles';
 import LoadingScreen from './LoadingScreen';
 import Storage from '../services/Storage';
 import { getProfile, createContact } from '../services/WebService';
-
+import { emailRegex, urlAvatarRegex } from '../Tools/Regex';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
-const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-const urlAvatarValidator = /(https?:\/\/.*\.(?:png|jpg))/;
 
 export const ADDCONTACT_SCREEN_NAME = 'ADDCONTACT_SCREEN';
 
@@ -93,7 +91,7 @@ export default class AddContactScreen extends Component {
     }
 
     validator = () => {
-      if (emailValidator.test(this.state.email) !== true) {
+      if (emailRegex.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
       } else {
         this.setState({ emailBool: true });
@@ -117,7 +115,7 @@ export default class AddContactScreen extends Component {
         this.setState({ phoneBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (urlAvatarValidator.test(this.state.urlAvatar) !== true) {
+      if (urlAvatarRegex.test(this.state.urlAvatar) !== true) {
         this.setState({ urlAvatarBool: false });
       } else {
         this.setState({ urlAvatarBool: true });
