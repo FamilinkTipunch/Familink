@@ -4,16 +4,16 @@ const { StyleSheet, Platform } = React;
 
 const darkPurple = 'rgba(51, 1, 54, 1)';
 const purple = 'rgba(83, 23, 66, 1)';
-const lightPurple = 'rgba(150, 46, 64, 1)';
 const trlightPurple = 'rgba(150, 46, 64, 0.1)';
 const darkOrange = 'rgba(201, 70, 61, 1)';
 const orange = 'rgba(255, 94, 53, 1)';
 const darkBlue = 'rgba(24, 72, 92, 1)';
-const white = 'rgba(255, 255, 255, 1)';
 const trWhite = 'rgba(255, 255, 255, 0.5)';
 const grey = 'rgba(240, 240, 240, 1)';
 const darkerGrey = 'rgba(150, 150, 150, 1)';
 
+export const white = 'rgba(255, 255, 255, 1)';
+export const red = 'rgba(150, 46, 64, 1)';
 export const darkGrey = 'rgba(200, 200, 200, 1)';
 export const transparent = 'transparent';
 
@@ -22,6 +22,29 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     padding: 10,
     zIndex: 2,
+  },
+  buttonAdd: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    bottom: 0,
+    zIndex: 3,
+    paddingBottom: 20,
+    paddingRight: 20,
+  },
+  addButton: {
+    backgroundColor: red,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addButtonText: {
+    color: white,
+    marginBottom: (Platform.OS === 'ios') ? 5 : 3,
+    marginLeft: (Platform.OS === 'ios') ? 1 : 0,
+    fontSize: 26,
+    fontWeight: '600',
   },
   marginSearch: {
     padding: 30,
@@ -131,7 +154,7 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     left: 60,
     top: 8,
-    color: lightPurple,
+    color: red,
   },
   item: {
     fontSize: 14,
@@ -212,7 +235,7 @@ export const styles = StyleSheet.create({
 
     borderRadius: 5,
 
-    backgroundColor: lightPurple,
+    backgroundColor: red,
   },
   modifyButton: {
     width: window.width,
@@ -297,7 +320,8 @@ export const styles = StyleSheet.create({
   alphabetText: {
     textAlign: 'center',
     color: darkBlue,
-    marginBottom: (Platform.OS === 'ios') ? 0 : -4,
+    fontSize: (Platform.OS === 'ios') ? 12 : 10,
+    marginBottom: (Platform.OS === 'ios') ? 0 : -1,
   },
   textForgotPassword: {
     fontSize: 15,

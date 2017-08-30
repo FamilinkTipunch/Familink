@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import FAB from 'react-native-fab';
 import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
 import Toast from 'react-native-simple-toast';
@@ -56,16 +55,19 @@ export default class PhoneBookListScreen extends Component {
       });
       this.setState({
         contacts: await getContacts(this.state.token),
-        contactsFilter: await getContacts(this.state.token),
       });
       if (this.state.contacts === 401 || this.state.contactsFilter === 401) {
         Toast.show('Votre token est plus valide, veuillez vous reconnecter');
         this.navigateToLogin();
       }
       this.setState({
-        contacts: Lodash.orderBy(this.state.contacts, ['firstName'], ['asc']),
-        contactsFilter: Lodash.orderBy(this.state.contactsFilter, ['firstName'], ['asc']),
+        contacts: Lodash.orderBy(this.state.contacts, [contact => contact.firstName.toLowerCase()], ['asc']),
       });
+      const contacts = Lodash.forEach(this.state.contacts, (value) => {
+        value.firstName = Lodash.upperFirst(value.firstName.toLowerCase());
+        value.lastName = Lodash.upperFirst(value.lastName.toLowerCase());
+      });
+      this.setState({ contactsFilter: contacts });
     }
 
     onMenuItemSelected = item =>
@@ -75,7 +77,7 @@ export default class PhoneBookListScreen extends Component {
       },
       );
 
-    debug = (search) => {
+    searchInput = (search) => {
       if (search !== '') {
         this.state.contactsFilter = Lodash.filter(
           this.state.contacts, item => item.firstName.indexOf(search) > -1,
@@ -167,7 +169,7 @@ export default class PhoneBookListScreen extends Component {
                 underlineColorAndroid={transparent}
                 value={this.state.search}
                 onChangeText={(search) => {
-                  this.debug(search);
+                  this.searchInput(search);
                   this.setState({ search });
                 }
                 }
@@ -203,11 +205,17 @@ export default class PhoneBookListScreen extends Component {
                         <Image
                           source={item.gravatar !== ''
                             ? { uri: item.gravatar }
-                            : { uri: 'http://russfik.ru/templates/Blogss/dleimages/noavatar.png' }}
+                            : { uri: 'https://s-media-cache-ak0.pinimg.com/736x/dd/45/96/dd4596b601062eb491ea9bb8e3a78062--two-faces-baby-faces.jpg' }
+                          }
                           style={styles.avatar}
                         />
-                        <Text style={styles.contactText}>{item.firstName} {item.lastName}</Text>
-                        <Text style={styles.contactDetailText}>{item.phone}</Text>
+                        <Text
+                          style={styles.contactText}
+                          numberOfLines={1}
+                        >
+                          {item.firstName} {item.lastName}
+                        </Text>
+                        <Text style={styles.contactDetailText} numberOfLines={1}>{item.phone}</Text>
                         <View style={styles.line} /></View>
                     </TouchableOpacity>
                   )}
@@ -215,7 +223,14 @@ export default class PhoneBookListScreen extends Component {
                 <View style={styles.marginBottom} />
               </View>
             </ScrollView>
-            <FAB buttonColor="red" iconTextColor="#FFFFFF" onClickAction={() => this.navigateToAddContact()} visible={true} />
+            <TouchableOpacity
+              onPress={() => this.navigateToAddContact()}
+              style={styles.buttonAdd}
+            >
+              <View style={styles.addButton}>
+                <Text style={styles.addButtonText}>+</Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={this.toggle}

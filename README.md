@@ -12,6 +12,7 @@ Pour lancer correctement l'application il faut:
 * puis: `npm install --save react-native-simple-toast`
 * lancer: `npm install --save lodash`
 * et: `npm install react-native-alphabetlistview  --save `
+* puis: `npm install react-native-vector-icons --save`
 * et enfin: `npm install react-native-fab --save`
 
 ou par yarn:
@@ -23,8 +24,10 @@ ou par yarn:
 * `yarn add react-native-simple-toast`
 * `yarn add lodash`
 * `yarn add react-native-alphabetlistview`
+* `yarn add react-native-vector-icons`
 * `yarn add react-native-fab`
 
+puis: `react-native link` pour react-native-vector-link 
 puis lancer la commande: `yarn`
 
 
@@ -70,6 +73,3 @@ Les documents de gestion de projet sont stockés dans le «dossier» contenant :
 * Les BurnUp et BurnDown charts
 * Le protuct Backlog
 * Le Backlog d'itération
-
-Palette de couleur choisis :
-https://color.adobe.com/fr/Happy-Halloween-color-theme-9877044/
