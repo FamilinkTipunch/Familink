@@ -1,6 +1,6 @@
 import { NetInfo } from 'react-native';
 
-let isConnected = null;
+let isConnected = false;
 export default class CheckReseau {
   static checkConnectivity() {
     NetInfo.isConnected.addEventListener(
