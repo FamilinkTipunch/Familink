@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Image, Text } from 'react-native';
-import { styles } from '../styles/styles';
+import { ScrollView, View, Image, Text, TouchableHighlight } from 'react-native';
+import { styles, transparent } from '../styles/styles';
 import { PHONEBOOKLIST_SCREEN_NAME } from '../PhoneBookListScreen';
 import { HOME_SCREEN_NAME } from '../HomeScreen';
 import { LOGIN_SCREEN_NAME } from '../LoginScreen';
 import Storage from '../../services/Storage';
 
-const uri = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/US_Navy_100915-N-4790M-040_Lanier_Phillips%2C_left%2C_Bill_Cosby_and_Ed_LeBaron_pose_for_a_picture_before_receiving_the_Lone_Sailor_Award_at_the_Nation_%28cropped_to_Cosby%29.jpg';
+const logo = require('../../assets/logo.png');
 
 export default class Menu extends Component {
   static navigationOptions = {
@@ -44,28 +44,34 @@ export default class Menu extends Component {
         <View style={styles.avatarContainer}>
           <Image
             style={styles.avatar}
-            source={{ uri }}
+            source={logo}
           />
-          <Text style={styles.name}>Bill Cosby</Text>
+          <Text style={styles.name}>Thibaut</Text>
         </View>
-        <Text
+        <TouchableHighlight
           onPress={this.navigateToHome}
-          style={styles.item}
+          underlayColor={transparent}
         >
-          Accueil
-        </Text>
-        <Text
+          <View style={styles.modifyButton}>
+            <Text style={styles.validateText}>Accueil</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
           onPress={this.navigateToPhoneBookList}
-          style={styles.item}
+          underlayColor={transparent}
         >
-          Contacts
-        </Text>
-        <Text
+          <View style={styles.modifyButton}>
+            <Text style={styles.validateText}>Contacts</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
           onPress={() => this.signOut()}
-          style={styles.item}
+          underlayColor={transparent}
         >
-          Déconnexion
-        </Text>
+          <View style={styles.confirmationButton}>
+            <Text style={styles.validateText}>Déconnexion</Text>
+          </View>
+        </TouchableHighlight>
       </ScrollView>
     );
   }

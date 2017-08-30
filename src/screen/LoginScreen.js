@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Toast from 'react-native-simple-toast';
-import { View, TextInput, TouchableHighlight, ScrollView } from 'react-native';
+import { View, Image, TextInput, TouchableHighlight, ScrollView } from 'react-native';
 import { Content, ListItem, CheckBox, Body, Text } from 'native-base';
 import Popup from 'react-native-popup';
 import { transparent, styles } from './styles/styles';
@@ -12,6 +12,7 @@ import { HOME_SCREEN_NAME } from './HomeScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
 
 export const LOGIN_SCREEN_NAME = 'LOGIN_SCREEN';
+const logo = require('../assets/logo.png');
 
 export default class LoginScreen extends Component {
     static navigationOptions = {
@@ -103,9 +104,7 @@ export default class LoginScreen extends Component {
     }
 
     validator = () => {
-      if (this.state.isLogin === 400) {
-        this.setState({ numTelBool: false, numTel: '', password: '', passwordBool: false });
-      }
+      this.setState({ numTelBool: false, password: '', passwordBool: false });
       this.onAlert();
     }
 
@@ -113,6 +112,10 @@ export default class LoginScreen extends Component {
       return (
         <View style={styles.container}>
           <ScrollView scrollsToTop={false} style={styles.signin}>
+            <Image
+              source={logo}
+              style={[styles.avatarDetailContact, styles.marginBottom]}
+            />
             <TextInput
               style={
                 this.state.numTelBool

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Popup from 'react-native-popup';
-import { Button, View, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Image, TouchableOpacity, TouchableHighlight, Text } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/Menu';
-import { styles } from './styles/styles';
+import { styles, transparent } from './styles/styles';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
 const image = require('../assets/menu.png');
+const logo = require('../assets/logo.png');
 
 export const HOME_SCREEN_NAME = 'HOME_SCREEN';
 
@@ -60,10 +61,22 @@ export default class HomeScreen extends Component {
           onChange={isOpen => this.updateMenuState(isOpen)}
         >
           <View style={styles.container}>
-            <Button
-              onPress={this.navigateToPhoneBookList}
-              title="PhoneBookList"
-            />
+            <ScrollView scrollsToTop={false} style={styles.signin}>
+              <Image
+                source={logo}
+                style={styles.avatarDetailContact}
+              />
+              <Text style={styles.homeText}>
+                Bienvenu Thibaut sur votre application.
+                Je sais que vous êtes sénior. Je vous invite donc à consulter
+                vos contacts.
+              </Text>
+              <TouchableHighlight onPress={this.navigateToPhoneBookList} underlayColor={transparent}>
+                <View style={styles.confirmationButton}>
+                  <Text style={styles.validateText}>Contacts</Text>
+                </View>
+              </TouchableHighlight>
+            </ScrollView>
           </View>
           <TouchableOpacity
             onPress={this.toggle}

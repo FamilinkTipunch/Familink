@@ -7,7 +7,7 @@ import { transparent, styles } from './styles/styles';
 import LoadingScreen from './LoadingScreen';
 import Storage from '../services/Storage';
 import { getProfile, createContact } from '../services/WebService';
-import { emailRegex, urlAvatarRegex } from '../Tools/Regex';
+import { emailRegex, phoneRegex } from '../Tools/Regex';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
@@ -99,7 +99,6 @@ export default class AddContactScreen extends Component {
       }
     }
 
-
     validator = () => {
       if (emailRegex.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
@@ -119,16 +118,10 @@ export default class AddContactScreen extends Component {
         this.setState({ lastNameBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (this.state.phone.length < 10) {
+      if (phoneRegex.test(this.state.phone) !== true) {
         this.setState({ phoneBool: false });
       } else {
         this.setState({ phoneBool: true });
-        this.setState({ count: this.state.allInputCorrect += 1 });
-      }
-      if (urlAvatarRegex.test(this.state.urlAvatar) !== true) {
-        this.setState({ urlAvatarBool: false });
-      } else {
-        this.setState({ urlAvatarBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
       if (this.state.allInputCorrect === 4) {
@@ -197,7 +190,7 @@ export default class AddContactScreen extends Component {
               onChangeText={phone => this.setState({ phone, phoneBool: true })}
             />
             <TextInput
-              style={[styles.input, styles.inputMiddle, styles.blue]}
+              style={[styles.input, styles.inputStandAlone, styles.blue]}
               placeholder={'url Gravatar'}
               autoCapitalize={'sentences'}
               autoCorrect={false}

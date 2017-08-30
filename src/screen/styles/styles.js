@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.height,
-    backgroundColor: purple,
+    backgroundColor: darkGrey,
     padding: 20,
   },
   signin: {
@@ -154,13 +154,13 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     left: 60,
     top: 8,
-    color: red,
+    color: darkBlue,
   },
   item: {
     fontSize: 14,
     fontWeight: '300',
     paddingTop: 5,
-    color: darkOrange,
+    color: darkBlue,
   },
   burgerStyle: {
     width: 32,
@@ -328,5 +328,9 @@ export const styles = StyleSheet.create({
     color: darkBlue,
     textAlign: 'center',
     marginBottom: 20,
+  },
+  homeText: {
+    margin: 20,
+    color: darkBlue,
   },
 });

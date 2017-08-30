@@ -7,7 +7,7 @@ import { transparent, styles } from './styles/styles';
 import LoadingScreen from './LoadingScreen';
 import Storage from '../services/Storage';
 import { updateContact, getProfile } from '../services/WebService';
-import { emailRegex, phoneRegex, urlAvatarRegex } from '../Tools/Regex';
+import { emailRegex, phoneRegex } from '../Tools/Regex';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
@@ -89,7 +89,7 @@ export default class PhoneBookModifyScreen extends Component {
         this.state.lastName,
         this.state.email,
         this.state.profile,
-        this.state.gravatar,
+        this.state.urlAvatar,
         this.state.token,
         this.state.id);
       if (status === 1) {
@@ -124,12 +124,6 @@ export default class PhoneBookModifyScreen extends Component {
         this.setState({ phoneBool: false });
       } else {
         this.setState({ phoneBool: true });
-        this.setState({ count: this.state.allInputCorrect += 1 });
-      }
-      if (urlAvatarRegex.test(this.state.urlAvatar) !== true) {
-        this.setState({ urlAvatarBool: false });
-      } else {
-        this.setState({ urlAvatarBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
       if (this.state.allInputCorrect === 4) {
@@ -198,7 +192,7 @@ export default class PhoneBookModifyScreen extends Component {
               onChangeText={phone => this.setState({ phone, phoneBool: true })}
             />
             <TextInput
-              style={[styles.input, styles.inputMiddle, styles.blue]}
+              style={[styles.input, styles.inputStandAlone, styles.blue]}
               placeholder={'url Gravatar'}
               autoCapitalize={'sentences'}
               autoCorrect={false}
