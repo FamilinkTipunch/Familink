@@ -3,9 +3,7 @@ const React = require('react-native');
 const { StyleSheet, Platform } = React;
 
 const darkPurple = 'rgba(51, 1, 54, 1)';
-const purple = 'rgba(83, 23, 66, 1)';
 const trlightPurple = 'rgba(150, 46, 64, 0.1)';
-const darkOrange = 'rgba(201, 70, 61, 1)';
 const orange = 'rgba(255, 94, 53, 1)';
 const darkBlue = 'rgba(24, 72, 92, 1)';
 const trWhite = 'rgba(255, 255, 255, 0.5)';

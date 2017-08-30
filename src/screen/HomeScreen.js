@@ -71,7 +71,10 @@ export default class HomeScreen extends Component {
                 Je sais que vous êtes sénior. Je vous invite donc à consulter
                 vos contacts.
               </Text>
-              <TouchableHighlight onPress={this.navigateToPhoneBookList} underlayColor={transparent}>
+              <TouchableHighlight
+                onPress={this.navigateToPhoneBookList}
+                underlayColor={transparent}
+              >
                 <View style={styles.confirmationButton}>
                   <Text style={styles.validateText}>Contacts</Text>
                 </View>
