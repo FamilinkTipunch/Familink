@@ -94,7 +94,7 @@ export default class PhoneBookListScreen extends Component {
           this.setState({
             count: this.state.scrollIndicator +=
             (Platform.OS === 'ios')
-              ? 96 +
+              ? 97 +
               (86.5 *
                 (Lodash.filter(
                   this.state.contacts, item =>

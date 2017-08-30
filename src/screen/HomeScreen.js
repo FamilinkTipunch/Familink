@@ -67,7 +67,7 @@ export default class HomeScreen extends Component {
                 style={styles.avatarDetailContact}
               />
               <Text style={styles.homeText}>
-                Bienvenu Thibaut sur votre application.
+                Bienvenue Thibaut sur votre application.
                 Je sais que vous êtes sénior. Je vous invite donc à consulter
                 vos contacts.
               </Text>
