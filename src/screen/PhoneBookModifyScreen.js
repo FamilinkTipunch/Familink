@@ -6,17 +6,15 @@ import Toast from 'react-native-simple-toast';
 import { transparent, styles } from './styles/styles';
 import LoadingScreen from './LoadingScreen';
 import Storage from '../services/Storage';
-import { getProfile, createContact } from '../services/WebService';
-
+import { updateContact, getProfile } from '../services/WebService';
+import { emailRegex, phoneRegex, urlAvatarRegex } from '../Tools/Regex';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
-const emailValidator = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-const urlAvatarValidator = /(https?:\/\/.*\.(?:png|jpg))/;
 
 export const MODIFCONTACT_SCREEN_NAME = 'MODIFCONTACT_SCREEN';
 
-export default class PhoneBookModify extends Component {
+export default class PhoneBookModifyScreen extends Component {
     static navigationOptions = {
       title: 'Modifier un contact',
     };
@@ -45,12 +43,9 @@ export default class PhoneBookModify extends Component {
       };
       this.handlePress = this.handlePress.bind(this);
       this.showActionSheet = this.showActionSheet.bind(this);
-      this.addContact = this.addContact.bind(this);
+      this.modify = this.modify.bind(this);
     }
     async componentWillMount() {
-      this.setState({
-        profileList: await getProfile(),
-      });
       const { params } = this.props.navigation.state;
       this.setState({
         firstName: params.params.item.firstName,
@@ -59,6 +54,8 @@ export default class PhoneBookModify extends Component {
         phone: params.params.item.phone,
         urlAvatar: params.params.item.gravatar,
         profile: params.params.item.profile,
+        id: params.params.item._id,
+        profileList: await getProfile(),
       });
     }
 
@@ -85,23 +82,27 @@ export default class PhoneBookModify extends Component {
     navigateToPhoneBookList() {
       this.navigate(PHONEBOOKLIST_SCREEN_NAME);
     }
-
-    async addContact() {
-      const status = await createContact(this.state.phone,
+    async modify() {
+      const status = await updateContact(
+        this.state.phone,
         this.state.firstName,
         this.state.lastName,
         this.state.email,
-        this.state.profileList[this.state.selected],
-        this.state.urlAvatar,
-        this.state.token);
+        this.state.profile,
+        this.state.gravatar,
+        this.state.token,
+        this.state.id);
       if (status === 1) {
-        Toast.show('Votre contact a été ajouté');
+        Toast.show('Votre contact a été Modifié');
         this.navigateToPhoneBookList();
+      }
+      if (status === 401) {
+        this.navigateToLogin();
       }
     }
 
     validator = () => {
-      if (emailValidator.test(this.state.email) !== true) {
+      if (emailRegex.test(this.state.email) !== true) {
         this.setState({ emailBool: false });
       } else {
         this.setState({ emailBool: true });
@@ -119,20 +120,20 @@ export default class PhoneBookModify extends Component {
         this.setState({ lastNameBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (this.state.phone.length < 10) {
+      if (phoneRegex.test(this.state.phone) !== true) {
         this.setState({ phoneBool: false });
       } else {
         this.setState({ phoneBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
-      if (urlAvatarValidator.test(this.state.urlAvatar) !== true) {
+      if (urlAvatarRegex.test(this.state.urlAvatar) !== true) {
         this.setState({ urlAvatarBool: false });
       } else {
         this.setState({ urlAvatarBool: true });
         this.setState({ count: this.state.allInputCorrect += 1 });
       }
       if (this.state.allInputCorrect === 4) {
-        this.addContact();
+        this.modify();
       } else {
         this.onAlert();
       }

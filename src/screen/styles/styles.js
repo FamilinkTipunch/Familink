@@ -119,7 +119,8 @@ export const styles = StyleSheet.create({
     width: 70,
     height: 70,
 
-    borderRadius: 24,
+    borderRadius: 35,
+    alignSelf: 'center',
 
     borderWidth: 0.5,
     borderColor: darkGrey,
@@ -213,6 +214,18 @@ export const styles = StyleSheet.create({
 
     backgroundColor: lightPurple,
   },
+  modifyButton: {
+    width: window.width,
+
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    marginBottom: 20,
+
+    borderRadius: 5,
+
+    backgroundColor: darkBlue,
+  },
   actionSheet: {
     width: window.width,
 
@@ -272,6 +285,9 @@ export const styles = StyleSheet.create({
   },
   marginBottom: {
     marginBottom: 20,
+  },
+  marginTop: {
+    marginTop: 20,
   },
   alphabetView: {
     alignSelf: 'flex-end',

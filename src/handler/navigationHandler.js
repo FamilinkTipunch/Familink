@@ -9,7 +9,7 @@ import PhoneBookDetailScreen, { PHONEBOOKDETAIL_SCREEN_NAME } from '../screen/Ph
 import PhoneBookListScreen, { PHONEBOOKLIST_SCREEN_NAME } from '../screen/PhoneBookListScreen';
 import ForgottenPasswordScreen, { FORGOTTENPASSWORD_SCREEN_NAME } from '../screen/ForgottenPasswordScreen';
 import AddContactScreen, { ADDCONTACT_SCREEN_NAME } from '../screen/AddContactScreen';
-import PhoneBookModify, { MODIFCONTACT_SCREEN_NAME } from '../screen/PhoneBookModify';
+import PhoneBookModifyScreen, { MODIFCONTACT_SCREEN_NAME } from '../screen/PhoneBookModifyScreen';
 
 const stackNavigatorConfig = {};
 
@@ -42,7 +42,7 @@ stackNavigatorConfig[ADDCONTACT_SCREEN_NAME] = {
 };
 
 stackNavigatorConfig[MODIFCONTACT_SCREEN_NAME] = {
-  screen: PhoneBookModify,
+  screen: PhoneBookModifyScreen,
 };
 
 const ApplicationNavigator = StackNavigator(stackNavigatorConfig, {
