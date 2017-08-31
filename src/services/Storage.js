@@ -5,6 +5,10 @@ import { AsyncStorage } from 'react-native';
 // @Contact:key
 // @RememberMe:key
 // @Phone:key
+// @FirstName:key
+// @LastName:key
+// @Email:key
+// @Profil:key
 
 export default class Storage {
   static async setData(key, data) {

@@ -8,6 +8,7 @@ const profileUrl = '/public/profiles/';
 const loginUrl = '/public/login/';
 const contactUrl = '/secured/users/contacts/';
 const forgotpasswordUrl = '/public/forgot-password/';
+const userUrl = '/secured/users/current/';
 
 function onAlert() {
   Alert.alert(
@@ -240,18 +241,38 @@ export async function updateContact(contactPhone, contactFirstName, contactLastN
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userToken}`,
       },
-      body: JSON.stringify({
-        phone: contactPhone,
-        firstName: contactFirstName,
-        lastName: contactLastName,
-        email: contactEmail,
-        profile: contactProfile,
-        gravatar: contacturlGravatar,
-      }),
     });
     const status = response.status;
     if (status === 200 || status === 204) {
       return 1;
+    }
+    if (status === 401) {
+      Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+      return response.status;
+    }
+    Toast.show(`Une erreur est survenue lors de la modification du contacts avec le code erreur:${response.status}`);
+    return response.status;
+  } catch (error) {
+    return -1;
+  }
+}
+export async function getUserAuthenticated(userToken) {
+  try {
+    if (CheckReseau.checkConnectivity() === false) {
+      onAlert();
+      return null;
+    }
+
+    const response = await fetch(apiUrl + userUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    const status = response.status;
+    if (status === 200) {
+      return response.json();
     }
     if (status === 401) {
       Toast.show('Votre token est plus valide, veuillez vous reconnecter');

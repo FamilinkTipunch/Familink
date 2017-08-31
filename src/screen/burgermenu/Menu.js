@@ -4,6 +4,8 @@ import { styles, transparent } from '../styles/styles';
 import { PHONEBOOKLIST_SCREEN_NAME } from '../PhoneBookListScreen';
 import { HOME_SCREEN_NAME } from '../HomeScreen';
 import { LOGIN_SCREEN_NAME } from '../LoginScreen';
+import { PROFIL_SCREEN_NAME } from '../ProfilScreen';
+
 import Storage from '../../services/Storage';
 
 const logo = require('../../assets/logo.png');
@@ -20,6 +22,16 @@ export default class Menu extends Component {
     this.navigateToHome = this.navigateToHome.bind(this);
     this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
     this.navigateToLogin = this.navigateToLogin.bind(this);
+    this.navigateToProfil = this.navigateToProfil.bind(this);
+    this.state = {
+      firstName: '',
+    };
+  }
+
+  async componentWillMount() {
+    this.setState({
+      firstName: await Storage.getData('@FirstName:key'),
+    });
   }
 
   navigateToHome() {
@@ -32,7 +44,9 @@ export default class Menu extends Component {
   navigateToLogin() {
     this.navigate(LOGIN_SCREEN_NAME);
   }
-
+  navigateToProfil() {
+    this.navigate(PROFIL_SCREEN_NAME);
+  }
   signOut() {
     Storage.setData('@Token:key', '');
     this.navigateToLogin();
@@ -46,7 +60,7 @@ export default class Menu extends Component {
             style={styles.avatar}
             source={logo}
           />
-          <Text style={styles.name}>Thibaut</Text>
+          <Text style={styles.name}>{this.state.firstName}</Text>
         </View>
         <TouchableHighlight
           onPress={this.navigateToHome}
@@ -54,6 +68,14 @@ export default class Menu extends Component {
         >
           <View style={styles.modifyButton}>
             <Text style={styles.validateText}>Accueil</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={this.navigateToProfil}
+          underlayColor={transparent}
+        >
+          <View style={styles.modifyButton}>
+            <Text style={styles.validateText}>Profil</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight
