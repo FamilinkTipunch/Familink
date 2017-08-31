@@ -15,7 +15,7 @@ export const PHONEBOOKDETAIL_SCREEN_NAME = 'PHONEBOOKDETAIL_SCREEN';
 
 export default class PhoneBookDetailScreen extends Component {
     static navigationOptions = {
-      title: 'PhoneBookDetail',
+      title: 'Details du contact',
     };
 
     constructor(props) {
