@@ -26,7 +26,8 @@ export default class Storage {
 
   static async removeData(key, data) {
     try {
-      return await AsyncStorage.getItem(key);
+      await AsyncStorage.getItem(key, data);
+      return 1;
     } catch (error) {
       return -1;
     }
