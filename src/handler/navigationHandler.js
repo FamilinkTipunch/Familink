@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 
 import AuthentificationScreen, { AUTH_SCREEN_NAME } from '../screen/AuthentificationScreen';
 import HomeScreen, { HOME_SCREEN_NAME } from '../screen/HomeScreen';
@@ -48,5 +48,17 @@ stackNavigatorConfig[MODIFCONTACT_SCREEN_NAME] = {
 const ApplicationNavigator = StackNavigator(stackNavigatorConfig, {
   initialRouteName: LOGIN_SCREEN_NAME,
 });
+
+const navigateOnce = getStateForAction => (action, state) => {
+  const { type, routeName } = action;
+  return (
+    state &&
+    type === NavigationActions.NAVIGATE &&
+    routeName === state.routes[state.routes.length - 1].routeName
+  ) ? null : getStateForAction(action, state);
+};
+
+ApplicationNavigator.router.getStateForAction =
+navigateOnce(ApplicationNavigator.router.getStateForAction);
 
 export default () => <ApplicationNavigator />;
