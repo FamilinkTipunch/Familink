@@ -18,6 +18,7 @@ export default class LoginScreen extends Component {
     static navigationOptions = {
       title: 'Login',
       headerLeft: null,
+      gesturesEnabled: false,
     };
 
     constructor(props) {
