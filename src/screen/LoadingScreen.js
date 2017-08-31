@@ -15,17 +15,20 @@ export default class LoadingScreen extends Component {
   /* eslint react/no-did-mount-set-state: 0 */
   componentDidMount() {
     setInterval(() => {
-      this.setState({
-        visible: !this.state.visible,
-      });
+      if (this.spinner) {
+        this.setState({
+          visible: !this.state.visible,
+        });
+      }
     }, 3000);
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View ref={(component) => { this.spinner = component; }} style={styles.container}>
         <Spinner visible={this.state.visible} textContent={'Loading...'} />
       </View>
     );
   }
 }
+
