@@ -10,6 +10,7 @@ import PhoneBookListScreen, { PHONEBOOKLIST_SCREEN_NAME } from '../screen/PhoneB
 import ForgottenPasswordScreen, { FORGOTTENPASSWORD_SCREEN_NAME } from '../screen/ForgottenPasswordScreen';
 import AddContactScreen, { ADDCONTACT_SCREEN_NAME } from '../screen/AddContactScreen';
 import PhoneBookModifyScreen, { MODIFCONTACT_SCREEN_NAME } from '../screen/PhoneBookModifyScreen';
+import ProfilScreen, { PROFIL_SCREEN_NAME } from '../screen/ProfilScreen';
 
 const stackNavigatorConfig = {};
 
@@ -31,6 +32,10 @@ stackNavigatorConfig[PHONEBOOKDETAIL_SCREEN_NAME] = {
 
 stackNavigatorConfig[PHONEBOOKLIST_SCREEN_NAME] = {
   screen: PhoneBookListScreen,
+};
+
+stackNavigatorConfig[PROFIL_SCREEN_NAME] = {
+  screen: ProfilScreen,
 };
 
 stackNavigatorConfig[FORGOTTENPASSWORD_SCREEN_NAME] = {
