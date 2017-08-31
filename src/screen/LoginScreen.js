@@ -71,6 +71,9 @@ export default class LoginScreen extends Component {
     }
 
     navigateToHome() {
+      this.setState({
+        password: '',
+      });
       this.navigate(HOME_SCREEN_NAME);
     }
 
@@ -142,6 +145,7 @@ export default class LoginScreen extends Component {
               underlineColorAndroid={transparent}
               maxLength={4}
               onChangeText={password => this.setState({ password, passwordBool: true })}
+              value={this.state.password}
             />
             <Content>
               <ListItem style={styles.checkboxLogin}>
