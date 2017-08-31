@@ -16,7 +16,7 @@ export default class HomeScreen extends Component {
     static navigationOptions = {
       title: 'Home',
       headerLeft: null,
-      correctionGesture: false,
+      gesturesEnabled: false,
     };
 
     constructor(props) {
