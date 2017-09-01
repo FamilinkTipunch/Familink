@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import SideMenu from 'react-native-side-menu';
-import Menu from './burgermenu/Menu';
+import { Text, View, ScrollView, TextInput, Image, TouchableHighlight } from 'react-native';
 import Storage from '../services/Storage';
 
-import { styles } from './styles/styles';
+import { styles, transparent } from './styles/styles';
 
 export const PROFIL_SCREEN_NAME = 'PROFIL_SCREEN';
+
+const logo = require('../assets/logo.png');
 
 export default class ProfilScreen extends Component {
     static navigationOptions = {
@@ -35,22 +35,46 @@ export default class ProfilScreen extends Component {
     }
 
     render() {
-      const menu = <Menu navigation={this.props.navigation} />;
       return (
-        <SideMenu
-          menu={menu}
-          isOpen={this.state.isOpen}
-          onChange={isOpen => this.updateMenuState(isOpen)}
-        >
-          <View style={styles.container}>
-            <ScrollView scrollsToTop={false} style={styles.signin}>
-              <Text >{this.state.firstName}</Text>
-              <Text >{this.state.lastName}</Text>
-              <Text >{this.state.email}</Text>
-              <Text >{this.state.profil}</Text>
-            </ScrollView>
-          </View>
-        </SideMenu>
+        <View style={styles.container}>
+          <ScrollView scrollsToTop={false} style={styles.signin}>
+            <Image
+              source={logo}
+              style={styles.avatarDetailContact}
+            />
+            <TextInput
+              style={[styles.input, styles.inputTop, styles.blue, styles.marginTop]}
+              underlineColorAndroid={transparent}
+              editable={false}
+              value={this.state.firstName}
+            />
+            <TextInput
+              style={[styles.input, styles.inputMiddle, styles.blue]}
+              underlineColorAndroid={transparent}
+              editable={false}
+              value={this.state.lastName}
+            />
+            <TextInput
+              style={[styles.input, styles.inputMiddle, styles.blue]}
+              underlineColorAndroid={transparent}
+              editable={false}
+              value={this.state.email}
+            />
+            <TextInput
+              style={[styles.input, styles.inputBottom, styles.blue]}
+              underlineColorAndroid={transparent}
+              editable={false}
+              value={this.state.profil}
+            />
+            <TouchableHighlight
+              underlayColor={transparent}
+            >
+              <View style={styles.modifyButton}>
+                <Text style={styles.validateText}>Modifier</Text>
+              </View>
+            </TouchableHighlight>
+          </ScrollView>
+        </View>
       );
     }
 }
