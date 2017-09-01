@@ -22,8 +22,7 @@ export default class Storage {
 
   static async getData(key) {
     try {
-      const value = await AsyncStorage.getItem(key);
-      return value;
+      return await AsyncStorage.getItem(key);
     } catch (error) {
       return -1;
     }
@@ -31,8 +30,8 @@ export default class Storage {
 
   static async removeData(key, data) {
     try {
-      const value = await AsyncStorage.removeItem(key, data);
-      return value;
+      await AsyncStorage.getItem(key, data);
+      return 1;
     } catch (error) {
       return -1;
     }
