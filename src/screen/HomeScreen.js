@@ -4,7 +4,6 @@ import { View, ScrollView, Image, TouchableOpacity, TouchableHighlight, Text } f
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/Menu';
 import { styles, transparent } from './styles/styles';
-import { getUserAuthenticated } from '../services/WebService';
 import Storage from '../services/Storage';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
