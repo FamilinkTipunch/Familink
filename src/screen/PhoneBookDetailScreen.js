@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, Image, TouchableHighlight, ScrollView } from 'react-native';
 import Toast from 'react-native-simple-toast';
-import Menu from './burgermenu/Menu';
-
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
 import { MODIFCONTACT_SCREEN_NAME } from './PhoneBookModifyScreen';
