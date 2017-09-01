@@ -65,7 +65,9 @@ export default class PhoneBookListScreen extends Component {
       });
       const contacts = Lodash.forEach(this.state.contacts, (value) => {
         value.firstName = Lodash.upperFirst(value.firstName.toLowerCase());
-        value.lastName = Lodash.upperFirst(value.lastName.toLowerCase());
+        if (value.lastName) {
+          value.lastName = Lodash.upperFirst(value.lastName.toLowerCase());
+        }
       });
       this.setState({ contactsFilter: contacts });
     }
