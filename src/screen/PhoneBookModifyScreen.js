@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, ScrollView, TouchableHighlight, View } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import ActionSheet from 'react-native-actionsheet';
 import Popup from 'react-native-popup';
 import Toast from 'react-native-simple-toast';
@@ -94,7 +95,11 @@ export default class PhoneBookModifyScreen extends Component {
         this.state.id);
       if (status === 1) {
         Toast.show('Votre contact a été Modifié');
-        this.navigateToPhoneBookList();
+        const backAction = NavigationActions.back({
+          routeName: PHONEBOOKLIST_SCREEN_NAME,
+        });
+        // this.navigateToPhoneBookList();
+        this.props.navigation.dispatch(backAction);
       }
       if (status === 401) {
         this.navigateToLogin();
