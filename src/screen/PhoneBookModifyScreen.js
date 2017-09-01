@@ -95,9 +95,7 @@ export default class PhoneBookModifyScreen extends Component {
         this.state.id);
       if (status === 1) {
         Toast.show('Votre contact a été Modifié');
-        const backAction = NavigationActions.back({
-          routeName: PHONEBOOKLIST_SCREEN_NAME,
-        });
+        const backAction = NavigationActions.back();
         // this.navigateToPhoneBookList();
         this.props.navigation.dispatch(backAction);
       }
