@@ -106,7 +106,7 @@ export default class LoginScreen extends Component {
           Storage.setData('@FirstName:key', user.firstName);
           Storage.setData('@LastName:key', user.lastName);
           Storage.setData('@Email:key', user.email);
-          Storage.setData('@Profil:key', user.profil);
+          Storage.setData('@Profil:key', user.profile);
           this.navigateToHome();
         }
       }
