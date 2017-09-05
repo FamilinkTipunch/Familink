@@ -5,6 +5,7 @@ import { AsyncStorage } from 'react-native';
 // @Contact:key
 // @RememberMe:key
 // @Phone:key
+// @CurrentPhone:key
 // @FirstName:key
 // @LastName:key
 // @Email:key
@@ -31,6 +32,14 @@ export default class Storage {
   static async removeData(key, data) {
     try {
       await AsyncStorage.getItem(key, data);
+      return 1;
+    } catch (error) {
+      return -1;
+    }
+  }
+  static async pushData(key, data) {
+    try {
+      await AsyncStorage.push(key, data);
       return 1;
     } catch (error) {
       return -1;
