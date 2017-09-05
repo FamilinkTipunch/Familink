@@ -102,6 +102,7 @@ export default class LoginScreen extends Component {
             Storage.setData('@RememberMe:key', String(!this.state.isChecked));
           }
           Storage.setData('@Token:key', this.state.isLogin.token);
+          Storage.setData('@CurrentPhone:key', this.state.numTel);
           this.navigateToHome();
         }
       }
