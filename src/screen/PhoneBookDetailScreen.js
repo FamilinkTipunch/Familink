@@ -62,7 +62,7 @@ export default class PhoneBookDetailScreen extends Component {
     async delete(contactId) {
       const status = await deleteContact(this.state.Token, contactId);
       if (status === 1) {
-        Toast.show('Le contact est supprimer');
+        Toast.show('Le contact est supprimé');
         this.navigateToPhoneBookList();
       }
       if (status === 401) {

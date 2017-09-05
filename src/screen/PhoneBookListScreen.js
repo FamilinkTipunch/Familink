@@ -19,7 +19,7 @@ export const PHONEBOOKLIST_SCREEN_NAME = 'PHONEBOOKLIST_SCREEN';
 
 export default class PhoneBookListScreen extends Component {
     static navigationOptions = {
-      title: 'Liste des contacts',
+      title: 'Annuaire',
     };
 
     constructor(props) {

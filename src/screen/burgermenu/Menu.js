@@ -83,7 +83,7 @@ export default class Menu extends Component {
           underlayColor={transparent}
         >
           <View style={styles.modifyButton}>
-            <Text style={styles.validateText}>Contacts</Text>
+            <Text style={styles.validateText}>Annuaire</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight

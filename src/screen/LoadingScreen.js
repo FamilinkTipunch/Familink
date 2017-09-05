@@ -26,7 +26,7 @@ export default class LoadingScreen extends Component {
   render() {
     return (
       <View ref={(component) => { this.spinner = component; }} style={styles.container}>
-        <Spinner visible={this.state.visible} textContent={'Loading...'} />
+        <Spinner visible={this.state.visible} textContent={'Chargement...'} />
       </View>
     );
   }
