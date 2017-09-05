@@ -102,6 +102,7 @@ export default class LoginScreen extends Component {
             Storage.setData('@RememberMe:key', String(!this.state.isChecked));
           }
           Storage.setData('@Token:key', this.state.isLogin.token);
+          Storage.setData('@CurrentPhone:key', this.state.numTel);
           const user = await getUserAuthenticated(this.state.isLogin.token);
           Storage.setData('@FirstName:key', user.firstName);
           Storage.setData('@LastName:key', user.lastName);

@@ -159,7 +159,7 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
     });
     const status = response.status;
     if (status === 200) {
-      return 1;
+      return response.json();
     }
     if (status === 401) {
       Toast.show('Votre token est plus valide, veuillez vous reconnecter');
