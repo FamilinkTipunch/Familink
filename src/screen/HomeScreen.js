@@ -4,7 +4,6 @@ import { View, ScrollView, Image, TouchableOpacity, TouchableHighlight, Text } f
 import SideMenu from 'react-native-side-menu';
 import Menu from './burgermenu/Menu';
 import { styles, transparent } from './styles/styles';
-import { getUserAuthenticated } from '../services/WebService';
 import Storage from '../services/Storage';
 
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
@@ -40,16 +39,11 @@ export default class HomeScreen extends Component {
       this.setState({
         Token: await Storage.getData('@Token:key'),
       });
-      const user = await getUserAuthenticated(this.state.Token);
       this.setState({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        profil: user.profile,
+        firstName: await Storage.getData('@FirstName:key'),
+        lastName: await Storage.getData('@LastName:key'),
+        profil: await Storage.getData('@Profil:key'),
       });
-      await Storage.setData('@FirstName:key', this.state.firstName);
-      await Storage.setData('@LastName:key', this.state.lastName);
-      await Storage.setData('@Email:key', user.email);
-      await Storage.setData('@Profil:key', this.state.profil);
     }
 
     onMenuItemSelected = (item) => {

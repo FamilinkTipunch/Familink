@@ -91,6 +91,16 @@ export default class PhoneBookListScreen extends Component {
         this.setState({ contactsFilter: contacts });
         Storage.setData(currentphone, JSON.stringify(this.state.contactsFilter));
       }
+      this.setState({
+        contacts: Lodash.orderBy(this.state.contacts, [contact => contact.firstName.toLowerCase()], ['asc']),
+      });
+      const contacts = Lodash.forEach(this.state.contacts, (value) => {
+        value.firstName = Lodash.upperFirst(value.firstName.toLowerCase());
+        if (value.lastName) {
+          value.lastName = Lodash.upperFirst(value.lastName.toLowerCase());
+        }
+      });
+      this.setState({ contactsFilter: contacts });
     }
 
     onMenuItemSelected = item =>

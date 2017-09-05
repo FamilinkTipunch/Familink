@@ -6,7 +6,7 @@ import Popup from 'react-native-popup';
 import { transparent, styles } from './styles/styles';
 import CheckReseau from '../services/CheckReseau';
 import Storage from '../services/Storage';
-import { canLogin } from '../services/WebService';
+import { canLogin, getUserAuthenticated } from '../services/WebService';
 import { FORGOTTENPASSWORD_SCREEN_NAME } from './ForgottenPasswordScreen';
 import { HOME_SCREEN_NAME } from './HomeScreen';
 import { AUTH_SCREEN_NAME } from './AuthentificationScreen';
@@ -103,6 +103,11 @@ export default class LoginScreen extends Component {
           }
           Storage.setData('@Token:key', this.state.isLogin.token);
           Storage.setData('@CurrentPhone:key', this.state.numTel);
+          const user = await getUserAuthenticated(this.state.isLogin.token);
+          Storage.setData('@FirstName:key', user.firstName);
+          Storage.setData('@LastName:key', user.lastName);
+          Storage.setData('@Email:key', user.email);
+          Storage.setData('@Profil:key', user.profile);
           this.navigateToHome();
         }
       }
