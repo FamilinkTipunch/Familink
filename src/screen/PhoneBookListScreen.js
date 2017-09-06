@@ -12,6 +12,7 @@ import { getContacts } from '../services/WebService';
 
 import { PHONEBOOKDETAIL_SCREEN_NAME } from './PhoneBookDetailScreen';
 import { ADDCONTACT_SCREEN_NAME } from './AddContactScreen';
+import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 const burgerIcon = require('../assets/menu.png');
 const searchIcon = require('../assets/search.png');
@@ -27,6 +28,7 @@ export default class PhoneBookListScreen extends Component {
       super(props);
       this.navigate = this.props.navigation.navigate;
       this.navigateToAddContact = this.navigateToAddContact.bind(this);
+      this.navigateToLogin = this.navigateToLogin.bind(this);
       this.toggle = this.toggle.bind(this);
       this.state = {
         isOpen: false,
@@ -177,6 +179,10 @@ export default class PhoneBookListScreen extends Component {
 
     navigateToAddContact() {
       this.navigate(ADDCONTACT_SCREEN_NAME);
+    }
+
+    navigateToLogin() {
+      this.navigate(LOGIN_SCREEN_NAME);
     }
 
     render() {

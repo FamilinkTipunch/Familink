@@ -38,13 +38,13 @@ export default class HomeScreen extends Component {
     async componentWillMount() {
       this.setState({
         Token: await Storage.getData('@Token:key'),
-      });
-      this.setState({
         firstName: await Storage.getData('@FirstName:key'),
         lastName: await Storage.getData('@LastName:key'),
         profil: await Storage.getData('@Profil:key'),
       });
+      navigator.popToTop();
     }
+
 
     onMenuItemSelected = (item) => {
       this.setState({
@@ -84,8 +84,8 @@ export default class HomeScreen extends Component {
               />
               <Text style={styles.homeText}>
                 Bienvenue {this.state.firstName} {this.state.lastName} sur votre application.
-                Je sais que vous êtes {this.state.profil}. Je vous invite donc à consulter
-                vos contacts.
+                Je sais que vous êtes un profil de type {this.state.profil}.
+                Je vous invite donc à consulter vos contacts.
               </Text>
               <TouchableHighlight
                 onPress={this.navigateToPhoneBookList}
