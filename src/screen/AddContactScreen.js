@@ -90,8 +90,9 @@ export default class AddContactScreen extends Component {
         this.state.profileList[this.state.selected],
         this.state.urlAvatar,
         this.state.token);
-      if (status === 1) {
+      if (status !== null) {
         Toast.show('Votre contact a été ajouté');
+        Storage.pushData('@Contact:key', JSON.stringify(status));
         this.navigateToPhoneBookList();
       }
       if (status === 401) {
@@ -144,7 +145,7 @@ export default class AddContactScreen extends Component {
                 this.state.firstNameBool
                   ? [styles.input, styles.inputTop, styles.blue]
                   : [styles.input, styles.inputFalse, styles.inputTop, styles.classic]}
-              placeholder={'Prenom'}
+              placeholder={'Prénom'}
               autoCapitalize={'sentences'}
               autoCorrect={false}
               underlineColorAndroid={transparent}

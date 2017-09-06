@@ -16,7 +16,7 @@ const title = 'Quel statut vous correspond le mieux ?';
 
 export default class ProfilScreen extends Component {
     static navigationOptions = {
-      title: 'Votre profil',
+      title: 'Profil',
     };
 
     constructor(props) {

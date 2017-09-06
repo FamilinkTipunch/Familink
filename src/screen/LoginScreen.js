@@ -16,7 +16,7 @@ const logo = require('../assets/logo.png');
 
 export default class LoginScreen extends Component {
     static navigationOptions = {
-      title: 'Login',
+      title: 'Connexion',
       headerLeft: null,
       gesturesEnabled: false,
     };
@@ -93,7 +93,7 @@ export default class LoginScreen extends Component {
         if (this.state.isLogin === 400) {
           this.validator();
         } else {
-          Toast.show('Vous etes bien connecté');
+          Toast.show('Vous êtes bien connecté');
           if (!this.state.isChecked === true) {
             Storage.setData('@Phone:key', this.state.numTel);
             Storage.setData('@RememberMe:key', String(!this.state.isChecked));
@@ -102,6 +102,7 @@ export default class LoginScreen extends Component {
             Storage.setData('@RememberMe:key', String(!this.state.isChecked));
           }
           Storage.setData('@Token:key', this.state.isLogin.token);
+          Storage.setData('@CurrentPhone:key', this.state.numTel);
           const user = await getUserAuthenticated(this.state.isLogin.token);
           Storage.setData('@FirstName:key', user.firstName);
           Storage.setData('@LastName:key', user.lastName);

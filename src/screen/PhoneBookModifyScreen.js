@@ -98,7 +98,7 @@ export default class PhoneBookModifyScreen extends Component {
         this.state.token,
         this.state.id);
       if (status === 1) {
-        Toast.show('Votre contact a été Modifié');
+        Toast.show('Votre contact a été modifié');
         this.navigateToPhoneBookList();
       }
       if (status === 401) {
@@ -151,7 +151,7 @@ export default class PhoneBookModifyScreen extends Component {
                 this.state.firstNameBool
                   ? [styles.input, styles.inputTop, styles.blue]
                   : [styles.input, styles.inputFalse, styles.inputTop, styles.classic]}
-              placeholder={'Prenom'}
+              placeholder={'Prénom'}
               autoCapitalize={'sentences'}
               autoCorrect={false}
               underlineColorAndroid={transparent}

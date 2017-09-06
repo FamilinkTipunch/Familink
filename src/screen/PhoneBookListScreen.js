@@ -3,6 +3,7 @@ import { FlatList, Image, Platform, ScrollView, Text, TextInput, TouchableOpacit
 import SideMenu from 'react-native-side-menu';
 import Lodash from 'lodash';
 import Toast from 'react-native-simple-toast';
+import CheckReseau from '../services/CheckReseau';
 
 import { styles, transparent } from './styles/styles';
 import Menu from './burgermenu/Menu';
@@ -20,7 +21,7 @@ export const PHONEBOOKLIST_SCREEN_NAME = 'PHONEBOOKLIST_SCREEN';
 
 export default class PhoneBookListScreen extends Component {
     static navigationOptions = {
-      title: 'Liste des contacts',
+      title: 'Annuaire',
     };
 
     constructor(props) {
@@ -52,15 +53,45 @@ export default class PhoneBookListScreen extends Component {
     }
 
     async componentWillMount() {
-      await Storage.getData('@Token:key').then((value) => {
-        this.setState({ token: value });
-      });
-      this.setState({
-        contacts: await getContacts(this.state.token),
-      });
-      if (this.state.contacts === 401 || this.state.contactsFilter === 401) {
-        Toast.show('Votre token est plus valide, veuillez vous reconnecter');
-        this.navigateToLogin();
+      const currentphone = await Storage.getData('@CurrentPhone:key');
+      if (CheckReseau.checkConnectivity() === false) {
+        Toast.show('Non connecter');
+        this.setState({
+          contacts: JSON.parse(await Storage.getData(currentphone)),
+        });
+        this.setState({
+          contacts: Lodash.orderBy(this.state.contacts, [contact => contact.firstName.toLowerCase()], ['asc']),
+        });
+        const contacts = Lodash.forEach(this.state.contacts, (value) => {
+          value.firstName = Lodash.upperFirst(value.firstName.toLowerCase());
+          if (value.lastName) {
+            value.lastName = Lodash.upperFirst(value.lastName.toLowerCase());
+          }
+        });
+        this.setState({ contactsFilter: contacts });
+        Storage.setData(currentphone, JSON.stringify(this.state.contactsFilter));
+      } else {
+        await Storage.getData('@Token:key').then((value) => {
+          this.setState({ token: value });
+        });
+        this.setState({
+          contacts: await getContacts(this.state.token),
+        });
+        if (this.state.contacts === 401 || this.state.contactsFilter === 401) {
+          Toast.show('Votre token est plus valide, veuillez vous reconnecter');
+          this.navigateToLogin();
+        }
+        this.setState({
+          contacts: Lodash.orderBy(this.state.contacts, [contact => contact.firstName.toLowerCase()], ['asc']),
+        });
+        const contacts = Lodash.forEach(this.state.contacts, (value) => {
+          value.firstName = Lodash.upperFirst(value.firstName.toLowerCase());
+          if (value.lastName) {
+            value.lastName = Lodash.upperFirst(value.lastName.toLowerCase());
+          }
+        });
+        this.setState({ contactsFilter: contacts });
+        Storage.setData(currentphone, JSON.stringify(this.state.contactsFilter));
       }
       this.setState({
         contacts: Lodash.orderBy(this.state.contacts, [contact => contact.firstName.toLowerCase()], ['asc']),

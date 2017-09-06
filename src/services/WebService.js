@@ -13,8 +13,8 @@ const updateUserUrl = '/secured/users/';
 
 function onAlert() {
   Alert.alert(
-    'Connectivity',
-    'Pas de connexion wifi',
+    'Connectivité',
+    'Pas de connexion à Internet',
     null,
     { cancelable: false },
   );
@@ -160,7 +160,7 @@ export async function createContact(contactPhone, contactFirstName, contactLastN
     });
     const status = response.status;
     if (status === 200) {
-      return 1;
+      return response.json();
     }
     if (status === 401) {
       Toast.show('Votre token est plus valide, veuillez vous reconnecter');
@@ -250,6 +250,7 @@ export async function updateContact(contactPhone, contactFirstName, contactLastN
         profile: contactProfile,
         gravatar: contacturlGravatar,
       }),
+
     });
     const status = response.status;
     if (status === 200 || status === 204) {
