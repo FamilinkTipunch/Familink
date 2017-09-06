@@ -9,6 +9,7 @@ import Storage from '../services/Storage';
 import { updateContact, getProfile } from '../services/WebService';
 import { emailRegex, phoneRegex } from '../Tools/Regex';
 import { PHONEBOOKLIST_SCREEN_NAME } from './PhoneBookListScreen';
+import { LOGIN_SCREEN_NAME } from './LoginScreen';
 
 const title = 'Quel statut vous correspond le mieux ?';
 
@@ -23,6 +24,7 @@ export default class PhoneBookModifyScreen extends Component {
       super(props);
       this.navigate = this.props.navigation.navigate;
       this.navigateToPhoneBookList = this.navigateToPhoneBookList.bind(this);
+      this.navigateToLogin = this.navigateToLogin.bind(this);
       this.state = {
         firstName: '',
         firstNameBool: true,
@@ -82,13 +84,16 @@ export default class PhoneBookModifyScreen extends Component {
     navigateToPhoneBookList() {
       this.navigate(PHONEBOOKLIST_SCREEN_NAME);
     }
+    navigateToLogin() {
+      this.navigate(LOGIN_SCREEN_NAME);
+    }
     async modify() {
       const status = await updateContact(
         this.state.phone,
         this.state.firstName,
         this.state.lastName,
         this.state.email,
-        this.state.profile,
+        this.state.profileList[this.state.selected],
         this.state.urlAvatar,
         this.state.token,
         this.state.id);

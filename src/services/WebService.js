@@ -242,6 +242,14 @@ export async function updateContact(contactPhone, contactFirstName, contactLastN
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userToken}`,
       },
+      body: JSON.stringify({
+        phone: contactPhone,
+        firstName: contactFirstName,
+        lastName: contactLastName,
+        email: contactEmail,
+        profile: contactProfile,
+        gravatar: contacturlGravatar,
+      }),
     });
     const status = response.status;
     if (status === 200 || status === 204) {
@@ -307,7 +315,6 @@ export async function updateUser(userToken, newFirstName, newLastName, newEmail,
       }),
     });
     const status = response.status;
-    console.log('STATUS : ', status);
     if (status === 200 || status === 204) {
       return 1;
     }
