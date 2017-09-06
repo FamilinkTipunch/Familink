@@ -145,7 +145,7 @@ export default class AddContactScreen extends Component {
                 this.state.firstNameBool
                   ? [styles.input, styles.inputTop, styles.blue]
                   : [styles.input, styles.inputFalse, styles.inputTop, styles.classic]}
-              placeholder={'Prenom'}
+              placeholder={'Prénom'}
               autoCapitalize={'sentences'}
               autoCorrect={false}
               underlineColorAndroid={transparent}

@@ -15,7 +15,7 @@ export const HOME_SCREEN_NAME = 'HOME_SCREEN';
 
 export default class HomeScreen extends Component {
     static navigationOptions = {
-      title: 'Home',
+      title: 'Accueil',
       headerLeft: null,
       gesturesEnabled: false,
     };
@@ -92,7 +92,7 @@ export default class HomeScreen extends Component {
                 underlayColor={transparent}
               >
                 <View style={styles.confirmationButton}>
-                  <Text style={styles.validateText}>Contacts</Text>
+                  <Text style={styles.validateText}>Annuaire</Text>
                 </View>
               </TouchableHighlight>
             </ScrollView>

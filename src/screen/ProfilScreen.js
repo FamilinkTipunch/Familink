@@ -10,7 +10,7 @@ const logo = require('../assets/logo.png');
 
 export default class ProfilScreen extends Component {
     static navigationOptions = {
-      title: 'PhoneBookDetail',
+      title: 'Profil',
     };
 
     constructor(props) {

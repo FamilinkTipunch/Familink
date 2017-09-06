@@ -12,8 +12,8 @@ const userUrl = '/secured/users/current/';
 
 function onAlert() {
   Alert.alert(
-    'Connectivity',
-    'Pas de connexion wifi',
+    'Connectivité',
+    'Pas de connexion à Internet',
     null,
     { cancelable: false },
   );
